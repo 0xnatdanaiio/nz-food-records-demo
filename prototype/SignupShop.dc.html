@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390">
+<style>html{touch-action:manipulation}@media (min-width:520px){html,body{background:#0E2A2C}body>div>div>div[style*="width: 390px"]{margin:24px auto;border-radius:28px;overflow:hidden}}</style>
+<title>SousMate – Your shop</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#0B6B72}a:hover{color:#08555B}
+.docket{flex:none;position:relative;background:#FFFFFF;border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.help{margin:0;font-size:14px;color:#4A5E60;line-height:1.4}
+.field{width:100%;box-sizing:border-box;min-height:52px;border:2px solid #6F8885;border-radius:16px;padding:10px 12px;font:inherit;font-size:16px;color:#0E2A2C;background:#FFFFFF}
+.field::placeholder{color:#6F8885}
+.field:focus{outline:3px solid #0B6B72;outline-offset:1px;border-color:#0B6B72}
+label,.lb{margin:0;font-weight:700;font-size:16px}
+.opt{font-weight:400;color:#4A5E60;font-size:14px}
+.main{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;box-sizing:border-box;min-height:56px;padding:0 16px;border:0;border-radius:9999px;background:#0B6B72;color:#FFFFFF;text-decoration:none;font-family:inherit;font-weight:700;font-size:17px;cursor:pointer;text-align:center}
+a.main:hover{color:#FFFFFF;background:#08555B}
+.main.off{background:#D5DFDC;color:#4A5E60;cursor:default}
+.tlink{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 8px;font-family:inherit;font-weight:700;font-size:15px;color:#0B6B72;text-decoration:underline;background:none;border:0;cursor:pointer}
+.go{display:flex;align-items:center;justify-content:center;gap:6px;min-height:48px;padding:0 16px;box-sizing:border-box;border-radius:9999px;border:2px solid #0B6B72;background:#FFFFFF;color:#0B6B72;font-family:inherit;font-weight:700;font-size:15px;cursor:pointer;text-decoration:none}
+.go.off{border-color:#D5DFDC;color:#4A5E60;cursor:default}
+.box{margin:0;display:flex;gap:8px;align-items:flex-start;padding:12px 14px;border-radius:20px;font-size:15px;line-height:1.35}
+.box svg{flex:none;margin-top:1px}
+.bad{background:#FBE6D9;color:#7E3209;font-weight:700}
+.ok{background:#DFF5EE;color:#08555B;font-weight:700}
+.info{background:#F3F7F6;color:#0E2A2C;border:1px solid #DDE6E4}
+.back{display:flex;align-items:center;gap:4px;min-height:48px;margin:-2px 0;padding-right:12px;color:#FFFFFF;text-decoration:none;font-size:15px}
+a.back:hover{color:#FFFFFF}
+.proto{margin:0;font-size:12px;color:#A9C4C2}
+.ttl{margin:0;font-size:36px;line-height:0.9;font-weight:900;letter-spacing:-0.045em;text-transform:uppercase}
+.sub{margin:0;font-size:14px;color:#A9C4C2;line-height:1.35}
+.steps{margin:0;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#A9C4C2}
+.bar{width:26px;height:6px;border-radius:3px;background:#1C3D40;border:1px solid #6F8E8C;box-sizing:border-box}
+.bar.on{background:#8EE6C9;border-color:#8EE6C9}
+.foot{flex:none;padding:12px 16px 16px;background:#E7EEEC;display:flex;flex-direction:column;gap:4px}
+.sample{flex:none;margin-top:4px;border:2px dashed #6F8885;border-radius:20px;padding:10px 12px 12px;display:flex;flex-direction:column;gap:8px}
+.sample p{margin:0;font-size:14px;font-weight:700;color:#4A5E60}
+.item{display:flex;align-items:center;gap:10px;min-height:52px;border-top:1px solid #DDE6E4}
+.item:first-of-type{border-top:0}
+.ico{flex:none;width:44px;height:44px;border-radius:9999px;background:#E7EEEC;display:flex;align-items:center;justify-content:center}
+.tag{display:inline-block;font-size:13px;font-weight:700;padding:2px 8px;border-radius:9999px;border:1.5px solid currentColor;white-space:nowrap;color:#4A5E60}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #E7EEEC; font-family: 'Inter', system-ui, sans-serif; color: #0E2A2C; display: flex; flex-direction: column">
+  <div style="flex: none; background: #0E2A2C; color: #FFFFFF; border-radius: 0 0 28px 28px; padding: 14px 20px 22px; display: flex; flex-direction: column; gap: 10px">
+    <div style="display: flex; justify-content: space-between; align-items: center; min-height: 44px">
+      <a class="back" href="SignupCode.dc.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.back}}"></path></svg>Back</a>
+      <p class="proto">Prototype with sample data</p>
+    </div>
+    <p class="steps"><span class="bar on"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span><span style="margin-left: 4px">Set up · Step 1 of 4</span></p>
+    <h1 class="ttl" tabindex="-1" style="font-size: 36px">Your shop</h1>
+  </div>
+
+  <div style="flex: 1; overflow: auto; padding: 20px 16px 16px; display: flex; flex-direction: column; gap: 14px">
+    <div class="docket">
+      <label for="shop">Shop name</label>
+      <input id="shop" class="field" autocomplete="organization" placeholder="For example: Harbour Café" value="{{name}}" onInput="{{onName}}">
+      <sc-if value="{{nameErr}}" hint-placeholder-val="{{ false }}">
+        <p class="box bad" role="status"><span>! Enter your shop name (up to 80 characters)</span></p>
+      </sc-if>
+    </div>
+    <div class="docket">
+      <p id="plan-l" class="lb">Your plan</p>
+      <div role="group" aria-labelledby="plan-l" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+        <sc-for list="{{plans}}" as="p" hint-placeholder-count="2">
+          <button type="button" aria-pressed="{{p.pressed}}" onClick="{{p.pick}}" style="{{p.style}}">{{p.label}}</button>
+        </sc-for>
+      </div>
+      <sc-if value="{{planErr}}" hint-placeholder-val="{{ false }}">
+        <p class="box bad" role="status"><span>! Choose your plan</span></p>
+      </sc-if>
+      <p class="help">It says which on your registration. Not sure? You can change it later in What's due.</p>
+    </div>
+    <div class="docket">
+      <button type="button" aria-pressed="{{ackPressed}}" onClick="{{toggleAck}}" style="{{ackStyle}}"><span style="{{ackBox}}" aria-hidden="true">✓</span>I have read the privacy notice</button>
+      <sc-if value="{{ackErr}}" hint-placeholder-val="{{ false }}">
+        <p class="box bad" role="status"><span>! Tick the box to confirm you have read the privacy notice</span></p>
+      </sc-if>
+      <div style="display: flex; gap: 4px; flex-wrap: wrap">
+        <a class="tlink" href="#privacy" style="padding-left: 0">Privacy notice</a>
+        <span aria-hidden="true" style="align-self: center; color: #4A5E60">·</span>
+        <a class="tlink" href="#terms">Terms</a>
+      </div>
+    </div>
+    <sc-if value="{{showNet}}" hint-placeholder-val="{{ false }}">
+      <p class="box info" role="status"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0E2A2C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.info}}"></path></svg><span>You need internet to sign in</span></p>
+    </sc-if>
+    <div class="sample">
+      <p id="sample-l">Prototype only: try another sample</p>
+      <div role="group" aria-labelledby="sample-l" style="display: flex; flex-wrap: wrap; gap: 8px">
+        <sc-for list="{{samples}}" as="p" hint-placeholder-count="3">
+          <button type="button" aria-pressed="{{p.pressed}}" onClick="{{p.pick}}" style="{{p.style}}">{{p.label}}</button>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <sc-if value="{{canGo}}" hint-placeholder-val="{{ false }}">
+      <a class="main" href="SignupStaff.dc.html">Start my 30-day trial</a>
+    </sc-if>
+    <sc-if value="{{tryGo}}" hint-placeholder-val="{{ false }}">
+      <button type="button" class="main" onClick="{{submit}}">Start my 30-day trial</button>
+    </sc-if>
+    <sc-if value="{{notReady}}" hint-placeholder-val="{{ true }}">
+      <button type="button" class="main off" onClick="{{submit}}">{{offLabel}}</button>
+    </sc-if>
+    <p class="help" style="text-align: center; padding-top: 4px">30 days of everything free. No card needed.</p>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    // Crit. 7: no default plan. The name is prefilled from localShopName when it exists (crit. 17).
+    this.state = { sample: 'empty', name: '', plan: null, ack: false, tried: false };
+  }
+  renderVals() {
+    // Line icons: 24 px grid, 2 px stroke, round ends (design-system.md section 8)
+    const ic = {
+      back: 'M15 6l-6 6 6 6',
+      info: 'M12 21a9 9 0 100-18 9 9 0 000 18zM12 11v5.5M12 7.5v.5',
+      problem: 'M10.3 3.9L2.4 18a2 2 0 001.7 3h15.8a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0zM12 9v4.5M12 17v.5'
+    };
+    const chipBase = 'min-height: 48px; padding: 0 14px; border-radius: 9999px; font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer; ';
+    const mkSamples = (list, cur, pick) => list.map((d) => ({
+      label: d.label,
+      pressed: cur === d.k ? 'true' : 'false',
+      style: chipBase + (cur === d.k ? 'background: #0E2A2C; color: #FFFFFF; border: 2px solid #0E2A2C' : 'background: #FFFFFF; color: #0E2A2C; border: 2px solid #6F8885'),
+      pick: () => pick(d.k),
+    }));
+    const planBase = 'min-height: 52px; padding: 4px 8px; border-radius: 9999px; font-family: inherit; font-size: 15px; font-weight: 700; line-height: 1.15; cursor: pointer; ';
+    const mkPlans = (cur, pick) => [
+      { k: 'SSS', label: 'Food control plan' },
+      { k: 'NP2', label: 'National Programme 2' },
+    ].map((d) => ({
+      label: cur === d.k ? '✓ ' + d.label : d.label,
+      pressed: cur === d.k ? 'true' : 'false',
+      style: planBase + (cur === d.k ? 'background: #0E2A2C; color: #FFFFFF; border: 2px solid #0E2A2C' : 'background: #FFFFFF; color: #0E2A2C; border: 2px solid #6F8885'),
+      pick: () => pick(d.k),
+    }));
+    const tickRow = (on) => 'display: flex; align-items: center; gap: 12px; width: 100%; min-height: 56px; padding: 8px 14px; box-sizing: border-box; border-radius: 28px; font-family: inherit; font-size: 16px; font-weight: 700; color: #0E2A2C; text-align: left; cursor: pointer; ' + (on ? 'background: #DFF5EE; border: 2px solid #0B6B72' : 'background: #F3F7F6; border: 2px solid #F3F7F6');
+    const tickBox = (on) => 'flex: none; width: 26px; height: 26px; border-radius: 6px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 17px; ' + (on ? 'background: #0B6B72; color: #FFFFFF; border: 2px solid #0B6B72' : 'background: #FFFFFF; color: #FFFFFF; border: 2px solid #6F8885');
+    const st = this.state;
+    const free = false;
+    const n = st.name.trim();
+    const nameOk = free ? n.length <= 80 : n.length >= 1 && n.length <= 80;
+    const ready = nameOk && !!st.plan && (free || st.ack);
+    const offline = st.sample === 'offline';
+    // The disabled button says what is missing (design-system.md: Main button).
+    const offLabel = !nameOk ? 'Add your shop name' : !st.plan ? 'Choose your plan' : 'Tick the privacy box';
+    return {
+      ic,
+      name: st.name,
+      onName: (e) => this.setState({ name: e.target.value }),
+      nameErr: st.tried && !nameOk,
+      plans: mkPlans(st.plan, (k) => this.setState({ plan: k })),
+      planErr: st.tried && !st.plan,
+      ackPressed: st.ack ? 'true' : 'false',
+      ackStyle: tickRow(st.ack),
+      ackBox: tickBox(st.ack),
+      toggleAck: () => this.setState({ ack: !st.ack }),
+      ackErr: st.tried && !st.ack && !free,
+      showNet: st.tried && ready && offline,
+      canGo: ready && !offline,
+      tryGo: ready && offline,
+      notReady: !ready,
+      offLabel,
+      submit: () => this.setState({ tried: true }),
+      samples: mkSamples([{ k: 'empty', label: 'Empty' }, { k: 'filled', label: 'Filled in' }, { k: 'offline', label: 'Offline' }], st.sample,
+        (k) => this.setState(k === 'empty' ? { sample: k, name: '', plan: null, ack: false, tried: false } : { sample: k, name: 'Harbour Café', plan: 'SSS', ack: true, tried: false })),
+    };
+  }
+}
+</script>
+</body>
+</html>

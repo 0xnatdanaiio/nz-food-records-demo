@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390">
+<style>html{touch-action:manipulation}@media (min-width:520px){html,body{background:#0E2A2C}body>div>div>div[style*="width: 390px"]{margin:24px auto;border-radius:28px;overflow:hidden}}</style>
+<title>Cooking check</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#0B6B72}a:hover{color:#08555B}
+.docket{position:relative;background:#FFFFFF;border-radius:20px;padding:14px 16px}
+
+.big{width:100%;box-sizing:border-box;min-width:0;height:88px;border:2px solid #6F8885;border-radius:20px;font-size:56px;text-align:center;color:#0E2A2C;background:#FFFFFF;font-weight:900;letter-spacing:-0.04em}
+.big::placeholder{color:#A3B5B2}
+.big:focus,.txt:focus{outline:3px solid #0B6B72;outline-offset:1px;border-color:#0B6B72}
+.txt{width:100%;box-sizing:border-box;min-height:52px;border:2px solid #6F8885;border-radius:16px;padding:10px 12px;font-family:inherit;font-size:16px;color:#0E2A2C;background:#FFFFFF}
+textarea.txt{min-height:64px;resize:vertical}
+.sm{width:100%;box-sizing:border-box;min-width:0;height:56px;border:2px solid #6F8885;border-radius:16px;font-size:23px;text-align:center;color:#0E2A2C;background:#FFFFFF;font-weight:800;letter-spacing:-0.02em}
+.sm:focus{outline:3px solid #0B6B72;outline-offset:1px;border-color:#0B6B72}
+.tag{display:inline-block;font-size:13px;font-weight:700;padding:2px 8px;border-radius:9999px;border:1.5px solid currentColor;white-space:nowrap}
+.lbl{margin:0;font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px}
+.tip{display:inline-flex;align-items:center;gap:6px;min-height:48px;margin:-8px 0 -10px;padding:0;border:0;background:transparent;color:#0B6B72;font-family:inherit;font-size:15px;font-weight:700;text-decoration:underline;cursor:pointer;align-self:flex-start}
+.track{position:relative;height:28px;border-radius:20px;background:#F3F7F6;border:2px solid #6F8885;box-sizing:border-box}
+.zone{position:absolute;left:42.86%;right:0;top:0;bottom:0;background:#DFF5EE;border-left:2px solid #0B6B72;border-radius:0 9999px 9999px 0}
+.tick{position:absolute;top:0;bottom:0;width:0;border-left:2px dashed #0B6B72}
+.tl{position:absolute;top:2px;transform:translateX(-50%);font-size:13px;font-weight:700;color:#4A5E60}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #E7EEEC; font-family: 'Inter', system-ui, sans-serif; color: #0E2A2C; display: flex; flex-direction: column">
+  <div style="flex: none; background: #0E2A2C; color: #FFFFFF; border-radius: 0 0 28px 28px; padding: 14px 20px 22px; display: flex; flex-direction: column; gap: 12px">
+    <div style="display: flex; justify-content: space-between; align-items: center">
+      <a href="Main.dc.html" style="display: flex; align-items: center; gap: 4px; min-height: 48px; margin: -2px 0; padding-right: 12px; color: #FFFFFF; text-decoration: none; font-size: 15px">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.back}}"></path></svg>
+        Today
+      </a>
+      <p style="margin: 0; font-size: 12px; color: #A9C4C2">Prototype with sample data</p>
+    </div>
+    <div style="display: flex; align-items: center; gap: 10px">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#8EE6C9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.cooking}}"></path></svg>
+      <h1 style="margin: 0; font-size: 36px; line-height: 0.9; font-weight: 900; letter-spacing: -0.045em; text-transform: uppercase">Cooking check</h1>
+    </div>
+    <div role="group" aria-label="What kind of food" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+      <sc-for list="{{modes}}" as="m" hint-placeholder-count="2">
+        <button type="button" aria-pressed="{{m.pressed}}" onClick="{{m.pick}}" style="{{m.style}}">{{m.label}}</button>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="flex: 1; overflow: auto; padding: 20px 16px 16px; display: flex; flex-direction: column; gap: 16px">
+
+    <sc-if value="{{isPoultry}}" hint-placeholder-val="{{ true }}">
+      <div style="display: flex; flex-direction: column; gap: 16px">
+        <div class="docket" style="display: flex; flex-direction: column; gap: 10px">
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
+            <label for="cook-food" class="lbl">What did you cook?</label>
+            <span class="tag" style="color: #08555B">Record every batch</span>
+          </div>
+          <input id="cook-food" class="txt" autocomplete="off" value="{{pFood}}" onInput="{{onPFood}}">
+          <p style="margin: 0; font-size: 15px; color: #4A5E60">Includes sausages and burger patties.</p>
+          <div role="group" aria-label="Recent foods" style="display: flex; flex-wrap: wrap; gap: 8px">
+            <sc-for list="{{pFoods}}" as="f" hint-placeholder-count="3">
+              <button type="button" aria-pressed="{{f.pressed}}" onClick="{{f.pick}}" style="{{f.style}}">{{f.name}}</button>
+            </sc-for>
+          </div>
+          <button type="button" class="tip" aria-expanded="{{tipOpen}}" onClick="{{toggleTip}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B6B72" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.info}}"></path></svg>Thin pieces?</button>
+          <sc-if value="{{showTip}}" hint-placeholder-val="{{ false }}">
+            <p style="margin: 0; padding: 8px 10px; border-radius: 20px; background: #E7EEEC; font-size: 15px">Thin pieces, like chicken in a stir-fry, don't need a probe.</p>
+          </sc-if>
+        </div>
+
+        <div class="docket" style="display: flex; flex-direction: column; gap: 10px">
+          <h2 class="lbl">Safe at one of these</h2>
+          <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+            <sc-for list="{{rules}}" as="r" hint-placeholder-count="3">
+              <div style="{{r.style}}">
+                <p style="margin: 0; font-size: 22px; line-height: 1; font-weight: 800; letter-spacing: -0.02em">{{r.temp}}</p>
+                <p style="margin: 0; font-size: 14px">{{r.time}}</p>
+                <p style="margin: 0; font-size: 14px; font-weight: 700; min-height: 18px">{{r.mark}}</p>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div class="docket" style="display: flex; flex-direction: column; gap: 10px">
+          <label for="cook-temp" class="lbl"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B6B72" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.thermometer}}"></path></svg>Thickest part</label>
+          <div style="display: flex; align-items: center; gap: 8px">
+            <input id="cook-temp" class="big" inputmode="decimal" autocomplete="off" placeholder="0" value="{{text}}" onInput="{{onInput}}">
+            <span aria-hidden="true" style="font-size: 32px; color: #4A5E60; font-weight: 800; letter-spacing: -0.02em">°C</span>
+          </div>
+          <div aria-hidden="true" style="padding-top: 4px">
+            <div class="track">
+              <div class="zone"><span style="position: absolute; right: 6px; top: 0; bottom: 0; display: flex; align-items: center; gap: 3px; font-size: 13px; font-weight: 700; color: #08555B"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#08555B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="{{ic.clock}}"></path></svg>+ time</span></div>
+              <div class="tick" style="left: 57.14%"></div>
+              <div class="tick" style="left: 71.43%"></div>
+              <sc-if value="{{hasValue}}" hint-placeholder-val="{{ false }}">
+                <div style="{{markStyle}}"></div>
+              </sc-if>
+            </div>
+            <div style="position: relative; height: 18px">
+              <span class="tl" style="left: 42.86%">65°</span>
+              <span class="tl" style="left: 57.14%">70°</span>
+              <span class="tl" style="left: 71.43%">75°</span>
+            </div>
+          </div>
+          <h3 id="hold-label" class="lbl" style="margin-top: 2px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B6B72" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.clock}}"></path></svg>How long at that temperature?</h3>
+          <div role="group" aria-labelledby="hold-label" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px">
+            <sc-for list="{{holds}}" as="h" hint-placeholder-count="9">
+              <button type="button" aria-pressed="{{h.pressed}}" onClick="{{h.pick}}" style="{{h.style}}">{{h.label}}</button>
+            </sc-for>
+          </div>
+          <sc-if value="{{holdOther}}" hint-placeholder-val="{{ false }}">
+            <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+              <div style="display: flex; flex-direction: column; gap: 4px">
+                <label for="hold-min" style="font-weight: 700; font-size: 15px">Minutes</label>
+                <input id="hold-min" class="sm" inputmode="numeric" autocomplete="off" placeholder="0" value="{{hMin}}" onInput="{{onHMin}}">
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 4px">
+                <label for="hold-sec" style="font-weight: 700; font-size: 15px">Seconds</label>
+                <input id="hold-sec" class="sm" inputmode="numeric" autocomplete="off" placeholder="0" value="{{hSec}}" onInput="{{onHSec}}">
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{pass}}" hint-placeholder-val="{{ false }}">
+            <p role="status" style="margin: 0; padding: 10px 12px; border-radius: 28px; background: #DFF5EE; color: #08555B; font-weight: 700">✓ Safe. {{passText}}</p>
+          </sc-if>
+          <sc-if value="{{fail}}" hint-placeholder-val="{{ false }}">
+            <div style="display: flex; flex-direction: column; gap: 10px">
+              <p role="status" style="margin: 0; padding: 10px 12px; border-radius: 28px; background: #FBE6D9; color: #7E3209; font-weight: 700">! Not safe yet. {{failText}}</p>
+              <button type="button" class="tip" aria-expanded="{{probOpen}}" onClick="{{toggleProb}}">Can't cook it more? Record what you did</button>
+              <sc-if value="{{showProb}}" hint-placeholder-val="{{ false }}">
+                <div style="display: flex; flex-direction: column; gap: 8px">
+                  <h3 id="fix-label" class="lbl" style="margin-top: 4px">What did you do?</h3>
+                  <div role="group" aria-labelledby="fix-label" style="display: flex; flex-direction: column; gap: 8px">
+                    <sc-for list="{{presets}}" as="p" hint-placeholder-count="2">
+                      <button type="button" aria-pressed="{{p.pressed}}" onClick="{{p.pick}}" style="{{p.style}}">
+                        <span style="{{p.boxStyle}}" aria-hidden="true">{{p.box}}</span>
+                        <span style="flex: 1; text-align: left">{{p.label}}</span>
+                      </button>
+                    </sc-for>
+                  </div>
+                  <sc-if value="{{isOtherFix}}" hint-placeholder-val="{{ false }}">
+                    <div style="display: flex; flex-direction: column; gap: 8px">
+                      <label for="c-what" style="font-weight: 700; font-size: 15px">What did you do?</label>
+                      <textarea id="c-what" class="txt" value="{{otherWhat}}" onInput="{{onWhat}}"></textarea>
+                      <label for="c-safe" style="font-weight: 700; font-size: 15px">How did you keep the food safe?</label>
+                      <textarea id="c-safe" class="txt" value="{{otherSafe}}" onInput="{{onSafe}}"></textarea>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{hasPreset}}" hint-placeholder-val="{{ false }}">
+                    <div style="display: flex; flex-direction: column; gap: 8px">
+                      <h3 id="prev-label" class="lbl" style="font-size: 15px; color: #4A5E60">Stop it happening again? (optional)</h3>
+                      <div role="group" aria-labelledby="prev-label" style="display: flex; flex-wrap: wrap; gap: 8px">
+                        <sc-for list="{{prevent}}" as="v" hint-placeholder-count="3">
+                          <button type="button" aria-pressed="{{v.pressed}}" onClick="{{v.pick}}" style="{{v.style}}">{{v.label}}</button>
+                        </sc-for>
+                      </div>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-if>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{isOther}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 16px">
+        <div class="docket" style="display: flex; flex-direction: column; gap: 10px">
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
+            <label for="other-food" class="lbl">What did you cook?</label>
+            <span class="tag" style="color: #4A5E60">Optional record</span>
+          </div>
+          <input id="other-food" class="txt" autocomplete="off" value="{{oFood}}" onInput="{{onOFood}}">
+          <div role="group" aria-label="Recent foods" style="display: flex; flex-wrap: wrap; gap: 8px">
+            <sc-for list="{{oFoods}}" as="f" hint-placeholder-count="4">
+              <button type="button" aria-pressed="{{f.pressed}}" onClick="{{f.pick}}" style="{{f.style}}">{{f.name}}</button>
+            </sc-for>
+          </div>
+          <p style="margin: 0; font-size: 15px; color: #4A5E60">No set temperature. Keep a note only if it helps.</p>
+        </div>
+
+        <div class="docket" style="display: flex; flex-direction: column; gap: 10px">
+          <h2 class="lbl">How did you cook it?</h2>
+          <sc-for list="{{ticks}}" as="t" hint-placeholder-count="4">
+            <button type="button" aria-pressed="{{t.pressed}}" onClick="{{t.toggle}}" style="{{t.style}}">
+              <span style="{{t.boxStyle}}" aria-hidden="true">{{t.box}}</span>
+              <span style="flex: 1; text-align: left">{{t.label}}</span>
+            </button>
+          </sc-for>
+          <label for="other-note" style="margin-top: 4px; font-weight: 700; font-size: 15px">Note <span style="font-weight: 400; color: #4A5E60">(optional)</span></label>
+          <textarea id="other-note" class="txt" value="{{note}}" onInput="{{onNote}}"></textarea>
+        </div>
+      </div>
+    </sc-if>
+  </div>
+
+  <div style="padding: 12px 16px 16px; background: #E7EEEC">
+    <sc-if value="{{canSave}}" hint-placeholder-val="{{ false }}">
+      <a href="Main.dc.html" style="display: flex; align-items: center; justify-content: center; min-height: 56px; border-radius: 9999px; background: #0B6B72; color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 17px">{{saveLabel}}</a>
+    </sc-if>
+    <sc-if value="{{canSaveProblem}}" hint-placeholder-val="{{ false }}">
+      <a href="Main.dc.html" style="display: flex; align-items: center; justify-content: center; min-height: 56px; border-radius: 9999px; background: #A9440C; color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 17px">Save problem record</a>
+    </sc-if>
+    <sc-if value="{{cannotSave}}" hint-placeholder-val="{{ true }}">
+      <span style="display: flex; align-items: center; justify-content: center; min-height: 56px; border-radius: 9999px; background: #D5DFDC; color: #4A5E60; font-weight: 700; font-size: 17px">{{saveHint}}</span>
+    </sc-if>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { mode: 'poultry', pFood: 'Chicken thighs', oFood: 'Pork belly', text: '', hold: null, hMin: '', hSec: '', ticks: {}, note: '', tip: false, prob: false, preset: null, prevent: {}, otherWhat: '', otherSafe: '' };
+  }
+  renderVals() {
+    // Line icons: 24 px grid, 2 px stroke, round ends (design-system.md section 8)
+    const ic = {
+      fridge: 'M7 2.5h10a2 2 0 012 2v15a2 2 0 01-2 2H7a2 2 0 01-2-2v-15a2 2 0 012-2zM5 9.5h14M8.5 5.5v1.5M8.5 12.5v3',
+      cooking: 'M5 10.5h14v6.5a3 3 0 01-3 3H8a3 3 0 01-3-3zM3 10.5h18M10 7.5h4M2.5 13h2.5M19 13h2.5M9 3.5v1.5M12 3v2M15 3.5v1.5',
+      cooling: 'M8 14.5V5a2 2 0 014 0v9.5a3.5 3.5 0 11-4 0zM10 9.5v7M18 4v11M15.5 12.5L18 15l2.5-2.5',
+      delivery: 'M2 5.5h11v10H2zM13 8.5h4.2l3.3 3.5v3.5H13M4.5 17.5a2 2 0 104 0a2 2 0 10-4 0M14.5 17.5a2 2 0 104 0a2 2 0 10-4 0',
+      hotHold: 'M3 13h18M5 13v4.5a2 2 0 002 2h10a2 2 0 002-2V13M8 4.5c-1 1.2 1 2.3 0 3.5M12 4.5c-1 1.2 1 2.3 0 3.5M16 4.5c-1 1.2 1 2.3 0 3.5',
+      problem: 'M10.3 3.9L2.4 18a2 2 0 001.7 3h15.8a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0zM12 9v4.5M12 17v.5',
+      cleaning: 'M11 3l1.9 4.6L17.5 9.5l-4.6 1.9L11 16l-1.9-4.6L4.5 9.5l4.6-1.9zM18 14.5l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z',
+      opening: 'M5 21V4.5a1.5 1.5 0 011.5-1.5h11A1.5 1.5 0 0119 4.5V21M3 21h18M15 12v1',
+      registration: 'M6 2.5h8.5L19 7v14.5H6zM14.5 2.5V7H19M9 12h7M9 16h5',
+      recall: 'M3.5 8L12 3.5 20.5 8v8L12 20.5 3.5 16zM3.5 8L12 12.5 20.5 8M12 12.5v8',
+      verify: 'M10.5 18a7.5 7.5 0 110-15 7.5 7.5 0 010 15zM16 16l5 5M7.5 10.5l2 2 4-4',
+      training: 'M2 9l10-5 10 5-10 5zM6 11v5c0 1.6 2.7 3 6 3s6-1.4 6-3v-5M22 9v5',
+      thermometer: 'M10 14.5V5a2 2 0 014 0v9.5a3.5 3.5 0 11-4 0zM12 9.5v7',
+      plan: 'M4 4.5A1.5 1.5 0 015.5 3H20v15H5.5A1.5 1.5 0 004 19.5zM4 19.5A1.5 1.5 0 005.5 21H20M9 10.5l2 2 4-4',
+      service: 'M14.7 6.3a4 4 0 00-5.4 5.2L3.5 17.3a1.8 1.8 0 002.5 2.5l5.8-5.8a4 4 0 005.2-5.4l-2.6 2.6-2.3-.4-.4-2.3z',
+      supplier: 'M9 6h11M9 12h11M9 18h11M4.5 6h.5M4.5 12h.5M4.5 18h.5',
+      calendar: 'M5.5 5h13a2 2 0 012 2v11.5a2 2 0 01-2 2h-13a2 2 0 01-2-2V7a2 2 0 012-2zM3.5 10h17M8 3v4M16 3v4',
+      bell: 'M6 16v-5a6 6 0 0112 0v5l1.5 2h-15zM10 20.5a2 2 0 004 0',
+      clock: 'M12 21a9 9 0 100-18 9 9 0 000 18zM12 7v5l3 2',
+      check: 'M5 12l5 5L20 7',
+      download: 'M12 4v11M7 10l5 5 5-5M5 20h14',
+      link: 'M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1',
+      person: 'M12 12a4 4 0 100-8 4 4 0 000 8zM4.5 21a7.5 7.5 0 0115 0',
+      team: 'M9 11a3.5 3.5 0 100-7 3.5 3.5 0 000 7zM2.5 20a6.5 6.5 0 0113 0M16 4.3a3.5 3.5 0 010 6.4M18 13.5a6.5 6.5 0 013.5 6',
+      today: 'M4 6l1.5 1.5L8 5M4 12l1.5 1.5L8 11M4 18l1.5 1.5L8 17M11 6.5h9M11 12.5h9M11 18.5h9',
+      info: 'M12 21a9 9 0 100-18 9 9 0 000 18zM12 11v5.5M12 7.5v.5',
+      lock: 'M6 11h12v10H6zM8.5 11V7.5a3.5 3.5 0 017 0V11',
+      pay: 'M3 6h18v12H3zM3 10h18M7 14.5h3',
+      history: 'M4 12a8 8 0 102.4-5.7M4 3.5v4.5h4.5M12 8v4l2.5 2',
+      chevron: 'M9 6l6 6-6 6',
+      back: 'M15 6l-6 6 6 6',
+      plus: 'M12 5v14M5 12h14',
+      pen: 'M4 20h4L19 9a2.8 2.8 0 00-4-4L4 16zM13.5 6.5l4 4'
+    };
+    const chip = 'min-height: 48px; padding: 0 14px; border-radius: 9999px; font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer; ';
+    const on = 'background: #0E2A2C; color: #FFFFFF; border: 2px solid #0E2A2C';
+    const off = 'background: #E7EEEC; color: #0E2A2C; border: 2px solid #E7EEEC';
+    // Recent food names (spec crit. 5: up to 6 recent names of this business, newest first). Sample data.
+    const chips = (names, key) => names.map((n) => ({
+      name: n,
+      pressed: this.state[key] === n ? 'true' : 'false',
+      style: chip + (this.state[key] === n ? on : off),
+      pick: () => this.setState({ [key]: n }),
+    }));
+
+    // Mode switch (on the dark header)
+    const modeBase = 'min-height: 52px; padding: 4px 8px; border-radius: 9999px; font-family: inherit; font-size: 15px; font-weight: 700; line-height: 1.2; cursor: pointer; ';
+    const modes = [
+      { key: 'poultry', label: 'Poultry, mince, liver' },
+      { key: 'other', label: 'Other food' },
+    ].map((m) => {
+      const sel = this.state.mode === m.key;
+      return {
+        label: m.label,
+        pressed: sel ? 'true' : 'false',
+        style: modeBase + (sel ? 'background: #FFFFFF; color: #0E2A2C; border: 2px solid #FFFFFF' : 'background: transparent; color: #FFFFFF; border: 2px solid #6F8E8C'),
+        pick: () => this.setState({ mode: m.key }),
+      };
+    });
+
+    // Poultry, mince, liver: MPI time + temperature pairs (SS&S p.46, spec C1). Both inclusive.
+    const pairs = [
+      { t: 65, s: 900, temp: '65°C', time: 'for 15 min' },
+      { t: 70, s: 180, temp: '70°C', time: 'for 3 min' },
+      { t: 75, s: 30, temp: '75°C', time: 'for 30 sec' },
+    ];
+    const s = String(this.state.text).trim().replace(',', '.');
+    const n = /^\d+(\.\d)?$/.test(s) && Number(s) <= 150 ? Number(s) : null;
+    // Hold: a chip, or Other with whole minutes 0-60 and seconds 0-59 (spec crit. 3, app rule, not MPI)
+    let hold = this.state.hold;
+    if (hold === 'other') {
+      const m = String(this.state.hMin).trim();
+      const sec = String(this.state.hSec).trim();
+      const okM = m === '' || (/^\d+$/.test(m) && Number(m) <= 60);
+      const okS = sec === '' || (/^\d+$/.test(sec) && Number(sec) <= 59);
+      const total = (m === '' ? 0 : Number(m)) * 60 + (sec === '' ? 0 : Number(sec));
+      hold = (m === '' && sec === '') || !okM || !okS || total > 3600 ? null : total;
+    }
+    const met = (p) => n !== null && hold !== null && n >= p.t && hold >= p.s;
+    const metPair = pairs.find(met) || null;
+    const ruleBase = 'display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 4px 6px; border-radius: 16px; text-align: center; ';
+    const rules = pairs.map((p) => {
+      const ok = metPair === p;
+      return {
+        temp: p.temp,
+        time: p.time,
+        mark: ok ? '✓ Met' : '',
+        style: ruleBase + (ok ? 'background: #DFF5EE; color: #08555B; border: 2px solid #0B6B72' : 'background: #F3F7F6; color: #0E2A2C; border: 2px solid #F3F7F6'),
+      };
+    });
+    const holdOpts = [
+      { s: 30, label: '30 sec' }, { s: 60, label: '1 min' }, { s: 120, label: '2 min' }, { s: 180, label: '3 min' },
+      { s: 300, label: '5 min' }, { s: 600, label: '10 min' }, { s: 900, label: '15 min' }, { s: 1200, label: '20 min' },
+      { s: 'other', label: 'Other' },
+    ];
+    const holdBase = 'min-height: 48px; padding: 0 4px; border-radius: 9999px; font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer; ';
+    const holds = holdOpts.map((h) => ({
+      label: h.label,
+      pressed: this.state.hold === h.s ? 'true' : 'false',
+      style: holdBase + (this.state.hold === h.s ? on : off) + (h.s === 'other' ? '; grid-column: 1 / -1' : ''),
+      pick: () => this.setState({ hold: h.s }),
+    }));
+    // Status wording: spec crit. 6 and 7
+    const long = (sec) => (sec < 60 ? sec + ' seconds' : sec / 60 + (sec === 60 ? ' minute' : ' minutes'));
+    let failText = '';
+    if (n !== null && hold !== null && !metPair) {
+      if (n < 65) failText = 'It must reach at least 65°C. Keep cooking and check again.';
+      else {
+        const best = pairs.filter((p) => n >= p.t).pop();
+        failText = 'At ' + best.temp + ' it must stay there for ' + long(best.s) + '. Keep cooking and check again.';
+      }
+    }
+    const isPoultry = this.state.mode === 'poultry';
+    const pass = isPoultry && metPair !== null;
+    const fail = isPoultry && failText !== '';
+    // Gauge scale is display only: 50°C left, 85°C right. Shaded from 65°C, ticks at 70 and 75 (the SS&S p.46 pairs).
+    const pos = n === null ? 0 : Math.max(0, Math.min(100, ((n - 50) / 35) * 100));
+
+    // Not safe and can't cook more: one-tap presets (spec section 3 cooking problemPresets, crit. 8)
+    const rowBase = 'display: flex; align-items: center; gap: 12px; width: 100%; min-height: 56px; padding: 8px 12px; border-radius: 28px; font-family: inherit; font-size: 16px; font-weight: 700; color: #0E2A2C; cursor: pointer; ';
+    const preset = this.state.preset;
+    const presets = [{ k: 'threwOut', label: 'Threw it out' }, { k: 'other', label: 'Other' }].map((d) => {
+      const sel = preset === d.k;
+      return {
+        label: d.label,
+        pressed: sel ? 'true' : 'false',
+        box: sel ? '✓' : '',
+        boxStyle: 'flex: none; width: 28px; height: 28px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 18px; ' + (sel ? 'background: #0B6B72; color: #FFFFFF; border: 2px solid #0B6B72' : 'background: #FFFFFF; color: #FFFFFF; border: 2px solid #6F8E8C'),
+        style: rowBase + (sel ? 'background: #DFF5EE; border: 2px solid #0B6B72' : 'background: #F3F7F6; border: 2px solid #F3F7F6'),
+        pick: () => this.setState({ preset: d.k }),
+      };
+    });
+    // problemPrevent chips: spec crit. 19 (optional)
+    const prevent = ['Check the thermometer', 'Train staff', 'Service the equipment'].map((l) => {
+      const sel = !!this.state.prevent[l];
+      return {
+        label: (sel ? '✓ ' : '+ ') + l,
+        pressed: sel ? 'true' : 'false',
+        style: chip + (sel ? on : 'background: #FFFFFF; color: #0E2A2C; border: 2px solid #6F8885'),
+        pick: () => this.setState({ prevent: Object.assign({}, this.state.prevent, { [l]: !sel }) }),
+      };
+    });
+    const showProb = fail && this.state.prob;
+    const otherDone = String(this.state.otherWhat).trim() !== '' && String(this.state.otherSafe).trim() !== '';
+    const problemReady = showProb && preset !== null && (preset !== 'other' || otherDone);
+
+    // Other food: optional checklist, no pass/fail temperature (SS&S p.44). All 4 template ticks (spec section 3, crit. 10).
+    const tickDefs = [
+      { k: 'manufacturer', label: "Followed the manufacturer's instructions" },
+      { k: 'noColdSpots', label: 'Checked there are no cold spots' },
+      { k: 'porkMediumOrMore', label: 'Pork cooked to medium or well-done' },
+      { k: 'redMeatSeared', label: 'Beef, lamb or venison seared before serving' },
+    ];
+    const tickBase = 'display: flex; align-items: center; gap: 12px; width: 100%; min-height: 56px; padding: 8px 12px; border-radius: 28px; font-family: inherit; font-size: 16px; font-weight: 700; color: #0E2A2C; cursor: pointer; ';
+    const ticks = tickDefs.map((d) => {
+      const sel = !!this.state.ticks[d.k];
+      return {
+        label: d.label,
+        pressed: sel ? 'true' : 'false',
+        box: sel ? '✓' : '',
+        boxStyle: 'flex: none; width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 20px; ' + (sel ? 'background: #0B6B72; color: #FFFFFF; border: 2px solid #0B6B72' : 'background: #FFFFFF; color: #FFFFFF; border: 2px solid #6F8E8C'),
+        style: tickBase + (sel ? 'background: #DFF5EE; border: 2px solid #0B6B72' : 'background: #F3F7F6; border: 2px solid #F3F7F6'),
+        toggle: () => this.setState({ ticks: Object.assign({}, this.state.ticks, { [d.k]: !sel }) }),
+      };
+    });
+    const anyTick = tickDefs.some((d) => this.state.ticks[d.k]);
+
+    const pFoodOk = String(this.state.pFood).trim() !== '';
+    const oFoodOk = String(this.state.oFood).trim() !== '';
+    const canSave = isPoultry ? pass && pFoodOk : anyTick && oFoodOk;
+    const canSaveProblem = isPoultry && problemReady && pFoodOk;
+    let saveHint = 'Save cooking check';
+    if (isPoultry && !pFoodOk) saveHint = 'Enter the food';
+    else if (isPoultry && s !== '' && n === null) saveHint = 'Check the number';
+    else if (isPoultry && n === null) saveHint = 'Enter the temperature';
+    else if (isPoultry && hold === null) saveHint = 'Choose how long';
+    else if (isPoultry && showProb && preset === null) saveHint = 'Choose what you did';
+    else if (isPoultry && showProb && preset === 'other' && !otherDone) saveHint = 'Answer both questions';
+    else if (isPoultry) saveHint = 'Keep cooking first';
+    else if (!oFoodOk) saveHint = 'Enter the food';
+    else saveHint = 'Tick what you did';
+
+    return {
+      ic,
+      modes,
+      isPoultry,
+      isOther: !isPoultry,
+      pFood: this.state.pFood,
+      onPFood: (e) => this.setState({ pFood: e.target.value }),
+      oFood: this.state.oFood,
+      onOFood: (e) => this.setState({ oFood: e.target.value }),
+      pFoods: chips(['Chicken thighs', 'Beef mince patties', 'Chicken livers'], 'pFood'),
+      oFoods: chips(['Pork belly', 'Beef steak', 'Vege lasagne'], 'oFood'),
+      rules,
+      holds,
+      holdOther: this.state.hold === 'other',
+      hMin: this.state.hMin,
+      hSec: this.state.hSec,
+      onHMin: (e) => this.setState({ hMin: e.target.value }),
+      onHSec: (e) => this.setState({ hSec: e.target.value }),
+      text: this.state.text,
+      onInput: (e) => this.setState({ text: e.target.value }),
+      hasValue: n !== null,
+      markStyle: 'position: absolute; top: -8px; bottom: -8px; width: 6px; margin-left: -3px; border-radius: 3px; background: #0E2A2C; border: 2px solid #FFFFFF; box-sizing: content-box; left: ' + pos + '%',
+      pass,
+      fail,
+      passText: metPair ? 'Meets ' + metPair.temp + ' for ' + long(metPair.s) + '.' : '',
+      failText,
+      showProb,
+      probOpen: this.state.prob ? 'true' : 'false',
+      toggleProb: () => this.setState({ prob: !this.state.prob }),
+      presets,
+      prevent,
+      isOtherFix: showProb && preset === 'other',
+      hasPreset: showProb && preset !== null,
+      otherWhat: this.state.otherWhat,
+      otherSafe: this.state.otherSafe,
+      onWhat: (e) => this.setState({ otherWhat: e.target.value }),
+      onSafe: (e) => this.setState({ otherSafe: e.target.value }),
+      ticks,
+      note: this.state.note,
+      onNote: (e) => this.setState({ note: e.target.value }),
+      canSave,
+      canSaveProblem,
+      cannotSave: !canSave && !canSaveProblem,
+      saveLabel: isPoultry ? 'Save cooking check' : 'Save cooking note',
+      saveHint,
+      showTip: this.state.tip,
+      tipOpen: this.state.tip ? 'true' : 'false',
+      toggleTip: () => this.setState({ tip: !this.state.tip }),
+    };
+  }
+}
+</script>
+</body>
+</html>

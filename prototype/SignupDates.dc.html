@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390">
+<style>html{touch-action:manipulation}@media (min-width:520px){html,body{background:#0E2A2C}body>div>div>div[style*="width: 390px"]{margin:24px auto;border-radius:28px;overflow:hidden}}</style>
+<title>SousMate – Your registration and verification (setup)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#0B6B72}a:hover{color:#08555B}
+.docket{flex:none;position:relative;background:#FFFFFF;border-radius:20px;padding:16px}
+
+.help{margin:0;font-size:14px;color:#4A5E60;line-height:1.35}
+.field{width:100%;box-sizing:border-box;min-height:52px;border:2px solid #6F8885;border-radius:16px;padding:10px 12px;font:inherit;font-size:16px;color:#0E2A2C;background:#FFFFFF}
+.field::placeholder{color:#6F8885}
+.field:focus{outline:3px solid #0B6B72;outline-offset:1px;border-color:#0B6B72}
+.datebtn{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;box-sizing:border-box;min-height:52px;border:2px solid #6F8885;border-radius:16px;padding:10px 12px;font:inherit;font-size:16px;background:#FFFFFF;text-align:left;cursor:pointer}
+.datebtn:focus-visible{outline:3px solid #0B6B72;outline-offset:1px;border-color:#0B6B72}
+.guide{margin:0;padding:10px 12px;border-radius:20px;background:#E7EEEC;font-size:14px;line-height:1.4}
+.guide b{display:block;margin-bottom:2px}
+.src{display:block;margin-top:4px;font-size:13px;color:#4A5E60}
+.tag{display:inline-block;font-size:13px;font-weight:700;padding:2px 8px;border-radius:9999px;border:1.5px solid currentColor;white-space:nowrap}
+.go{display:flex;align-items:center;justify-content:center;gap:6px;min-height:48px;border-radius:9999px;border:2px solid #0B6B72;background:#FFFFFF;color:#0B6B72;font-family:inherit;font-weight:700;font-size:15px;cursor:pointer}
+label,.lb{margin:0;font-weight:700;font-size:16px}
+.opt{font-weight:400;color:#4A5E60;font-size:14px}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #E7EEEC; font-family: 'Inter', system-ui, sans-serif; color: #0E2A2C; display: flex; flex-direction: column">
+  <div style="flex: none; background: #0E2A2C; color: #FFFFFF; border-radius: 0 0 28px 28px; padding: 14px 20px 24px; display: flex; flex-direction: column; gap: 10px">
+    <div style="display: flex; justify-content: space-between; align-items: center">
+      <a href="SignupUnits.dc.html" style="display: flex; align-items: center; gap: 4px; min-height: 48px; margin: -2px 0; padding-right: 12px; color: #FFFFFF; text-decoration: none; font-size: 15px">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.back}}"></path></svg>
+        Back
+      </a>
+      <p style="margin: 0; font-size: 12px; color: #A9C4C2">Prototype with sample data</p>
+    </div>
+    <p style="margin: 0; display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #A9C4C2"><span style="width: 26px; height: 6px; border-radius: 3px; background: #8EE6C9"></span><span style="width: 26px; height: 6px; border-radius: 3px; background: #8EE6C9"></span><span style="width: 26px; height: 6px; border-radius: 3px; background: #8EE6C9"></span><span style="width: 26px; height: 6px; border-radius: 3px; background: #8EE6C9"></span><span style="margin-left: 4px">Set up · Step 4 of 4</span></p>
+    <h1 tabindex="-1" style="margin: 0; font-size: 30px; line-height: 0.92; font-weight: 900; letter-spacing: -0.045em; text-transform: uppercase">Your registration and verification</h1>
+    <p style="margin: 0; font-size: 14px; color: #A9C4C2">New business? Add these when you have them. You can come back later.</p>
+    <p id="plan-l" style="margin: 2px 0 -2px; font-size: 14px; font-weight: 700">Your plan</p>
+    <div role="group" aria-labelledby="plan-l" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+      <sc-for list="{{plans}}" as="p" hint-placeholder-count="2">
+        <button type="button" aria-pressed="{{p.pressed}}" onClick="{{p.pick}}" style="{{p.style}}">{{p.label}}</button>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="flex: 1; overflow: auto; padding: 22px 16px 16px; display: flex; flex-direction: column; gap: 18px">
+    <div class="docket" style="display: flex; flex-direction: column; gap: 10px">
+      <h2 style="margin: 0; font-size: 18px; line-height: 1.1; font-weight: 700; letter-spacing: -0.01em">1. Registration</h2>
+      <label for="council">Who you registered with</label>
+      <input id="council" class="field" placeholder="For example: your district council">
+      <label for="regon">Date you registered <span class="opt">(optional)</span></label>
+      <button type="button" id="regon" class="datebtn" onClick="{{setRegOn}}" style="{{regOnStyle}}">{{regOnText}}<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B6B72" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.calendar}}"></path></svg></button>
+      <label for="regend">End date on your registration</label>
+      <button type="button" id="regend" class="datebtn" onClick="{{setEnd}}" style="{{endStyle}}">{{endText}}<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B6B72" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.calendar}}"></path></svg></button>
+      <sc-if value="{{canPrefill}}" hint-placeholder-val="{{ false }}">
+        <button type="button" class="go" onClick="{{prefill}}">{{prefillLabel}}</button>
+      </sc-if>
+      <sc-if value="{{isEstimated}}" hint-placeholder-val="{{ false }}">
+        <p class="help" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap"><span class="tag" style="color: #0E2A2C">Estimated</span>Check the date on your registration.</p>
+      </sc-if>
+      <p class="help">Both dates are on the registration your council sent you.</p>
+    </div>
+
+    <div class="docket" style="display: flex; flex-direction: column; gap: 10px">
+      <h2 style="margin: 0; font-size: 18px; line-height: 1.1; font-weight: 700; letter-spacing: -0.01em">2. First verification</h2>
+      <p id="fv-l" class="lb">Have you had your first verification?</p>
+      <div role="group" aria-labelledby="fv-l" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+        <button type="button" aria-pressed="{{yesPressed}}" onClick="{{pickYes}}" style="{{yesStyle}}">{{yesText}}</button>
+        <button type="button" aria-pressed="{{noPressed}}" onClick="{{pickNo}}" style="{{noStyle}}">{{noText}}</button>
+      </div>
+      <sc-if value="{{firstNo}}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <p class="guide"><b>{{deadline}}</b>A new business must be verified within 6 weeks after registering. You book it. If you can't make it, ask your council for more time at least 2 weeks before the deadline.<span class="src">Food Regulations 2015 r 88(1)(b), r 94A; Simply Safe &amp; Suitable p.16</span></p>
+          <label for="booked">Booked a visit? Next visit, from your verifier <span class="opt">(optional)</span></label>
+          <button type="button" id="booked" class="datebtn" style="color: #4A5E60">Choose a date<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B6B72" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.calendar}}"></path></svg></button>
+        </div>
+      </sc-if>
+      <sc-if value="{{firstYes}}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <label for="lastv">Last visit</label>
+          <button type="button" id="lastv" class="datebtn" style="color: #4A5E60">Choose a date<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B6B72" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.calendar}}"></path></svg></button>
+          <p class="help">Then add the next date your verifier gave you on Your dates.</p>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+
+  <div style="padding: 12px 16px 16px; background: #E7EEEC; display: flex; flex-direction: column; gap: 4px">
+    <sc-if value="{{canSave}}" hint-placeholder-val="{{ false }}">
+      <a href="SignupDone.dc.html" style="display: flex; align-items: center; justify-content: center; min-height: 56px; border-radius: 9999px; background: #0B6B72; color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 17px">Save dates</a>
+    </sc-if>
+    <sc-if value="{{cannotSave}}" hint-placeholder-val="{{ true }}">
+      <span style="display: flex; align-items: center; justify-content: center; min-height: 56px; border-radius: 9999px; background: #D5DFDC; color: #4A5E60; font-weight: 700; font-size: 17px">Add the end date to save</span>
+    </sc-if>
+    <a href="SignupDone.dc.html" style="display: flex; align-items: center; justify-content: center; min-height: 48px; font-weight: 700; font-size: 15px">Skip for now</a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    // Setup step (shop-signup crit. 11): the #due-new form unchanged; plan already chosen on Your shop.
+    // Sample: tap "Date you registered" to fill Thursday 1 October 2026.
+    this.state = { plan: 'fcp', regOn: false, end: null, first: null };
+  }
+  renderVals() {
+    // Line icons: 24 px grid, 2 px stroke, round ends (design-system.md section 8)
+    const ic = {
+      fridge: 'M7 2.5h10a2 2 0 012 2v15a2 2 0 01-2 2H7a2 2 0 01-2-2v-15a2 2 0 012-2zM5 9.5h14M8.5 5.5v1.5M8.5 12.5v3',
+      cooking: 'M5 10.5h14v6.5a3 3 0 01-3 3H8a3 3 0 01-3-3zM3 10.5h18M10 7.5h4M2.5 13h2.5M19 13h2.5M9 3.5v1.5M12 3v2M15 3.5v1.5',
+      cooling: 'M8 14.5V5a2 2 0 014 0v9.5a3.5 3.5 0 11-4 0zM10 9.5v7M18 4v11M15.5 12.5L18 15l2.5-2.5',
+      delivery: 'M2 5.5h11v10H2zM13 8.5h4.2l3.3 3.5v3.5H13M4.5 17.5a2 2 0 104 0a2 2 0 10-4 0M14.5 17.5a2 2 0 104 0a2 2 0 10-4 0',
+      hotHold: 'M3 13h18M5 13v4.5a2 2 0 002 2h10a2 2 0 002-2V13M8 4.5c-1 1.2 1 2.3 0 3.5M12 4.5c-1 1.2 1 2.3 0 3.5M16 4.5c-1 1.2 1 2.3 0 3.5',
+      problem: 'M10.3 3.9L2.4 18a2 2 0 001.7 3h15.8a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0zM12 9v4.5M12 17v.5',
+      cleaning: 'M11 3l1.9 4.6L17.5 9.5l-4.6 1.9L11 16l-1.9-4.6L4.5 9.5l4.6-1.9zM18 14.5l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z',
+      opening: 'M5 21V4.5a1.5 1.5 0 011.5-1.5h11A1.5 1.5 0 0119 4.5V21M3 21h18M15 12v1',
+      registration: 'M6 2.5h8.5L19 7v14.5H6zM14.5 2.5V7H19M9 12h7M9 16h5',
+      recall: 'M3.5 8L12 3.5 20.5 8v8L12 20.5 3.5 16zM3.5 8L12 12.5 20.5 8M12 12.5v8',
+      verify: 'M10.5 18a7.5 7.5 0 110-15 7.5 7.5 0 010 15zM16 16l5 5M7.5 10.5l2 2 4-4',
+      training: 'M2 9l10-5 10 5-10 5zM6 11v5c0 1.6 2.7 3 6 3s6-1.4 6-3v-5M22 9v5',
+      thermometer: 'M10 14.5V5a2 2 0 014 0v9.5a3.5 3.5 0 11-4 0zM12 9.5v7',
+      plan: 'M4 4.5A1.5 1.5 0 015.5 3H20v15H5.5A1.5 1.5 0 004 19.5zM4 19.5A1.5 1.5 0 005.5 21H20M9 10.5l2 2 4-4',
+      service: 'M14.7 6.3a4 4 0 00-5.4 5.2L3.5 17.3a1.8 1.8 0 002.5 2.5l5.8-5.8a4 4 0 005.2-5.4l-2.6 2.6-2.3-.4-.4-2.3z',
+      supplier: 'M9 6h11M9 12h11M9 18h11M4.5 6h.5M4.5 12h.5M4.5 18h.5',
+      calendar: 'M5.5 5h13a2 2 0 012 2v11.5a2 2 0 01-2 2h-13a2 2 0 01-2-2V7a2 2 0 012-2zM3.5 10h17M8 3v4M16 3v4',
+      bell: 'M6 16v-5a6 6 0 0112 0v5l1.5 2h-15zM10 20.5a2 2 0 004 0',
+      clock: 'M12 21a9 9 0 100-18 9 9 0 000 18zM12 7v5l3 2',
+      check: 'M5 12l5 5L20 7',
+      download: 'M12 4v11M7 10l5 5 5-5M5 20h14',
+      link: 'M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1',
+      person: 'M12 12a4 4 0 100-8 4 4 0 000 8zM4.5 21a7.5 7.5 0 0115 0',
+      team: 'M9 11a3.5 3.5 0 100-7 3.5 3.5 0 000 7zM2.5 20a6.5 6.5 0 0113 0M16 4.3a3.5 3.5 0 010 6.4M18 13.5a6.5 6.5 0 013.5 6',
+      today: 'M4 6l1.5 1.5L8 5M4 12l1.5 1.5L8 11M4 18l1.5 1.5L8 17M11 6.5h9M11 12.5h9M11 18.5h9',
+      info: 'M12 21a9 9 0 100-18 9 9 0 000 18zM12 11v5.5M12 7.5v.5',
+      lock: 'M6 11h12v10H6zM8.5 11V7.5a3.5 3.5 0 017 0V11',
+      pay: 'M3 6h18v12H3zM3 10h18M7 14.5h3',
+      history: 'M4 12a8 8 0 102.4-5.7M4 3.5v4.5h4.5M12 8v4l2.5 2',
+      chevron: 'M9 6l6 6-6 6',
+      back: 'M15 6l-6 6 6 6',
+      plus: 'M12 5v14M5 12h14',
+      pen: 'M4 20h4L19 9a2.8 2.8 0 00-4-4L4 16zM13.5 6.5l4 4',
+      settings: 'M4 7h9M17 7h3M13 7a2 2 0 104 0a2 2 0 10-4 0M4 17h3M11 17h9M7 17a2 2 0 104 0a2 2 0 10-4 0'
+    };
+    const st = this.state;
+    const fcp = st.plan === 'fcp';
+    const base = 'min-height: 48px; padding: 4px 6px; border-radius: 9999px; font-family: inherit; font-size: 14px; font-weight: 700; line-height: 1.15; cursor: pointer; ';
+    const plans = [
+      { k: 'fcp', label: 'Food control plan' },
+      { k: 'np2', label: 'National Programme 2' },
+    ].map((d) => {
+      const on = st.plan === d.k;
+      return {
+        label: d.label,
+        pressed: on ? 'true' : 'false',
+        style: base + (on ? 'background: #FFFFFF; color: #0E2A2C; border: 2px solid #FFFFFF' : 'background: transparent; color: #FFFFFF; border: 2px solid #6F8E8C'),
+        pick: () => this.setState({ plan: d.k, end: st.end === 'est' ? null : st.end }),
+      };
+    });
+    // Pre-fill (crit. 14, A4, A2): only for the first registration record; 12 months (NP2: 24) after
+    // the registration date, month ends rounded down. Stored as "estimated" until the owner checks it.
+    const estText = fcp ? 'Friday 1 October 2027' : 'Sunday 1 October 2028';
+    const yn = 'min-height: 48px; border-radius: 9999px; font-family: inherit; font-size: 16px; font-weight: 700; cursor: pointer; ';
+    const on = 'background: #0E2A2C; color: #FFFFFF; border: 2px solid #0E2A2C';
+    const off = 'background: #FFFFFF; color: #0E2A2C; border: 2px solid #6F8885';
+    const filled = 'color: #0E2A2C';
+    const empty = 'color: #4A5E60';
+    return {
+      ic,
+      plans,
+      regOnText: st.regOn ? 'Thursday 1 October 2026' : 'Choose a date',
+      regOnStyle: st.regOn ? filled : empty,
+      setRegOn: () => this.setState({ regOn: true }),
+      endText: st.end ? (st.end === 'est' ? estText : 'Friday 1 October 2027') : 'Choose a date',
+      endStyle: st.end ? filled : empty,
+      setEnd: () => this.setState({ end: 'entered' }),
+      canPrefill: st.regOn && !st.end,
+      prefillLabel: fcp ? 'Use 12 months after registering' : 'Use 24 months after registering',
+      prefill: () => this.setState({ end: 'est' }),
+      isEstimated: st.end === 'est',
+      yesPressed: st.first === 'yes' ? 'true' : 'false',
+      noPressed: st.first === 'no' ? 'true' : 'false',
+      yesText: st.first === 'yes' ? '✓ Yes' : 'Yes',
+      noText: st.first === 'no' ? '✓ No' : 'No',
+      yesStyle: yn + (st.first === 'yes' ? on : off),
+      noStyle: yn + (st.first === 'no' ? on : off),
+      pickYes: () => this.setState({ first: 'yes' }),
+      pickNo: () => this.setState({ first: 'no' }),
+      firstNo: st.first === 'no',
+      firstYes: st.first === 'yes',
+      // Deadline = registration date + 42 days (law, crit. 26); shown only when the registration date is known.
+      deadline: st.regOn ? 'Book it by Thursday 12 November 2026' : 'Within 6 weeks of registering',
+      canSave: !!st.end,
+      cannotSave: !st.end,
+    };
+  }
+}
+</script>
+</body>
+</html>

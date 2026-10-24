@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390">
+<style>html{touch-action:manipulation}@media (min-width:520px){html,body{background:#0E2A2C}body>div>div>div[style*="width: 390px"]{margin:24px auto;border-radius:28px;overflow:hidden}}</style>
+<title>Staff training</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#0B6B72}a:hover{color:#08555B}
+.docket{position:relative;background:#FFFFFF;border-radius:20px;padding:14px 16px}
+
+.help{margin:0;font-size:14px;color:#4A5E60;line-height:1.35}
+.why{flex:none;min-width:48px;min-height:48px;margin:-12px -8px -12px 0;padding:0 8px;border:0;background:transparent;font-family:inherit;font-size:15px;font-weight:700;color:#0B6B72;text-decoration:underline;cursor:pointer}
+.whybox{margin:4px 0 6px;padding:10px 12px;border-radius:20px;background:#E7EEEC;font-size:14px;line-height:1.4}
+.src{display:block;margin-top:4px;font-size:13px;color:#4A5E60}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #E7EEEC; font-family: 'Inter', system-ui, sans-serif; color: #0E2A2C; display: flex; flex-direction: column">
+  <div style="flex: none; background: #0E2A2C; color: #FFFFFF; border-radius: 0 0 28px 28px; padding: 14px 20px 24px; display: flex; flex-direction: column; gap: 12px">
+    <div style="display: flex; justify-content: space-between; align-items: center">
+      <a href="Due.dc.html" style="display: flex; align-items: center; gap: 4px; min-height: 48px; margin: -2px 0; padding-right: 12px; color: #FFFFFF; text-decoration: none; font-size: 15px">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.back}}"></path></svg>
+        What's due
+      </a>
+      <p style="margin: 0; font-size: 12px; color: #A9C4C2">Prototype with sample data</p>
+    </div>
+    <div style="display: flex; align-items: center; gap: 10px">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#8EE6C9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.training}}"></path></svg>
+      <h1 style="margin: 0; font-size: 36px; line-height: 0.9; font-weight: 900; letter-spacing: -0.045em; text-transform: uppercase">Staff training</h1>
+    </div>
+    <div role="group" aria-label="Staff member" style="display: flex; flex-wrap: wrap; gap: 8px">
+      <sc-for list="{{people}}" as="p" hint-placeholder-count="3">
+        <button type="button" aria-pressed="{{p.pressed}}" onClick="{{p.pick}}" style="{{p.style}}">{{p.name}}</button>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="flex: 1; overflow: auto; padding: 20px 16px 16px; display: flex; flex-direction: column; gap: 16px">
+    <div class="docket" style="display: flex; align-items: center; gap: 14px">
+      <div style="position: relative; width: 76px; height: 76px; flex: none">
+        <svg width="76" height="76" viewBox="0 0 76 76" aria-hidden="true" style="display: block">
+          <circle cx="38" cy="38" r="32" fill="none" stroke="#E7EEEC" stroke-width="9"></circle>
+          <circle cx="38" cy="38" r="32" fill="none" stroke="#0B6B72" stroke-width="9" stroke-dasharray="{{ringDash}}" transform="rotate(-90 38 38)"></circle>
+        </svg>
+        <div aria-hidden="true" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; letter-spacing: -0.01em">{{ringText}}</div>
+      </div>
+      <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+        <p style="margin: 0; font-size: 20px; line-height: 1.1; font-weight: 800; letter-spacing: -0.02em">{{name}}</p>
+        <p class="help">{{job}}</p>
+        <p style="{{statusStyle}}" role="status">{{status}}</p>
+      </div>
+    </div>
+
+    <div class="docket" style="display: flex; flex-direction: column; gap: 0">
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px">
+        <h2 style="margin: 0; font-size: 16px; flex: 1">Parts of your plan</h2>
+        <button type="button" class="why" aria-expanded="{{whyOpen}}" onClick="{{toggleWhy}}">Why?</button>
+      </div>
+      <sc-if value="{{showWhy}}" hint-placeholder-val="{{ false }}">
+        <p class="whybox">The 9 topics from Simply Safe &amp; Suitable. Staff only need the ones for their job.<span class="src">Simply Safe &amp; Suitable pp.21-22</span></p>
+      </sc-if>
+      <sc-for list="{{topics}}" as="t" hint-placeholder-count="9">
+        <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid #DDE6E4">
+          <span style="{{t.markStyle}}" aria-hidden="true">{{t.mark}}</span>
+          <p style="margin: 0; font-size: 15px; font-weight: 700; flex: 1">{{t.label}}</p>
+          <p style="{{t.stateStyle}}">{{t.state}}</p>
+        </div>
+      </sc-for>
+      <a href="StaffTraining.dc.html" style="display: flex; align-items: center; min-height: 48px; font-weight: 700; font-size: 15px; border-top: 1px solid #DDE6E4">Change topics for this job</a>
+    </div>
+
+    <h2 style="margin: 4px 0 0; font-size: 16px; color: #4A5E60">Training records</h2>
+    <sc-if value="{{noRecords}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 8px; border: 2px dashed #6F8885; border-radius: 20px">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#4A5E60" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.training}}"></path></svg>
+        <p style="margin: 0; font-size: 15px; color: #4A5E60">No records yet</p>
+      </div>
+    </sc-if>
+    <sc-for list="{{records}}" as="r" hint-placeholder-count="2">
+      <div class="docket" style="display: flex; flex-direction: column; gap: 6px">
+        <p style="margin: 0; font-size: 18px; line-height: 1.1; font-weight: 700; letter-spacing: -0.01em">{{r.date}}</p>
+        <p style="margin: 0; font-size: 15px">{{r.topics}}</p>
+        <p class="help">{{r.how}}</p>
+        <p style="margin: 2px 0 0; font-size: 14px; color: #08555B; font-weight: 700">{{r.signed}}</p>
+      </div>
+    </sc-for>
+    <p class="help" style="display: flex; align-items: center; gap: 8px; padding: 0 2px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4A5E60" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="{{ic.lock}}"></path></svg>Can't be deleted. Fixes are added as linked notes.</p>
+  </div>
+
+  <div style="padding: 12px 16px 16px; background: #E7EEEC">
+    <a href="TrainingAdd.dc.html" style="display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 56px; border-radius: 9999px; background: #0B6B72; color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 17px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.plus}}"></path></svg>{{addLabel}}</a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { who: 'Arjun', why: false };
+  }
+  renderVals() {
+    // Line icons: 24 px grid, 2 px stroke, round ends (design-system.md section 8)
+    const ic = {
+      fridge: 'M7 2.5h10a2 2 0 012 2v15a2 2 0 01-2 2H7a2 2 0 01-2-2v-15a2 2 0 012-2zM5 9.5h14M8.5 5.5v1.5M8.5 12.5v3',
+      cooking: 'M5 10.5h14v6.5a3 3 0 01-3 3H8a3 3 0 01-3-3zM3 10.5h18M10 7.5h4M2.5 13h2.5M19 13h2.5M9 3.5v1.5M12 3v2M15 3.5v1.5',
+      cooling: 'M8 14.5V5a2 2 0 014 0v9.5a3.5 3.5 0 11-4 0zM10 9.5v7M18 4v11M15.5 12.5L18 15l2.5-2.5',
+      delivery: 'M2 5.5h11v10H2zM13 8.5h4.2l3.3 3.5v3.5H13M4.5 17.5a2 2 0 104 0a2 2 0 10-4 0M14.5 17.5a2 2 0 104 0a2 2 0 10-4 0',
+      hotHold: 'M3 13h18M5 13v4.5a2 2 0 002 2h10a2 2 0 002-2V13M8 4.5c-1 1.2 1 2.3 0 3.5M12 4.5c-1 1.2 1 2.3 0 3.5M16 4.5c-1 1.2 1 2.3 0 3.5',
+      problem: 'M10.3 3.9L2.4 18a2 2 0 001.7 3h15.8a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0zM12 9v4.5M12 17v.5',
+      cleaning: 'M11 3l1.9 4.6L17.5 9.5l-4.6 1.9L11 16l-1.9-4.6L4.5 9.5l4.6-1.9zM18 14.5l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z',
+      opening: 'M5 21V4.5a1.5 1.5 0 011.5-1.5h11A1.5 1.5 0 0119 4.5V21M3 21h18M15 12v1',
+      registration: 'M6 2.5h8.5L19 7v14.5H6zM14.5 2.5V7H19M9 12h7M9 16h5',
+      recall: 'M3.5 8L12 3.5 20.5 8v8L12 20.5 3.5 16zM3.5 8L12 12.5 20.5 8M12 12.5v8',
+      verify: 'M10.5 18a7.5 7.5 0 110-15 7.5 7.5 0 010 15zM16 16l5 5M7.5 10.5l2 2 4-4',
+      training: 'M2 9l10-5 10 5-10 5zM6 11v5c0 1.6 2.7 3 6 3s6-1.4 6-3v-5M22 9v5',
+      thermometer: 'M10 14.5V5a2 2 0 014 0v9.5a3.5 3.5 0 11-4 0zM12 9.5v7',
+      plan: 'M4 4.5A1.5 1.5 0 015.5 3H20v15H5.5A1.5 1.5 0 004 19.5zM4 19.5A1.5 1.5 0 005.5 21H20M9 10.5l2 2 4-4',
+      service: 'M14.7 6.3a4 4 0 00-5.4 5.2L3.5 17.3a1.8 1.8 0 002.5 2.5l5.8-5.8a4 4 0 005.2-5.4l-2.6 2.6-2.3-.4-.4-2.3z',
+      supplier: 'M9 6h11M9 12h11M9 18h11M4.5 6h.5M4.5 12h.5M4.5 18h.5',
+      calendar: 'M5.5 5h13a2 2 0 012 2v11.5a2 2 0 01-2 2h-13a2 2 0 01-2-2V7a2 2 0 012-2zM3.5 10h17M8 3v4M16 3v4',
+      bell: 'M6 16v-5a6 6 0 0112 0v5l1.5 2h-15zM10 20.5a2 2 0 004 0',
+      clock: 'M12 21a9 9 0 100-18 9 9 0 000 18zM12 7v5l3 2',
+      check: 'M5 12l5 5L20 7',
+      download: 'M12 4v11M7 10l5 5 5-5M5 20h14',
+      link: 'M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1',
+      person: 'M12 12a4 4 0 100-8 4 4 0 000 8zM4.5 21a7.5 7.5 0 0115 0',
+      team: 'M9 11a3.5 3.5 0 100-7 3.5 3.5 0 000 7zM2.5 20a6.5 6.5 0 0113 0M16 4.3a3.5 3.5 0 010 6.4M18 13.5a6.5 6.5 0 013.5 6',
+      today: 'M4 6l1.5 1.5L8 5M4 12l1.5 1.5L8 11M4 18l1.5 1.5L8 17M11 6.5h9M11 12.5h9M11 18.5h9',
+      info: 'M12 21a9 9 0 100-18 9 9 0 000 18zM12 11v5.5M12 7.5v.5',
+      lock: 'M6 11h12v10H6zM8.5 11V7.5a3.5 3.5 0 017 0V11',
+      pay: 'M3 6h18v12H3zM3 10h18M7 14.5h3',
+      history: 'M4 12a8 8 0 102.4-5.7M4 3.5v4.5h4.5M12 8v4l2.5 2',
+      chevron: 'M9 6l6 6-6 6',
+      back: 'M15 6l-6 6 6 6',
+      plus: 'M12 5v14M5 12h14',
+      pen: 'M4 20h4L19 9a2.8 2.8 0 00-4-4L4 16zM13.5 6.5l4 4'
+    };
+    // Topic labels from templates/nz/training.json topicSets.SSS (Simply Safe & Suitable p.22).
+    const topicNames = [
+      'Health and hygiene',
+      'High-risk foods',
+      'Cleaning and sanitising',
+      'Sourcing and receiving food',
+      'Keeping foods separate',
+      'Your own procedures',
+      'Customer complaints',
+      'When something goes wrong',
+      'Food recalls',
+    ];
+    // Order (crit. 4): no training first, then fewest topics covered, then complete; ties A-Z.
+    const all9 = { 0: '12 Jan 2026', 1: '12 Jan 2026', 2: '12 Jan 2026', 3: '12 Jan 2026', 4: '12 Jan 2026', 5: '12 Jan 2026', 6: '12 Jan 2026', 7: '12 Jan 2026', 8: '12 Jan 2026' };
+    const staff = {
+      Somchai: {
+        job: 'Kitchen hand',
+        status: '! No training yet. Train before they handle food.',
+        warn: true,
+        done: {}, notNeeded: {},
+        records: [],
+      },
+      Arjun: {
+        job: 'Cook',
+        status: '7 of 9 topics',
+        warn: false,
+        done: { 0: '19 Feb 2026', 1: '19 Feb 2026', 2: '19 Feb 2026', 4: '19 Feb 2026', 3: '2 Jun 2026', 5: '2 Jun 2026', 7: '2 Jun 2026' },
+        notNeeded: {},
+        records: [
+          { date: 'Tuesday 2 June 2026', topics: 'Sourcing and receiving food, Your own procedures, When something goes wrong', how: 'Showed him the delivery check and the problem record, then watched him do both.', signed: '✓ Arjun and Mia (trainer) confirmed' },
+          { date: 'Thursday 19 February 2026', topics: 'Health and hygiene, High-risk foods, Cleaning and sanitising, Keeping foods separate', how: 'First shift, before he handled food. Walked through the kitchen and the cooking check.', signed: '✓ Arjun and Mia (trainer) confirmed' },
+        ],
+      },
+      Hana: {
+        job: 'Barista',
+        status: '✓ All topics for their job',
+        warn: false,
+        done: { 0: '6 Aug 2026', 2: '6 Aug 2026', 3: '3 Sep 2026', 4: '6 Aug 2026', 6: '3 Sep 2026', 7: '3 Sep 2026', 8: '3 Sep 2026' },
+        notNeeded: { 1: true, 5: true },
+        records: [
+          { date: 'Thursday 3 September 2026', topics: 'Sourcing and receiving food, Customer complaints, When something goes wrong, Food recalls', how: 'Talked it through at the counter.', signed: '✓ Hana and Mia (trainer) confirmed' },
+          { date: 'Thursday 6 August 2026', topics: 'Health and hygiene, Cleaning and sanitising, Keeping foods separate', how: 'First shift. Milk jugs, allergens on the cabinet labels.', signed: '✓ Hana and Mia (trainer) confirmed' },
+        ],
+      },
+      Mia: {
+        job: 'Owner',
+        status: '✓ All topics for their job',
+        warn: false,
+        done: all9,
+        notNeeded: {},
+        records: [
+          { date: 'Monday 12 January 2026', topics: 'All 9 topics', how: 'Online food safety course. Certificate 20-4471 is in the office folder.', signed: '✓ Mia confirmed · Trainer: Online course (not on your team: the note is the evidence)' },
+        ],
+      },
+    };
+    const who = this.state.who;
+    const s = staff[who];
+    const base = 'min-height: 48px; padding: 0 18px; border-radius: 9999px; font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer; ';
+    const people = Object.keys(staff).map((n) => {
+      const on = n === who;
+      return {
+        name: n,
+        pressed: on ? 'true' : 'false',
+        style: base + (on ? 'background: #FFFFFF; color: #0E2A2C; border: 2px solid #FFFFFF' : 'background: transparent; color: #FFFFFF; border: 2px solid #6F8E8C'),
+        pick: () => this.setState({ who: n }),
+      };
+    });
+    const markBase = 'flex: none; width: 26px; height: 26px; border-radius: 13px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 700; ';
+    const stateBase = 'margin: 0; font-size: 14px; white-space: nowrap; ';
+    const topics = topicNames.map((label, i) => {
+      if (s.done[i]) return { label, state: s.done[i], stateStyle: stateBase + 'color: #4A5E60', mark: '✓', markStyle: markBase + 'background: #0B6B72; color: #FFFFFF; border: 2px solid #0B6B72' };
+      if (s.notNeeded[i]) return { label, state: 'Not needed', stateStyle: stateBase + 'color: #4A5E60', mark: '–', markStyle: markBase + 'background: #F3F7F6; color: #4A5E60; border: 2px dashed #6F8885' };
+      return { label, state: 'Not yet', stateStyle: stateBase + 'color: #0E2A2C; font-weight: 700', mark: '', markStyle: markBase + 'background: #FFFFFF; border: 2px solid #6F8E8C' };
+    });
+    const needed = topicNames.length - Object.keys(s.notNeeded).length;
+    const doneN = Object.keys(s.done).length;
+    const circ = 2 * Math.PI * 32;
+    return {
+      ic,
+      people,
+      name: who,
+      job: s.job,
+      status: s.status,
+      statusStyle: 'margin: 2px 0 0; padding: 6px 10px; border-radius: 20px; font-weight: 700; font-size: 15px; ' + (s.warn ? 'background: #FBE6D9; color: #7E3209' : (s.status.indexOf('✓') === 0 ? 'background: #DFF5EE; color: #08555B' : 'background: #E7EEEC; color: #0E2A2C')),
+      ringDash: (circ * doneN / needed).toFixed(1) + ' ' + circ.toFixed(1),
+      ringText: doneN + '/' + needed,
+      topics,
+      records: s.records,
+      noRecords: s.records.length === 0,
+      addLabel: 'Add training for ' + who,
+      showWhy: this.state.why,
+      whyOpen: this.state.why ? 'true' : 'false',
+      toggleWhy: () => this.setState({ why: !this.state.why }),
+    };
+  }
+}
+</script>
+</body>
+</html>

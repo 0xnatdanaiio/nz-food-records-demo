@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390">
+<style>html{touch-action:manipulation}@media (min-width:520px){html,body{background:#0E2A2C}body>div>div>div[style*="width: 390px"]{margin:24px auto;border-radius:28px;overflow:hidden}}</style>
+<title>What's due</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#0B6B72}a:hover{color:#08555B}
+.docket{flex:none;position:relative;background:#FFFFFF;border-radius:20px;padding:12px 14px 12px 12px;color:#0E2A2C;text-decoration:none;box-sizing:border-box}
+
+.tag{display:inline-block;font-size:13px;font-weight:700;padding:2px 8px;border-radius:9999px;border:1.5px solid currentColor;white-space:nowrap}
+.why{flex:none;min-width:48px;min-height:48px;margin:-10px -8px -10px 0;padding:0 8px;border:0;background:transparent;font-family:inherit;font-size:15px;font-weight:700;color:#0B6B72;text-decoration:underline;cursor:pointer}
+.why:focus-visible{outline:3px solid #0B6B72;border-radius:20px}
+.whybox{margin:0;padding:10px 12px;border-radius:20px;background:#E7EEEC;font-size:14px;line-height:1.4;color:#0E2A2C}
+.src{display:block;margin-top:4px;font-size:13px;color:#4A5E60}
+.title{margin:0;font-size:18px;line-height:1.1;font-weight:700;letter-spacing:-0.01em}
+.help{margin:0;font-size:14px;color:#4A5E60;line-height:1.35}
+.row{display:flex;align-items:center;gap:10px}
+.ico{flex:none;width:44px;height:44px;border-radius:9999px;background:#E7EEEC;display:flex;align-items:center;justify-content:center}
+.num{margin:0;font-size:32px;line-height:1;font-weight:800;letter-spacing:-0.02em;color:#0B6B72}
+.go{display:flex;align-items:center;justify-content:center;gap:6px;min-height:48px;border-radius:9999px;border:2px solid #0B6B72;background:#FFFFFF;color:#0B6B72;text-decoration:none;font-weight:700;font-size:15px}
+.sec{margin:0;font-weight:900;font-size:20px;line-height:1;letter-spacing:-0.03em;text-transform:uppercase;color:#0E2A2C;display:flex;align-items:center;gap:8px}
+.av{flex:none;width:44px;height:44px;border-radius:9999px;background:#0E2A2C;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px}
+.bar{height:8px;border-radius:9999px;background:#E7EEEC;overflow:hidden;margin-top:6px}
+.limit{margin:0;padding:10px 12px;border-radius:20px;background:#F3F7F6;border:1.5px dashed #6F8885;font-size:14px;line-height:1.4}
+.limit b{display:block;font-size:15px}
+.nav{min-height:56px;border-radius:9999px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:13px;font-weight:600;color:#FFFFFF;text-decoration:none;letter-spacing:-0.01em}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #E7EEEC; font-family: 'Inter', system-ui, sans-serif; color: #0E2A2C; display: flex; flex-direction: column">
+  <div style="flex: none; background: #0E2A2C; color: #FFFFFF; border-radius: 0 0 28px 28px; padding: 14px 20px 24px; display: flex; flex-direction: column; gap: 10px">
+    <p style="margin: 0; font-size: 12px; color: #A9C4C2">Prototype with sample data</p>
+    <div>
+      <p style="margin: 0; font-size: 14px; color: #A9C4C2">Thursday 22 October</p>
+      <h1 style="margin: 6px 0 0; font-size: 52px; line-height: 0.85; font-weight: 900; letter-spacing: -0.045em; text-transform: uppercase">What's due</h1>
+    </div>
+  </div>
+
+  <div style="flex: 1; overflow: auto; padding: 18px 16px 20px; display: flex; flex-direction: column; gap: 12px">
+
+    <h2 class="sec">Dates</h2>
+
+    <sc-for list="{{cards}}" as="c" hint-placeholder-count="3">
+      <div class="docket" style="{{c.cardStyle}}">
+        <div class="row">
+          <span class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0B6B72" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{c.icon}}"></path></svg></span>
+          <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 4px">
+            <p class="title">{{c.title}}</p>
+            <span class="tag" style="{{c.tagStyle}}">{{c.tag}}</span>
+          </div>
+          <button type="button" class="why" aria-expanded="{{c.open}}" onClick="{{c.toggle}}">Why?</button>
+        </div>
+        <sc-if value="{{c.hasNum}}" hint-placeholder-val="{{ true }}">
+          <div class="row" style="align-items: baseline; gap: 8px; padding-left: 54px">
+            <p class="num">{{c.num}}</p>
+            <p style="margin: 0; font-size: 16px; font-weight: 700">{{c.words}}</p>
+          </div>
+        </sc-if>
+        <sc-if value="{{c.noNum}}" hint-placeholder-val="{{ false }}">
+          <p style="{{c.textStyle}}">{{c.text}}</p>
+        </sc-if>
+        <sc-if value="{{c.hasHelp}}" hint-placeholder-val="{{ true }}">
+          <p class="help" style="padding-left: 54px">{{c.help}}</p>
+        </sc-if>
+        <sc-if value="{{c.hasLimit}}" hint-placeholder-val="{{ false }}">
+          <p class="limit"><b>{{c.limit}}</b>A legal limit, not your due date. Your verifier's date is usually earlier.<span class="src">{{c.limitSrc}}</span></p>
+        </sc-if>
+        <sc-if value="{{c.show}}" hint-placeholder-val="{{ false }}">
+          <p class="whybox">{{c.why}}<span class="src">{{c.src}}</span></p>
+        </sc-if>
+        <sc-if value="{{c.linkReminder}}" hint-placeholder-val="{{ false }}">
+          <a class="go" href="Reminder.dc.html">What to do<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B6B72" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.chevron}}"></path></svg></a>
+        </sc-if>
+        <sc-if value="{{c.linkRecall}}" hint-placeholder-val="{{ false }}">
+          <a class="go" href="RecallAdd.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B6B72" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.plus}}"></path></svg>Add a recall test</a>
+        </sc-if>
+        <sc-if value="{{c.linkDates}}" hint-placeholder-val="{{ false }}">
+          <a class="go" href="Dates.dc.html">{{c.linkLabel}}<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B6B72" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.chevron}}"></path></svg></a>
+        </sc-if>
+        <sc-if value="{{c.linkDatesNew}}" hint-placeholder-val="{{ false }}">
+          <a class="go" href="DatesNew.dc.html">{{c.linkLabel}}<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B6B72" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.chevron}}"></path></svg></a>
+        </sc-if>
+      </div>
+    </sc-for>
+
+    <a href="Dates.dc.html" style="display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; color: #0B6B72; font-weight: 700; font-size: 15px">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B6B72" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.calendar}}"></path></svg>
+      Change your dates
+    </a>
+
+    <div class="row" style="margin-top: 4px">
+      <h2 class="sec" style="flex: 1">Staff training <span class="tag" style="color: #08555B; text-transform: none; letter-spacing: 0; font-weight: 700">Required</span></h2>
+      <button type="button" class="why" aria-expanded="{{whyTrainOpen}}" onClick="{{whyTrain}}">Why?</button>
+    </div>
+    <sc-if value="{{showWhyTrain}}" hint-placeholder-val="{{ false }}">
+      <p class="whybox" style="background: #FFFFFF">Train staff before they start handling food. Write down who was trained, when, and in which parts of your plan. Not needed if you work alone.<span class="src">Simply Safe &amp; Suitable pp.21-22; National Programme 2 pp.26-27</span></p>
+    </sc-if>
+
+    <sc-for list="{{staff}}" as="s" hint-placeholder-count="4">
+      <a class="docket" href="StaffTraining.dc.html" style="display: flex; align-items: center; gap: 12px">
+        <span class="av" aria-hidden="true">{{s.initial}}</span>
+        <div style="flex: 1; min-width: 0">
+          <div class="row" style="justify-content: space-between; flex-wrap: wrap; gap: 2px 10px">
+            <p class="title">{{s.name}}</p>
+            <p style="{{s.statusStyle}}">{{s.status}}</p>
+          </div>
+          <div class="bar" aria-hidden="true"><div style="{{s.fillStyle}}"></div></div>
+        </div>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0E2A2C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.chevron}}"></path></svg>
+      </a>
+    </sc-for>
+
+    <div style="margin: 14px 0 0; border: 2px dashed #6F8885; border-radius: 20px; padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 8px">
+      <p id="sample-l" style="margin: 0; font-size: 14px; font-weight: 700; color: #4A5E60">Prototype only: try another sample</p>
+      <div role="group" aria-labelledby="sample-l" style="display: flex; flex-wrap: wrap; gap: 8px">
+        <sc-for list="{{samples}}" as="p" hint-placeholder-count="3">
+          <button type="button" aria-pressed="{{p.pressed}}" onClick="{{p.pick}}" style="{{p.style}}">{{p.label}}</button>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <nav aria-label="Main" style="flex: none; margin: 4px 12px 12px; padding: 5px; border-radius: 9999px; background: #0E2A2C; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2px">
+    <a class="nav" href="Main.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.today}}"></path></svg>Today</a>
+    <a class="nav" href="Due.dc.html" aria-current="page" style="font-weight: 700; color: #0E2A2C; background: #8EE6C9"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0E2A2C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.calendar}}"></path></svg>What's due</a>
+    <a class="nav" href="Verify.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.history}}"></path></svg>History</a>
+    <a class="nav" href="Settings.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.settings}}"></path></svg>Settings</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { open: null, sample: 'week' };
+  }
+  renderVals() {
+    // Line icons: 24 px grid, 2 px stroke, round ends (design-system.md section 8)
+    const ic = {
+      fridge: 'M7 2.5h10a2 2 0 012 2v15a2 2 0 01-2 2H7a2 2 0 01-2-2v-15a2 2 0 012-2zM5 9.5h14M8.5 5.5v1.5M8.5 12.5v3',
+      cooking: 'M5 10.5h14v6.5a3 3 0 01-3 3H8a3 3 0 01-3-3zM3 10.5h18M10 7.5h4M2.5 13h2.5M19 13h2.5M9 3.5v1.5M12 3v2M15 3.5v1.5',
+      cooling: 'M8 14.5V5a2 2 0 014 0v9.5a3.5 3.5 0 11-4 0zM10 9.5v7M18 4v11M15.5 12.5L18 15l2.5-2.5',
+      delivery: 'M2 5.5h11v10H2zM13 8.5h4.2l3.3 3.5v3.5H13M4.5 17.5a2 2 0 104 0a2 2 0 10-4 0M14.5 17.5a2 2 0 104 0a2 2 0 10-4 0',
+      hotHold: 'M3 13h18M5 13v4.5a2 2 0 002 2h10a2 2 0 002-2V13M8 4.5c-1 1.2 1 2.3 0 3.5M12 4.5c-1 1.2 1 2.3 0 3.5M16 4.5c-1 1.2 1 2.3 0 3.5',
+      problem: 'M10.3 3.9L2.4 18a2 2 0 001.7 3h15.8a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0zM12 9v4.5M12 17v.5',
+      cleaning: 'M11 3l1.9 4.6L17.5 9.5l-4.6 1.9L11 16l-1.9-4.6L4.5 9.5l4.6-1.9zM18 14.5l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z',
+      opening: 'M5 21V4.5a1.5 1.5 0 011.5-1.5h11A1.5 1.5 0 0119 4.5V21M3 21h18M15 12v1',
+      registration: 'M6 2.5h8.5L19 7v14.5H6zM14.5 2.5V7H19M9 12h7M9 16h5',
+      recall: 'M3.5 8L12 3.5 20.5 8v8L12 20.5 3.5 16zM3.5 8L12 12.5 20.5 8M12 12.5v8',
+      verify: 'M10.5 18a7.5 7.5 0 110-15 7.5 7.5 0 010 15zM16 16l5 5M7.5 10.5l2 2 4-4',
+      training: 'M2 9l10-5 10 5-10 5zM6 11v5c0 1.6 2.7 3 6 3s6-1.4 6-3v-5M22 9v5',
+      thermometer: 'M10 14.5V5a2 2 0 014 0v9.5a3.5 3.5 0 11-4 0zM12 9.5v7',
+      plan: 'M4 4.5A1.5 1.5 0 015.5 3H20v15H5.5A1.5 1.5 0 004 19.5zM4 19.5A1.5 1.5 0 005.5 21H20M9 10.5l2 2 4-4',
+      service: 'M14.7 6.3a4 4 0 00-5.4 5.2L3.5 17.3a1.8 1.8 0 002.5 2.5l5.8-5.8a4 4 0 005.2-5.4l-2.6 2.6-2.3-.4-.4-2.3z',
+      supplier: 'M9 6h11M9 12h11M9 18h11M4.5 6h.5M4.5 12h.5M4.5 18h.5',
+      calendar: 'M5.5 5h13a2 2 0 012 2v11.5a2 2 0 01-2 2h-13a2 2 0 01-2-2V7a2 2 0 012-2zM3.5 10h17M8 3v4M16 3v4',
+      bell: 'M6 16v-5a6 6 0 0112 0v5l1.5 2h-15zM10 20.5a2 2 0 004 0',
+      clock: 'M12 21a9 9 0 100-18 9 9 0 000 18zM12 7v5l3 2',
+      check: 'M5 12l5 5L20 7',
+      download: 'M12 4v11M7 10l5 5 5-5M5 20h14',
+      link: 'M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1',
+      person: 'M12 12a4 4 0 100-8 4 4 0 000 8zM4.5 21a7.5 7.5 0 0115 0',
+      team: 'M9 11a3.5 3.5 0 100-7 3.5 3.5 0 000 7zM2.5 20a6.5 6.5 0 0113 0M16 4.3a3.5 3.5 0 010 6.4M18 13.5a6.5 6.5 0 013.5 6',
+      today: 'M4 6l1.5 1.5L8 5M4 12l1.5 1.5L8 11M4 18l1.5 1.5L8 17M11 6.5h9M11 12.5h9M11 18.5h9',
+      info: 'M12 21a9 9 0 100-18 9 9 0 000 18zM12 11v5.5M12 7.5v.5',
+      lock: 'M6 11h12v10H6zM8.5 11V7.5a3.5 3.5 0 017 0V11',
+      pay: 'M3 6h18v12H3zM3 10h18M7 14.5h3',
+      history: 'M4 12a8 8 0 102.4-5.7M4 3.5v4.5h4.5M12 8v4l2.5 2',
+      chevron: 'M9 6l6 6-6 6',
+      back: 'M15 6l-6 6 6 6',
+      plus: 'M12 5v14M5 12h14',
+      pen: 'M4 20h4L19 9a2.8 2.8 0 00-4-4L4 16zM13.5 6.5l4 4',
+      settings: 'M4 7h9M17 7h3M13 7a2 2 0 104 0a2 2 0 10-4 0M4 17h3M11 17h9M7 17a2 2 0 104 0a2 2 0 10-4 0'
+    };
+    const open = this.state.open;
+    const flip = (k) => () => this.setState({ open: open === k ? null : k });
+
+    // Sample data. "Today" is Thursday 22 October 2026 (NZ). Day counts are NZ calendar days
+    // (phase2-training-due crit. 22-26). States: overdue, comingUp (0-30 days, app policy A1),
+    // ok (more than 30 days), unknown (no date), notNeeded (recall qualifier, crit. 20).
+    const regWhy = { why: "Your registration has an end date. Renew it by paying your council's fee while it is still current. If it has ended, contact your council.", src: 'Food Act 2014 s 61(1) and Schedule 4 cl 3' };
+    const verWhy = 'Your verifier sets the next date after each visit. SousMate only reminds you; it doesn\'t work the date out.';
+    const recallWhy = 'Practise a recall once every 12 months, if you sell food that could be recalled (for example baking or frozen meat). A real recall that worked also counts.';
+    const recallSrc = 'Simply Safe & Suitable pp.91-92; National Programme 2 p.73';
+    const samples = {
+      week: [
+        { k: 'reg', icon: ic.registration, title: 'Registration ends', state: 'comingUp', days: 30, words: 'days left · renew',
+          help: 'Saturday 21 November 2026 · from your council', ...regWhy, linkReminder: true },
+        { k: 'recall', icon: ic.recall, title: 'Mock recall', state: 'ok', days: 132, words: 'days to go',
+          help: 'By Wednesday 3 March 2027 · every 12 months', why: recallWhy + ' Last one: Tuesday 3 March 2026, practice.', src: recallSrc, linkRecall: true },
+        { k: 'ver', icon: ic.verify, title: 'Next verification', state: 'ok', days: 144, words: 'days to go',
+          help: 'Monday 15 March 2027 · from your verifier', why: verWhy, src: 'Food Regulations 2015 r 90' },
+      ],
+      newbiz: [
+        { k: 'first', icon: ic.verify, title: 'First verification', state: 'comingUp', days: 21, words: 'days left · book it',
+          help: 'By Thursday 12 November 2026 · 6 weeks after registering',
+          why: "A new business must be verified within 6 weeks after registering. You book it. If you can't make it, ask your council for more time at least 2 weeks before the deadline.",
+          src: 'Food Regulations 2015 r 88(1)(b), r 94A; Simply Safe & Suitable p.16', linkDatesNew: true, linkLabel: 'Booked? Add the date' },
+        { k: 'reg', icon: ic.registration, title: 'Registration ends', state: 'ok', days: 344, words: 'days left · renew',
+          help: 'Friday 1 October 2027 · estimated, check your registration', ...regWhy },
+        { k: 'recall', icon: ic.recall, title: 'Mock recall', state: 'notNeeded', days: null,
+          text: "Not needed: you said you don't sell food that could be recalled",
+          why: 'A yearly practice recall is needed if you sell food that could be recalled, for example baking or frozen meat. You said you don\'t. You can change this in Your dates.',
+          src: 'Simply Safe & Suitable p.92', linkDates: true, linkLabel: 'Change your answer' },
+      ],
+      late: [
+        { k: 'reg', icon: ic.registration, title: 'Registration ends', state: 'overdue', days: -3,
+          text: '! Ended 3 days ago · contact your council', help: 'Monday 19 October 2026 · from your council', ...regWhy },
+        { k: 'recall', icon: ic.recall, title: 'Mock recall', state: 'overdue', days: -2,
+          text: '! 2 days overdue', help: 'By Tuesday 20 October 2026 · every 12 months',
+          why: recallWhy + ' Last one: Monday 20 October 2025, practice.', src: recallSrc, linkRecall: true },
+        { k: 'ver', icon: ic.verify, title: 'Next verification', state: 'unknown', days: null,
+          text: 'No date yet · add the date from your verifier', help: 'Last visit: Saturday 14 March 2026',
+          limit: 'Latest by law: 14 September 2027 (at least every 18 months)', limitSrc: 'Food Regulations 2015 r 88(2)(b)',
+          why: verWhy, src: 'Food Regulations 2015 r 90', linkDates: true, linkLabel: 'Add the date' },
+      ],
+    };
+
+    // Order (crit. 28): overdue (most days late first), comingUp (soonest), unknown, then ok and notNeeded.
+    const rank = { overdue: 0, comingUp: 1, unknown: 2, ok: 3, notNeeded: 4 };
+    const tie = { reg: 0, first: 1, ver: 1, recall: 2 };
+    const list = samples[this.state.sample].slice().sort((a, b) =>
+      (rank[a.state] - rank[b.state]) ||
+      (a.days !== null && b.days !== null ? a.days - b.days : 0) ||
+      (tie[a.k] - tie[b.k]));
+    const tagFor = {
+      overdue: { tag: '! Overdue', style: 'background: #FBE6D9; color: #7E3209; border-color: #A9440C' },
+      comingUp: { tag: 'Coming up', style: 'color: #0B6B72' },
+      unknown: { tag: 'Date needed', style: 'color: #4A5E60' },
+      ok: { tag: '✓ All good', style: 'background: #DFF5EE; color: #08555B; border-color: #DFF5EE' },
+      notNeeded: { tag: 'Not needed', style: 'color: #4A5E60' },
+    };
+    const cardBase = 'display: flex; flex-direction: column; gap: 8px; ';
+    const cards = list.map((d) => {
+      const hasNum = typeof d.words === 'string';
+      return {
+        icon: d.icon, title: d.title,
+        tag: tagFor[d.state].tag, tagStyle: tagFor[d.state].style,
+        cardStyle: cardBase + (d.state === 'overdue' ? 'border: 2px solid #A9440C' : ''),
+        hasNum, noNum: !hasNum, num: hasNum ? String(d.days) : '', words: d.words || '',
+        text: d.text || '',
+        textStyle: 'margin: 0; padding-left: 54px; font-size: 16px; line-height: 1.3; font-weight: 700; color: ' + (d.state === 'overdue' ? '#7E3209' : '#0E2A2C'),
+        hasHelp: !!d.help, help: d.help || '',
+        hasLimit: !!d.limit, limit: d.limit || '', limitSrc: d.limitSrc || '',
+        why: d.why, src: d.src,
+        show: open === d.k, open: open === d.k ? 'true' : 'false', toggle: flip(d.k),
+        linkReminder: !!d.linkReminder, linkRecall: !!d.linkRecall,
+        linkDates: !!d.linkDates, linkDatesNew: !!d.linkDatesNew, linkLabel: d.linkLabel || '',
+      };
+    });
+
+    // Staff training (crit. 3, 4): no training first, then fewest topics covered, then complete; ties A-Z.
+    const statusBase = 'margin: 0; font-size: 15px; font-weight: 700; white-space: nowrap; ';
+    const staff = [
+      { name: 'Somchai', status: '! No training yet', done: 0, of: 9, warn: true },
+      { name: 'Arjun', status: '7 of 9 topics', done: 7, of: 9 },
+      { name: 'Hana', status: '✓ All topics for their job', done: 7, of: 7, ok: true },
+      { name: 'Mia', status: '✓ All topics for their job', done: 9, of: 9, ok: true },
+    ].map((s) => ({
+      name: s.name,
+      initial: s.name[0],
+      status: s.status,
+      statusStyle: statusBase + (s.warn ? 'color: #7E3209' : s.ok ? 'color: #08555B' : 'color: #0E2A2C'),
+      fillStyle: 'height: 8px; width: ' + Math.round((s.done / s.of) * 100) + '%; background: #0B6B72',
+    }));
+
+    const chipBase = 'min-height: 48px; padding: 0 16px; border-radius: 9999px; font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer; ';
+    const sampleChips = [
+      { k: 'week', label: 'This week' },
+      { k: 'newbiz', label: 'New business' },
+      { k: 'late', label: 'Dates passed' },
+    ].map((d) => {
+      const on = this.state.sample === d.k;
+      return {
+        label: d.label,
+        pressed: on ? 'true' : 'false',
+        style: chipBase + (on ? 'background: #0E2A2C; color: #FFFFFF; border: 2px solid #0E2A2C' : 'background: #FFFFFF; color: #0E2A2C; border: 2px solid #6F8885'),
+        pick: () => this.setState({ sample: d.k, open: null }),
+      };
+    });
+
+    return {
+      ic,
+      cards,
+      staff,
+      samples: sampleChips,
+      showWhyTrain: open === 'train', whyTrainOpen: open === 'train' ? 'true' : 'false', whyTrain: flip('train'),
+    };
+  }
+}
+</script>
+</body>
+</html>

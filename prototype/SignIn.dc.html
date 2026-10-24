@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390">
+<style>html{touch-action:manipulation}@media (min-width:520px){html,body{background:#0E2A2C}body>div>div>div[style*="width: 390px"]{margin:24px auto;border-radius:28px;overflow:hidden}}</style>
+<title>SousMate – Who is on shift</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#0B6B72}a:hover{color:#08555B}
+.key{min-height:64px;border:0;border-radius:9999px;background:#FFFFFF;color:#0E2A2C;font-size:23px;cursor:pointer;font-weight:800;letter-spacing:-0.02em}
+.key:active{background:#D5E2DF}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #E7EEEC; font-family: 'Inter', system-ui, sans-serif; color: #0E2A2C; display: flex; flex-direction: column">
+  <div style="flex: none; background: #0E2A2C; color: #FFFFFF; border-radius: 0 0 28px 28px; padding: 14px 20px 24px">
+    <p style="margin: 0; font-size: 12px; color: #A9C4C2">Prototype with sample data</p>
+    <div style="margin-top: 10px; display: flex; align-items: center; gap: 10px">
+      <svg width="36" height="36" viewBox="0 0 512 512" aria-hidden="true" style="flex: none">
+        <defs><clipPath id="csignin"><rect width="512" height="512" rx="115"></rect></clipPath></defs><g clip-path="url(#csignin)"><rect width="512" height="512" fill="#0B6B72"></rect><g transform="translate(256 256) scale(0.86) translate(-256 -256)"><g transform="translate(256 256) rotate(-4 0 -110) translate(-256 -256)">
+  <path d="M176 150H336V384L320 402L304 384L288 402L272 384L256 402L240 384L224 402L208 384L192 402L176 384V150Z" fill="#DFF5EE"/>
+  <rect x="196" y="176" width="64" height="18" rx="9" fill="#0B6B72"/>
+  <path d="M210 284l36 36 62-76" fill="none" stroke="#0E2A2C" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+</g><rect x="116" y="112" width="280" height="38" rx="19" fill="#8EE6C9"/><rect x="226" y="140" width="60" height="26" rx="8" fill="#0E2A2C"/></g></g>
+      </svg>
+      <p style="margin: 0; font-size: 26px; line-height: 1; font-weight: 700; letter-spacing: -0.01em">Sous<span style="color: #8EE6C9">Mate</span></p>
+    </div>
+    <p style="margin: 8px 0 0; font-size: 17px; font-weight: 700">Less paperwork. More cooking.</p>
+    <p style="margin: 2px 0 0; font-size: 14px; color: #A9C4C2">Tells you what’s due. Keeps every record safe.</p>
+    <div style="margin-top: 14px; padding-top: 12px; border-top: 1px solid #1C3D40">
+      <p style="margin: 0; font-size: 14px; color: #A9C4C2">Your café</p>
+      <h1 style="margin: 4px 0 0; font-size: 40px; line-height: 0.9; font-weight: 900; letter-spacing: -0.045em; text-transform: uppercase">Who is checking?</h1>
+    </div>
+  </div>
+
+  <div style="padding: 20px 16px 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+    <sc-for list="{{staff}}" as="s" hint-placeholder-count="4">
+      <button type="button" onClick="{{s.pick}}" style="{{s.style}}">{{s.name}}</button>
+    </sc-for>
+  </div>
+
+  <div style="flex: 1; padding: 20px 16px 16px; display: flex; flex-direction: column; gap: 14px">
+    <p style="margin: 0; font-size: 16px; text-align: center">{{prompt}}</p>
+    <div aria-label="PIN entered" style="display: flex; justify-content: center; gap: 16px">
+      <sc-for list="{{dots}}" as="d" hint-placeholder-count="4">
+        <span style="{{d.style}}"></span>
+      </sc-for>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+      <sc-for list="{{keys}}" as="k" hint-placeholder-count="9">
+        <button type="button" class="key" onPointerDown="{{k.down}}" onClick="{{k.press}}">{{k.label}}</button>
+      </sc-for>
+      <button type="button" class="key" style="font-family: 'Inter', system-ui, sans-serif; font-size: 15px" onPointerDown="{{clearDown}}" onClick="{{clear}}">Clear</button>
+      <button type="button" class="key" onPointerDown="{{zeroDown}}" onClick="{{zero}}">0</button>
+      <sc-if value="{{ready}}" hint-placeholder-val="{{ false }}">
+        <a href="Main.dc.html" style="min-height: 64px; border-radius: 9999px; background: #0B6B72; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; text-decoration: none">Start</a>
+      </sc-if>
+      <sc-if value="{{notReady}}" hint-placeholder-val="{{ true }}">
+        <span style="min-height: 64px; border-radius: 9999px; background: #D5DFDC; color: #4A5E60; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px">Start</span>
+      </sc-if>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { who: 'Mia', pin: '' };
+  }
+  renderVals() {
+    const names = ['Mia', 'Arjun', 'Somchai', 'Hana'];
+    const base = 'min-height: 56px; border-radius: 9999px; font-family: inherit; font-size: 17px; font-weight: 700; cursor: pointer; ';
+    const staff = names.map((n) => ({
+      name: n,
+      style: base + (this.state.who === n ? 'background: #0B6B72; color: #FFFFFF; border: 2px solid #0B6B72' : 'background: #FFFFFF; color: #0E2A2C; border: 2px solid #FFFFFF'),
+      pick: () => { this.pin = ''; this.setState({ who: n, pin: '' }); },
+    }));
+    // Keys act on touch-down so fast tapping on a phone keeps up; the click that follows is skipped.
+    // A mouse or keyboard press still goes through click. this.pin is read before React re-renders.
+    const add = (d) => () => { const pin = this.pin ?? this.state.pin; if (pin.length < 4) { this.pin = pin + d; this.setState({ pin: this.pin }); } };
+    const down = (fn) => (e) => { if (e.pointerType === 'mouse') return; this.touches = (this.touches || 0) + 1; fn(); };
+    const click = (fn) => () => { if (this.touches > 0) { this.touches -= 1; return; } fn(); };
+    const reset = () => { this.pin = ''; this.setState({ pin: '' }); };
+    const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9'].map((d) => ({ label: d, down: down(add(d)), press: click(add(d)) }));
+    const dots = [0, 1, 2, 3].map((i) => ({
+      style: 'width: 18px; height: 18px; border-radius: 9px; border: 2px solid #0E2A2C; ' + (i < this.state.pin.length ? 'background: #0E2A2C' : 'background: transparent'),
+    }));
+    const ready = this.state.pin.length === 4;
+    return {
+      staff,
+      keys,
+      dots,
+      zero: click(add('0')),
+      zeroDown: down(add('0')),
+      clear: click(reset),
+      clearDown: down(reset),
+      ready,
+      notReady: !ready,
+      prompt: this.state.who + ', enter your 4-digit PIN',
+    };
+  }
+}
+</script>
+</body>
+</html>

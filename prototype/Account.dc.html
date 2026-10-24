@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390">
+<style>html{touch-action:manipulation}@media (min-width:520px){html,body{background:#0E2A2C}body>div>div>div[style*="width: 390px"]{margin:24px auto;border-radius:28px;overflow:hidden}}</style>
+<title>SousMate – Account</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#0B6B72}a:hover{color:#08555B}
+.docket{flex:none;position:relative;background:#FFFFFF;border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.help{margin:0;font-size:14px;color:#4A5E60;line-height:1.4}
+.field{width:100%;box-sizing:border-box;min-height:52px;border:2px solid #6F8885;border-radius:16px;padding:10px 12px;font:inherit;font-size:16px;color:#0E2A2C;background:#FFFFFF}
+.field::placeholder{color:#6F8885}
+.field:focus{outline:3px solid #0B6B72;outline-offset:1px;border-color:#0B6B72}
+label,.lb{margin:0;font-weight:700;font-size:16px}
+.opt{font-weight:400;color:#4A5E60;font-size:14px}
+.main{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;box-sizing:border-box;min-height:56px;padding:0 16px;border:0;border-radius:9999px;background:#0B6B72;color:#FFFFFF;text-decoration:none;font-family:inherit;font-weight:700;font-size:17px;cursor:pointer;text-align:center}
+a.main:hover{color:#FFFFFF;background:#08555B}
+.main.off{background:#D5DFDC;color:#4A5E60;cursor:default}
+.tlink{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 8px;font-family:inherit;font-weight:700;font-size:15px;color:#0B6B72;text-decoration:underline;background:none;border:0;cursor:pointer}
+.go{display:flex;align-items:center;justify-content:center;gap:6px;min-height:48px;padding:0 16px;box-sizing:border-box;border-radius:9999px;border:2px solid #0B6B72;background:#FFFFFF;color:#0B6B72;font-family:inherit;font-weight:700;font-size:15px;cursor:pointer;text-decoration:none}
+.go.off{border-color:#D5DFDC;color:#4A5E60;cursor:default}
+.box{margin:0;display:flex;gap:8px;align-items:flex-start;padding:12px 14px;border-radius:20px;font-size:15px;line-height:1.35}
+.box svg{flex:none;margin-top:1px}
+.bad{background:#FBE6D9;color:#7E3209;font-weight:700}
+.ok{background:#DFF5EE;color:#08555B;font-weight:700}
+.info{background:#F3F7F6;color:#0E2A2C;border:1px solid #DDE6E4}
+.back{display:flex;align-items:center;gap:4px;min-height:48px;margin:-2px 0;padding-right:12px;color:#FFFFFF;text-decoration:none;font-size:15px}
+a.back:hover{color:#FFFFFF}
+.proto{margin:0;font-size:12px;color:#A9C4C2}
+.ttl{margin:0;font-size:36px;line-height:0.9;font-weight:900;letter-spacing:-0.045em;text-transform:uppercase}
+.sub{margin:0;font-size:14px;color:#A9C4C2;line-height:1.35}
+.steps{margin:0;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#A9C4C2}
+.bar{width:26px;height:6px;border-radius:3px;background:#1C3D40;border:1px solid #6F8E8C;box-sizing:border-box}
+.bar.on{background:#8EE6C9;border-color:#8EE6C9}
+.foot{flex:none;padding:12px 16px 16px;background:#E7EEEC;display:flex;flex-direction:column;gap:4px}
+.sample{flex:none;margin-top:4px;border:2px dashed #6F8885;border-radius:20px;padding:10px 12px 12px;display:flex;flex-direction:column;gap:8px}
+.sample p{margin:0;font-size:14px;font-weight:700;color:#4A5E60}
+.item{display:flex;align-items:center;gap:10px;min-height:52px;border-top:1px solid #DDE6E4}
+.item:first-of-type{border-top:0}
+.ico{flex:none;width:44px;height:44px;border-radius:9999px;background:#E7EEEC;display:flex;align-items:center;justify-content:center}
+.tag{display:inline-block;font-size:13px;font-weight:700;padding:2px 8px;border-radius:9999px;border:1.5px solid currentColor;white-space:nowrap;color:#4A5E60}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #E7EEEC; font-family: 'Inter', system-ui, sans-serif; color: #0E2A2C; display: flex; flex-direction: column">
+  <div style="flex: none; background: #0E2A2C; color: #FFFFFF; border-radius: 0 0 28px 28px; padding: 14px 20px 22px; display: flex; flex-direction: column; gap: 10px">
+    <div style="display: flex; justify-content: space-between; align-items: center; min-height: 44px">
+      <a class="back" href="Settings.dc.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.back}}"></path></svg>Settings</a>
+      <p class="proto">Prototype with sample data</p>
+    </div>
+    <h1 class="ttl" tabindex="-1" style="font-size: 36px">Account</h1>
+    <p class="sub">Account and backup</p>
+  </div>
+
+  <div style="flex: 1; overflow: auto; padding: 20px 16px 16px; display: flex; flex-direction: column; gap: 14px">
+    <sc-if value="{{signedIn}}" hint-placeholder-val="{{ true }}">
+      <div class="docket">
+        <p class="help">Shop</p>
+        <p style="margin: -6px 0 0; font-size: 24px; font-weight: 800; letter-spacing: -0.02em">Harbour Café</p>
+        <p style="margin: 0; display: flex; align-items: center; gap: 8px; font-size: 17px; font-weight: 700"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B6B72" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.calendar}}"></path></svg>{{trialText}}</p>
+        <sc-if value="{{ended}}" hint-placeholder-val="{{ false }}">
+          <p class="box info"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0E2A2C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.lock}}"></path></svg><span>Nothing is deleted. You can still see and download every record.</span></p>
+        </sc-if>
+        <a class="go" href="Plan.dc.html">Choose a plan</a>
+      </div>
+      <div class="docket">
+        <p style="margin: 0; display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 700"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B6B72" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{syncIcon}}"></path></svg>{{syncText}}</p>
+        <p class="help">Signed in as ann@cafe.nz</p>
+      </div>
+      <div class="docket">
+        <p class="lb">Devices</p>
+        <sc-if value="{{codeShown}}" hint-placeholder-val="{{ false }}">
+          <p style="margin: 0; font-size: 30px; font-weight: 800; letter-spacing: 0.08em; text-align: center">K7QF-3M2X</p>
+          <p class="help">On the new device, open Team → Join a business and enter this code. It works once and only for 30 minutes.</p>
+        </sc-if>
+        <sc-if value="{{planNeeded}}" hint-placeholder-val="{{ false }}">
+          <p class="box info" role="status"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0E2A2C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.info}}"></path></svg><span>Adding more devices needs SousMate. Your trial has ended.</span></p>
+        </sc-if>
+        <button type="button" class="go" onClick="{{addDevice}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B6B72" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.plus}}"></path></svg>Add a device</button>
+      </div>
+    </sc-if>
+    <sc-if value="{{free}}" hint-placeholder-val="{{ false }}">
+      <div class="docket">
+        <p style="margin: 0; display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 700"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0E2A2C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.info}}"></path></svg>Not signed in — records are only on this device</p>
+        <p class="help">Sign in to keep a safe copy of your records for 4 years and use them on all your devices.</p>
+        <a class="main" href="SignupEmail.dc.html">Start your 30-day trial</a>
+        <p class="help" style="text-align: center">30 days of everything free. No card needed.</p>
+      </div>
+    </sc-if>
+    <div style="flex: 1"></div>
+    <div class="sample">
+      <p id="sample-l">Prototype only: try another sample</p>
+      <div role="group" aria-labelledby="sample-l" style="display: flex; flex-wrap: wrap; gap: 8px">
+        <sc-for list="{{samples}}" as="p" hint-placeholder-count="3">
+          <button type="button" aria-pressed="{{p.pressed}}" onClick="{{p.pick}}" style="{{p.style}}">{{p.label}}</button>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { sample: 'd12', code: false };
+  }
+  renderVals() {
+    // Line icons: 24 px grid, 2 px stroke, round ends (design-system.md section 8)
+    const ic = {
+      back: 'M15 6l-6 6 6 6',
+      info: 'M12 21a9 9 0 100-18 9 9 0 000 18zM12 11v5.5M12 7.5v.5',
+      calendar: 'M5.5 5h13a2 2 0 012 2v11.5a2 2 0 01-2 2h-13a2 2 0 01-2-2V7a2 2 0 012-2zM3.5 10h17M8 3v4M16 3v4',
+      check: 'M5 12l5 5L20 7',
+      plus: 'M12 5v14M5 12h14',
+      chevron: 'M9 6l6 6-6 6',
+      lock: 'M6 11h12v10H6zM8.5 11V7.5a3.5 3.5 0 017 0V11',
+      person: 'M12 12a4 4 0 100-8 4 4 0 000 8zM4.5 21a7.5 7.5 0 0115 0'
+    };
+    const chipBase = 'min-height: 48px; padding: 0 14px; border-radius: 9999px; font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer; ';
+    const mkSamples = (list, cur, pick) => list.map((d) => ({
+      label: d.label,
+      pressed: cur === d.k ? 'true' : 'false',
+      style: chipBase + (cur === d.k ? 'background: #0E2A2C; color: #FFFFFF; border: 2px solid #0E2A2C' : 'background: #FFFFFF; color: #0E2A2C; border: 2px solid #6F8885'),
+      pick: () => pick(d.k),
+    }));
+    const s = this.state.sample;
+    // Crit. 20: r > 24 h -> "Trial: {n} days left", n = ceil(r / 24 h); 0 < r <= 24 h -> "Trial: last day".
+    const trialText = { d12: 'Trial: 12 days left', last: 'Trial: last day', ended: 'Trial ended' }[s] || '';
+    const ended = s === 'ended';
+    return {
+      ic,
+      signedIn: s !== 'free',
+      free: s === 'free',
+      trialText,
+      ended,
+      syncIcon: ended ? ic.info : '',
+      // Crit. 22: status line row 5 while the shop is on Free after the trial.
+      syncText: ended ? 'Trial ended — new records stay on this device' : 'Backed up ✓ (last sync 2 min ago)',
+      codeShown: this.state.code && !ended,
+      planNeeded: this.state.code && ended,
+      addDevice: () => this.setState({ code: true }),
+      samples: mkSamples([
+        { k: 'd12', label: '12 days left' },
+        { k: 'last', label: 'Last day' },
+        { k: 'ended', label: 'Trial ended' },
+        { k: 'free', label: 'Free, not signed in' },
+      ], s, (k) => this.setState({ sample: k, code: false })),
+    };
+  }
+}
+</script>
+</body>
+</html>

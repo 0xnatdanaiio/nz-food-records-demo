@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390">
+<style>html{touch-action:manipulation}@media (min-width:520px){html,body{background:#0E2A2C}body>div>div>div[style*="width: 390px"]{margin:24px auto;border-radius:28px;overflow:hidden}}</style>
+<title>Something went wrong</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#0B6B72}a:hover{color:#08555B}
+.docket{position:relative;background:#FFFFFF;border-radius:20px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+
+textarea{width:100%;box-sizing:border-box;border:2px solid #6F8885;border-radius:16px;padding:10px;font:inherit;font-size:15px;min-height:52px;color:#0E2A2C}
+textarea::placeholder{color:#4A5E60}
+textarea:focus{outline:3px solid #0B6B72;outline-offset:1px;border-color:#0B6B72}
+.q{margin:0;font-weight:700;font-size:16px;display:flex;align-items:center;gap:10px}
+.num{flex:none;width:28px;height:28px;border-radius:20px;background:#0E2A2C;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700}
+.qa{min-height:48px;padding:0 12px;border-radius:9999px;border:2px solid #6F8885;background:#FFFFFF;color:#0E2A2C;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer}
+.row{display:flex;flex-wrap:wrap;gap:8px}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #E7EEEC; font-family: 'Inter', system-ui, sans-serif; color: #0E2A2C; display: flex; flex-direction: column">
+  <div style="flex: none; background: #0E2A2C; color: #FFFFFF; border-radius: 0 0 28px 28px; padding: 14px 20px 22px; display: flex; flex-direction: column; gap: 10px">
+    <div style="display: flex; justify-content: space-between; align-items: center">
+      <a href="Main.dc.html" style="display: flex; align-items: center; gap: 4px; min-height: 48px; margin: -2px 0; padding-right: 12px; color: #FFFFFF; text-decoration: none; font-size: 15px">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.back}}"></path></svg>
+        Today
+      </a>
+      <p style="margin: 0; font-size: 12px; color: #A9C4C2">Prototype with sample data</p>
+    </div>
+    <h1 style="margin: 0; font-size: 36px; line-height: 0.9; font-weight: 900; letter-spacing: -0.045em; text-transform: uppercase">Something went wrong</h1>
+    <p style="margin: 0; font-size: 15px; color: #A9C4C2">4 quick answers. Tap, or type a few words.</p>
+  </div>
+
+  <div style="flex: 1; overflow: auto; padding: 20px 16px 16px; display: flex; flex-direction: column; gap: 16px">
+    <div class="docket">
+      <label for="q1" class="q"><span class="num" aria-hidden="true">1</span>What went wrong?</label>
+      <div role="group" aria-label="Where" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+        <sc-for list="{{kinds}}" as="k" hint-placeholder-count="5">
+          <button type="button" aria-pressed="{{k.pressed}}" onClick="{{k.pick}}" style="{{k.style}}">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="{{k.stroke}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{k.icon}}"></path></svg>
+            {{k.label}}
+          </button>
+        </sc-for>
+      </div>
+      <textarea id="q1">Walk-in chiller read 7.4°C at 07:40.</textarea>
+    </div>
+    <div class="docket">
+      <label for="q2" class="q"><span class="num" aria-hidden="true">2</span>What did you do to fix it?</label>
+      <div class="row">
+        <sc-for list="{{fixes}}" as="f" hint-placeholder-count="3">
+          <button type="button" class="qa" onClick="{{f.add}}">+ {{f.label}}</button>
+        </sc-for>
+      </div>
+      <textarea id="q2" placeholder="Or type here" value="{{fixText}}" onInput="{{onFix}}"></textarea>
+    </div>
+    <div class="docket">
+      <label for="q3" class="q"><span class="num" aria-hidden="true">3</span>What will stop it happening again?</label>
+      <div class="row">
+        <sc-for list="{{stops}}" as="f" hint-placeholder-count="3">
+          <button type="button" class="qa" onClick="{{f.add}}">+ {{f.label}}</button>
+        </sc-for>
+      </div>
+      <textarea id="q3" placeholder="Or type here" value="{{stopText}}" onInput="{{onStop}}"></textarea>
+    </div>
+    <div class="docket">
+      <h2 class="q"><span class="num" aria-hidden="true">4</span>How did you keep the food safe?</h2>
+      <div class="row">
+        <sc-for list="{{choices}}" as="c" hint-placeholder-count="4">
+          <button type="button" aria-pressed="{{c.pressed}}" onClick="{{c.toggle}}" style="{{c.style}}">{{c.label}}</button>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding: 12px 16px 16px; background: #E7EEEC">
+    <a href="Main.dc.html" style="display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 56px; border-radius: 9999px; background: #A9440C; color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 17px">Save problem record</a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { kind: 'Fridge', picked: ['Moved to another fridge'], fix: '', stop: '' };
+  }
+  renderVals() {
+    // Line icons: 24 px grid, 2 px stroke, round ends (design-system.md section 8)
+    const ic = {
+      fridge: 'M7 2.5h10a2 2 0 012 2v15a2 2 0 01-2 2H7a2 2 0 01-2-2v-15a2 2 0 012-2zM5 9.5h14M8.5 5.5v1.5M8.5 12.5v3',
+      cooking: 'M5 10.5h14v6.5a3 3 0 01-3 3H8a3 3 0 01-3-3zM3 10.5h18M10 7.5h4M2.5 13h2.5M19 13h2.5M9 3.5v1.5M12 3v2M15 3.5v1.5',
+      cooling: 'M8 14.5V5a2 2 0 014 0v9.5a3.5 3.5 0 11-4 0zM10 9.5v7M18 4v11M15.5 12.5L18 15l2.5-2.5',
+      delivery: 'M2 5.5h11v10H2zM13 8.5h4.2l3.3 3.5v3.5H13M4.5 17.5a2 2 0 104 0a2 2 0 10-4 0M14.5 17.5a2 2 0 104 0a2 2 0 10-4 0',
+      hotHold: 'M3 13h18M5 13v4.5a2 2 0 002 2h10a2 2 0 002-2V13M8 4.5c-1 1.2 1 2.3 0 3.5M12 4.5c-1 1.2 1 2.3 0 3.5M16 4.5c-1 1.2 1 2.3 0 3.5',
+      problem: 'M10.3 3.9L2.4 18a2 2 0 001.7 3h15.8a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0zM12 9v4.5M12 17v.5',
+      cleaning: 'M11 3l1.9 4.6L17.5 9.5l-4.6 1.9L11 16l-1.9-4.6L4.5 9.5l4.6-1.9zM18 14.5l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z',
+      opening: 'M5 21V4.5a1.5 1.5 0 011.5-1.5h11A1.5 1.5 0 0119 4.5V21M3 21h18M15 12v1',
+      registration: 'M6 2.5h8.5L19 7v14.5H6zM14.5 2.5V7H19M9 12h7M9 16h5',
+      recall: 'M3.5 8L12 3.5 20.5 8v8L12 20.5 3.5 16zM3.5 8L12 12.5 20.5 8M12 12.5v8',
+      verify: 'M10.5 18a7.5 7.5 0 110-15 7.5 7.5 0 010 15zM16 16l5 5M7.5 10.5l2 2 4-4',
+      training: 'M2 9l10-5 10 5-10 5zM6 11v5c0 1.6 2.7 3 6 3s6-1.4 6-3v-5M22 9v5',
+      thermometer: 'M10 14.5V5a2 2 0 014 0v9.5a3.5 3.5 0 11-4 0zM12 9.5v7',
+      plan: 'M4 4.5A1.5 1.5 0 015.5 3H20v15H5.5A1.5 1.5 0 004 19.5zM4 19.5A1.5 1.5 0 005.5 21H20M9 10.5l2 2 4-4',
+      service: 'M14.7 6.3a4 4 0 00-5.4 5.2L3.5 17.3a1.8 1.8 0 002.5 2.5l5.8-5.8a4 4 0 005.2-5.4l-2.6 2.6-2.3-.4-.4-2.3z',
+      supplier: 'M9 6h11M9 12h11M9 18h11M4.5 6h.5M4.5 12h.5M4.5 18h.5',
+      calendar: 'M5.5 5h13a2 2 0 012 2v11.5a2 2 0 01-2 2h-13a2 2 0 01-2-2V7a2 2 0 012-2zM3.5 10h17M8 3v4M16 3v4',
+      bell: 'M6 16v-5a6 6 0 0112 0v5l1.5 2h-15zM10 20.5a2 2 0 004 0',
+      clock: 'M12 21a9 9 0 100-18 9 9 0 000 18zM12 7v5l3 2',
+      check: 'M5 12l5 5L20 7',
+      download: 'M12 4v11M7 10l5 5 5-5M5 20h14',
+      link: 'M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1',
+      person: 'M12 12a4 4 0 100-8 4 4 0 000 8zM4.5 21a7.5 7.5 0 0115 0',
+      team: 'M9 11a3.5 3.5 0 100-7 3.5 3.5 0 000 7zM2.5 20a6.5 6.5 0 0113 0M16 4.3a3.5 3.5 0 010 6.4M18 13.5a6.5 6.5 0 013.5 6',
+      today: 'M4 6l1.5 1.5L8 5M4 12l1.5 1.5L8 11M4 18l1.5 1.5L8 17M11 6.5h9M11 12.5h9M11 18.5h9',
+      info: 'M12 21a9 9 0 100-18 9 9 0 000 18zM12 11v5.5M12 7.5v.5',
+      lock: 'M6 11h12v10H6zM8.5 11V7.5a3.5 3.5 0 017 0V11',
+      pay: 'M3 6h18v12H3zM3 10h18M7 14.5h3',
+      history: 'M4 12a8 8 0 102.4-5.7M4 3.5v4.5h4.5M12 8v4l2.5 2',
+      chevron: 'M9 6l6 6-6 6',
+      back: 'M15 6l-6 6 6 6',
+      plus: 'M12 5v14M5 12h14',
+      pen: 'M4 20h4L19 9a2.8 2.8 0 00-4-4L4 16zM13.5 6.5l4 4'
+    };
+    const kindBase = 'display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 60px; padding: 4px 2px; border-radius: 20px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; ';
+    const kinds = [
+      { label: 'Fridge', icon: ic.fridge },
+      { label: 'Cooking', icon: ic.cooking },
+      { label: 'Cooling', icon: ic.cooling },
+      { label: 'Delivery', icon: ic.delivery },
+      { label: 'Other', icon: ic.problem },
+    ].map((k) => {
+      const on = this.state.kind === k.label;
+      return {
+        label: k.label,
+        icon: k.icon,
+        stroke: on ? '#FFFFFF' : '#0B6B72',
+        pressed: on ? 'true' : 'false',
+        style: kindBase + (on ? 'background: #0E2A2C; color: #FFFFFF; border: 2px solid #0E2A2C' : 'background: #E7EEEC; color: #0E2A2C; border: 2px solid #E7EEEC'),
+        pick: () => this.setState({ kind: k.label }),
+      };
+    });
+    const adder = (key) => (label) => ({
+      label,
+      add: () => {
+        const cur = String(this.state[key]).trim();
+        this.setState({ [key]: cur ? cur + '. ' + label : label });
+      },
+    });
+    // Quick answers are sample wording for the prototype (open question in less-text-notes.md); the MPI questions are SS&S pp.84-85, Blanks p.27.
+    const fixes = ['Moved the food', 'Closed the door', 'Called technician'].map(adder('fix'));
+    const stops = ['Booked a repair', 'Retrained staff', 'Changed our routine'].map(adder('stop'));
+    const labels = ['Moved to another fridge', 'Threw it out', 'Used it within 2 hours', 'Other'];
+    const base = 'min-height: 48px; padding: 0 14px; border-radius: 9999px; font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer; ';
+    const choices = labels.map((l) => {
+      const on = this.state.picked.indexOf(l) !== -1;
+      return {
+        label: (on ? '✓ ' : '') + l,
+        pressed: on ? 'true' : 'false',
+        style: base + (on ? 'background: #0E2A2C; color: #FFFFFF; border: 2px solid #0E2A2C' : 'background: #E7EEEC; color: #0E2A2C; border: 2px solid #E7EEEC'),
+        toggle: () => this.setState({ picked: on ? this.state.picked.filter((p) => p !== l) : this.state.picked.concat([l]) }),
+      };
+    });
+    return {
+      ic,
+      kinds,
+      fixes,
+      stops,
+      fixText: this.state.fix,
+      stopText: this.state.stop,
+      onFix: (e) => this.setState({ fix: e.target.value }),
+      onStop: (e) => this.setState({ stop: e.target.value }),
+      choices,
+    };
+  }
+}
+</script>
+</body>
+</html>

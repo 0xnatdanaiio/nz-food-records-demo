@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390">
+<title>SousMate prototype</title>
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap">
+<style>
+  /* Kitchen ink, 2026-10-23 (docs/design/design-system.md) */
+  :root { --ink:#0E2A2C; --ink-raised:#1C3D40; --muted:#4A5E60; --muted-on-ink:#A9C4C2; --surface:#E7EEEC; --teal:#0B6B72; --mint:#8EE6C9; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--surface); color:var(--ink); font-family:'Inter', system-ui, sans-serif; }
+  header { background:var(--ink); color:#fff; padding:22px 20px 30px; border-radius:0 0 28px 28px; }
+  .mark { display:flex; align-items:center; gap:10px; }
+  .mark img { width:40px; height:40px; border-radius:9px; }
+  .word { font-weight:700; font-size:28px; line-height:1; letter-spacing:-0.01em; }
+  .word span { color:var(--mint); }
+  h1 { margin:22px 0 0; font-weight:900; font-size:52px; line-height:0.85; letter-spacing:-0.045em; text-transform:uppercase; }
+  h1 span { color:var(--mint); }
+  .sub { margin:12px 0 0; font-size:15px; line-height:1.4; color:var(--muted-on-ink); }
+  main { padding:18px 16px 32px; }
+  .note { margin:0; background:#fff; border-radius:20px; padding:14px 16px; font-size:15px; line-height:1.45; }
+  .start { display:flex; align-items:center; justify-content:center; min-height:56px; margin:16px 0 22px; border-radius:9999px; background:var(--teal); color:#fff; text-decoration:none; font-weight:700; font-size:17px; }
+  h2 { margin:22px 0 10px; font-weight:900; font-size:20px; line-height:1; letter-spacing:-0.03em; text-transform:uppercase; }
+  ul { list-style:none; margin:0; padding:0; display:grid; gap:8px; }
+  li a { display:flex; align-items:center; justify-content:space-between; gap:8px; min-height:52px; padding:0 20px; border-radius:9999px; background:#fff; color:var(--ink); text-decoration:none; font-weight:600; font-size:16px; }
+  li a small { color:var(--muted); font-weight:400; font-size:13px; }
+  a:focus-visible { outline:3px solid var(--teal); outline-offset:2px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="mark"><img src="icon-192.png" alt=""><div class="word">Sous<span>Mate</span></div></div>
+  <h1>Less paperwork.<br><span>More cooking.</span></h1>
+  <p class="sub">Tells you what's due. Keeps every record safe.</p>
+</header>
+<main>
+  <p class="note"><strong>Prototype with sample data.</strong> This is a clickable prototype. Nothing you type is saved. Tap around to see how SousMate would work in your kitchen.</p>
+  <a class="start" href="SignIn.dc.html">Start: who is on shift?</a>
+
+  <h2>Every day</h2>
+  <ul>
+    <li><a href="Main.dc.html">Today <small>checks still to do</small></a></li>
+    <li><a href="Fridge.dc.html">Fridge check</a></li>
+    <li><a href="Cooking.dc.html">Cooking check</a></li>
+    <li><a href="Cooling.dc.html">Cooling batch</a></li>
+    <li><a href="Problem.dc.html">Something went wrong</a></li>
+  </ul>
+
+  <h2>Inspection day</h2>
+  <ul>
+    <li><a href="Verify.dc.html">Everything since the last visit</a></li>
+  </ul>
+
+  <h2>What's due</h2>
+  <ul>
+    <li><a href="Due.dc.html">What's due <small>dates and training</small></a></li>
+    <li><a href="Reminder.dc.html">A reminder</a></li>
+    <li><a href="Dates.dc.html">Your dates</a></li>
+    <li><a href="StaffTraining.dc.html">Staff training</a></li>
+    <li><a href="TrainingAdd.dc.html">Add training</a></li>
+  </ul>
+</main>
+</body>
+</html>
