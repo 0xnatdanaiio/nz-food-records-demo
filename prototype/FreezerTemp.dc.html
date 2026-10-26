@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390">
+<style>html{touch-action:manipulation}@media (min-width:520px){html,body{background:#0E2A2C}body>div>div>div[style*="width: 390px"]{margin:24px auto;border-radius:28px;overflow:hidden}}</style>
+<title>Freezer check</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap">
+<style>
+html,body{margin:0;height:100%}
+/* Tokens: light = Kitchen ink (section 1), dark = src/index.css dark block + the new nav tokens (section 12). */
+.app{--bg:#E7EEEC;--card:#FFFFFF;--quiet:#F3F7F6;--text:#0E2A2C;--muted:#4A5E60;--line:#DDE6E4;--line-input:#6F8885;--ring:rgba(14,42,44,0.12);--header:#0E2A2C;--ink-raised:#1C3D40;--on-header-muted:#A9C4C2;--line-on-ink:#6F8E8C;--mint:#8EE6C9;--accent:#0B6B72;--accent-ink:#FFFFFF;--link:#0B6B72;--ok:#08555B;--ok-bg:#DFF5EE;--bad:#A9440C;--bad-text:#7E3209;--bad-bg:#FBE6D9;--icon-bg:#E7EEEC;--av-bg:#0E2A2C;--chip-on-bg:#0E2A2C;--chip-on-text:#FFFFFF;
+--nav-bg:#0E2A2C;--nav-border:#0E2A2C;--nav-shadow:none;--menu-shadow:0 8px 24px rgba(14,42,44,0.18);--nav-strip:#E7EEEC;--safe-bottom:0px;
+position:relative;width:100%;height:100vh;overflow:hidden;box-sizing:border-box;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;display:flex;flex-direction:column}
+.app.dark{--bg:#0A1A1B;--card:#142E30;--quiet:#1B3638;--text:#E8F1EF;--muted:#A9C4C2;--line:#23403F;--line-input:#6F8E8C;--ring:rgba(232,241,239,0.16);--accent:#8EE6C9;--accent-ink:#0E2A2C;--link:#8EE6C9;--ok:#8EE6C9;--ok-bg:#12382F;--bad:#FF9F6E;--bad-text:#FF9F6E;--bad-bg:#3D1F10;--icon-bg:#1B3638;--av-bg:#1C3D40;--chip-on-bg:#8EE6C9;--chip-on-text:#0E2A2C;
+--nav-bg:#284F52;--nav-border:#6F8E8C;--nav-shadow:0 8px 24px rgba(0,0,0,0.55);--menu-shadow:0 8px 24px rgba(0,0,0,0.6);--nav-strip:#0A1A1B}
+.app.safe{--safe-bottom:34px}
+.app a{color:var(--link)}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ic{flex:none;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.c-acc{stroke:var(--accent)}.c-text{stroke:var(--text)}.c-muted{stroke:var(--muted)}.c-bad{stroke:var(--bad)}.c-cur{stroke:currentColor}.c-mint{stroke:#8EE6C9}.c-white{stroke:#FFFFFF}
+
+/* Main-tab header: shop name, NZ date, big title. Same height on Today, What's due, History and Team. */
+.hd{flex:none;position:relative;z-index:3;background:var(--header);color:#FFFFFF;border-radius:0 0 28px 28px;padding:10px 20px 20px;display:flex;flex-direction:column}
+.hd.flat{border-radius:0}
+.hd-proto{margin:0 0 4px;font-size:12px;line-height:1.25;color:#A9C4C2}
+.hd-top{display:flex;align-items:center;gap:12px;min-height:48px}
+.hd-lines{flex:1;min-width:0}
+.hd-shop{flex:1;min-width:0;margin:0;font-size:15px;font-weight:700;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hd-date{margin:2px 0 0;font-size:14px;line-height:1.25;color:#A9C4C2;white-space:nowrap}
+.hd-date.b{margin:4px 0 0}
+.hd-slot{flex:none;display:flex;justify-content:flex-end;max-width:55%;min-width:0}
+.hd-title{margin:10px 0 0;font-size:44px;line-height:0.9;font-weight:900;letter-spacing:-0.045em;text-transform:uppercase;white-space:nowrap}
+/* Shift chip: the app's .shift-avatar (48 px, 32 px mint circle, 15 px 600, name cut with an ellipsis, max 55%). */
+.shift{flex:0 1 auto;min-width:48px;max-width:100%;min-height:48px;box-sizing:border-box;display:flex;align-items:center;gap:8px;padding:0 14px 0 8px;border-radius:9999px;background:#1C3D40;color:#FFFFFF !important;text-decoration:none;font-size:15px;font-weight:600;white-space:nowrap}
+.shift-c{flex:none;width:32px;height:32px;border-radius:9999px;background:#8EE6C9;color:#0E2A2C;display:flex;align-items:center;justify-content:center;font-weight:700}
+.shift-n{position:relative;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.hd-top.b .shift{max-width:46%}
+
+/* Sub-screen and form header: Back + smaller title. */
+.sub-top{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:48px}
+.sub-top .hd-proto{margin:0;white-space:nowrap}
+@media (max-width:340px){.nav{font-size:12px;letter-spacing:-0.02em}}
+@media (min-width:768px){.hd-title{font-size:52px}.sub-title{font-size:36px}}
+.back{display:flex;align-items:center;gap:4px;min-height:48px;padding-right:12px;color:#FFFFFF !important;text-decoration:none;font-size:15px;font-weight:600;white-space:nowrap}
+.sub-title{margin:6px 0 0;display:flex;align-items:center;gap:10px;font-size:32px;line-height:0.95;font-weight:900;letter-spacing:-0.045em;text-transform:uppercase}
+
+/* Section heading: one style on every screen (uppercase via CSS, sentence case in the source). */
+.sec{margin:8px 0 0;font-weight:900;font-size:20px;line-height:1.1;letter-spacing:-0.03em;text-transform:uppercase;color:var(--text);display:flex;align-items:center;gap:8px}
+.sec.quiet{font-size:16px}
+.sec .n{display:inline-flex;min-width:22px;height:22px;padding:0 6px;box-sizing:border-box;border-radius:20px;background:var(--text);color:var(--bg);font-size:13px;letter-spacing:0;align-items:center;justify-content:center}
+.sec .tag{text-transform:none;letter-spacing:0}
+
+.scroll{flex:1;min-height:0;overflow:auto;padding:16px 16px 0;display:flex;flex-direction:column;gap:12px}
+/* Room for the nav strip (12 px fade + 66 px pill + 12 px) plus a 12 px gap from the scroll gap. */
+.endpad{flex:none;height:calc(90px + var(--safe-bottom))}
+.endpad.tall{height:calc(152px + var(--safe-bottom))}
+
+/* Bottom nav dock: the strip behind the pill (solid --nav-strip with a 12 px fade on top), safe-area aware. */
+.dock{position:absolute;left:0;right:0;bottom:0;z-index:2;box-sizing:border-box;padding:12px 12px calc(12px + var(--safe-bottom));background:linear-gradient(to bottom,rgba(0,0,0,0) 0,var(--nav-strip) 12px);display:flex;flex-direction:column;gap:10px}
+.navbar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2px;padding:4px;border:1px solid var(--nav-border);border-radius:9999px;background:var(--nav-bg);box-shadow:var(--nav-shadow)}
+.nav{min-height:56px;border-radius:9999px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:13px;font-weight:600;color:#FFFFFF !important;text-decoration:none;letter-spacing:-0.01em;white-space:nowrap}
+.nav[aria-current="page"]{background:#8EE6C9;color:#0E2A2C !important;font-weight:700}
+.homebar{position:absolute;left:50%;bottom:8px;width:134px;height:5px;margin-left:-67px;border-radius:3px;background:var(--text);opacity:.85;z-index:4}
+
+.docket{flex:none;position:relative;background:var(--card);border-radius:20px;padding:12px 14px 12px 12px;text-decoration:none;color:var(--text) !important;display:flex;gap:12px;align-items:center;min-height:56px;box-sizing:border-box}
+.ico{flex:none;width:44px;height:44px;border-radius:9999px;background:var(--icon-bg);display:flex;align-items:center;justify-content:center}
+.tag{display:inline-block;font-size:13px;font-weight:700;padding:2px 8px;border-radius:9999px;border:1.5px solid currentColor;color:var(--muted);white-space:nowrap}
+.t{margin:0;font-size:18px;line-height:1.1;font-weight:700;letter-spacing:-0.01em}
+.s{margin:2px 0 0;font-size:15px;color:var(--muted);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.help{margin:0;font-size:14px;color:var(--muted);line-height:1.35}
+.src{display:block;margin-top:4px;font-size:13px;color:var(--muted)}
+.mainBtn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:56px;border-radius:9999px;background:var(--accent);color:var(--accent-ink) !important;text-decoration:none;font-weight:700;font-size:17px}
+.go{display:flex;align-items:center;justify-content:center;gap:6px;min-height:48px;border-radius:9999px;border:2px solid var(--accent);background:var(--card);color:var(--accent) !important;text-decoration:none;font-weight:700;font-size:15px}
+
+.proto{margin:8px 0 0;border:2px dashed var(--line-input);border-radius:20px;padding:10px 12px 12px;display:flex;flex-direction:column;gap:8px}
+.proto p{margin:0;font-size:14px;font-weight:700;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:48px;padding:0 16px;border-radius:9999px;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;background:var(--card);color:var(--text);border:2px solid var(--line-input)}
+.chip[aria-pressed="true"]{background:var(--chip-on-bg);color:var(--chip-on-text);border-color:var(--chip-on-bg)}
+
+.box{background:var(--card);border-radius:20px;padding:6px 16px}
+.lrow{display:flex;align-items:center;gap:10px;min-height:56px;border-top:1px solid var(--line)}
+.lrow.first{border-top:0}
+.lrow b{font-size:17px}
+.av{flex:none;width:36px;height:36px;border-radius:9999px;background:var(--av-bg);color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px}
+.tbtn{flex:none;min-width:48px;min-height:48px;padding:0 6px;border:0;background:transparent;color:var(--link);font-family:inherit;font-size:15px;font-weight:700;text-decoration:underline;cursor:pointer}
+.lbl{margin:0;font-size:16px;font-weight:700}
+.addrow{display:flex;gap:8px}
+.txt{flex:1;min-width:0;box-sizing:border-box;min-height:52px;border:2px solid var(--line-input);border-radius:16px;padding:10px 12px;font-family:inherit;font-size:16px;color:var(--text);background:var(--card)}
+.txt::placeholder{color:var(--muted)}
+.btn2{flex:none;min-height:52px;padding:0 16px;border-radius:9999px;border:2px solid var(--accent);background:var(--card);color:var(--accent);font-family:inherit;font-size:15px;font-weight:700;cursor:pointer}
+.srow{display:flex;align-items:center;gap:12px;min-height:60px;color:var(--text) !important;text-decoration:none}
+.dl{display:flex;align-items:center;gap:12px;min-height:52px;width:100%;border:0;border-top:1px solid var(--line);background:transparent;font-family:inherit;cursor:pointer;padding:0;text-align:left;font-size:16px;font-weight:700;color:var(--link)}
+.dl.first{border-top:0}
+/* ui-tidy-a item 5: the shared signed field (SignedTempField), token version so it works in light and dark. */
+.sfield{display:flex;align-items:center;gap:4px;height:64px;box-sizing:border-box;border:2px solid var(--line-input);border-radius:16px;background:var(--card);padding:0 14px 0 6px}
+.sfield:focus-within{outline:3px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+.sfield input{flex:1;min-width:120px;width:100%;height:100%;box-sizing:border-box;border:0;outline:0;background:transparent;font-family:inherit;font-size:32px;font-weight:800;letter-spacing:-0.02em;text-align:left;padding:0 0 0 10px;color:var(--text)}
+.sfield input::placeholder{color:var(--muted);opacity:.6}
+.sfield .u{flex:none;font-size:22px;color:var(--muted);font-weight:800;letter-spacing:-0.02em}
+.sign{flex:none;width:48px;height:48px;box-sizing:border-box;border-radius:12px;border:1.5px solid var(--line-input);background:var(--icon-bg);color:var(--text);font-family:inherit;font-size:30px;line-height:1;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0 0 3px}
+.sign:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.readback{margin:0;font-size:15px;font-weight:700}
+.card{background:var(--card);border-radius:20px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.ans{display:flex;align-items:center;justify-content:center;min-height:56px;border-radius:9999px;font-family:inherit;font-size:17px;font-weight:700;cursor:pointer}
+.ans.ok{border:0;background:var(--accent);color:var(--accent-ink)}
+.ans.bad{border:2px solid var(--bad);background:var(--card);color:var(--bad-text)}
+.linkbtn{align-self:flex-start;min-height:48px;padding:0 4px;border:0;background:transparent;font-family:inherit;font-size:15px;font-weight:700;color:var(--link);text-decoration:underline;cursor:pointer}
+</style>
+</helmet>
+<div class="{{appClass}}">
+  <header class="hd">
+    <div class="sub-top">
+      <a class="back" href="Fridge.dc.html"><svg class="ic c-white" width="20" height="20" viewBox="0 0 24 24" style="stroke-width: 2.2" aria-hidden="true"><path d="{{ic.back}}"></path></svg>Fridges</a>
+      <p class="hd-proto">Prototype with sample data</p>
+    </div>
+    <h1 class="sub-title">Chest freezer</h1>
+  </header>
+
+  <div class="scroll">
+    <div class="card">
+      <span class="tag" style="align-self: flex-start">Daily check</span>
+      <p class="help" style="font-size: 15px">MPI says you don't have to record the temperature.</p>
+    </div>
+    <div class="card">
+      <p class="help" style="font-size: 15px; color: var(--text)">Checked by <b>Mia</b> · 08:10</p>
+    </div>
+    <div class="card">
+      <h2 id="fz-q" style="margin: 0; font-size: 18px; line-height: 1.25">Is the food still frozen (hard/solid)?</h2>
+      <div role="group" aria-labelledby="fz-q" style="display: flex; flex-direction: column; gap: 10px">
+        <a class="ans ok" href="Fridge.dc.html" style="text-decoration: none">Still frozen ✓</a>
+        <button type="button" class="ans bad" aria-expanded="false">Not frozen or freezer fault</button>
+      </div>
+      <button type="button" class="linkbtn" aria-expanded="true" aria-controls="fz-temp-box">Add a temperature (optional)</button>
+      <div id="fz-temp-box" style="display: flex; flex-direction: column; gap: 8px">
+        <label for="fz-temp" style="font-size: 16px; font-weight: 700">Food temperature (optional)</label>
+        <div class="sfield">
+          <button type="button" class="sign" aria-label="{{signLabel}}" onClick="{{flip}}" onMouseDown="{{keepFocus}}">{{signGlyph}}</button>
+          <input id="fz-temp" type="text" inputmode="decimal" autocomplete="off" placeholder="0.0" value="{{digits}}" onInput="{{onInput}}" aria-describedby="fz-rb">
+          <span class="u" aria-hidden="true">°C</span>
+        </div>
+        <sc-if value="{{hasValue}}" hint-placeholder-val="{{ true }}">
+          <p class="readback" id="fz-rb" role="status">Reading: {{readback}}</p>
+        </sc-if>
+        <p class="help">Saved as measured. SousMate does not judge a freezer temperature.</p>
+      </div>
+    </div>
+
+    <div class="proto">
+      <p>Prototype only: try another sample</p>
+      <sc-for list="{{groups}}" as="g" hint-placeholder-count="2">
+        <div class="chips" role="group" aria-label="{{g.label}}">
+          <sc-for list="{{g.chips}}" as="c" hint-placeholder-count="2">
+            <button type="button" class="chip" aria-pressed="{{c.pressed}}" onClick="{{c.pick}}">{{c.label}}</button>
+          </sc-for>
+        </div>
+      </sc-for>
+    </div>
+    <div style="flex: none; height: 16px"></div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    const h = (typeof location !== 'undefined' ? location.hash : '').slice(1).split(',');
+    const osDark = typeof matchMedia === 'function' && matchMedia('(prefers-color-scheme: dark)').matches;
+    // Freezer check (F4) starts on − (spec ui-tidy-a A5-1). Samples: empty, −18.0, +4.0.
+    const s = h.indexOf('m18') >= 0 ? 'm18' : h.indexOf('p4') >= 0 ? 'p4' : 'empty';
+    this.state = { dark: h.indexOf('dark') >= 0 || (h.indexOf('light') < 0 && osDark), sample: s, ...this.sampleState(s) };
+  }
+  sampleState(s) {
+    if (s === 'm18') return { sign: '-', digits: '18.0' };
+    if (s === 'p4') return { sign: '+', digits: '4.0' };
+    return { sign: '-', digits: '' };
+  }
+  renderVals() {
+    const ic = { back: 'M15 6l-6 6 6 6' };
+    const st = this.state;
+    const d = String(st.digits).trim().replace(',', '.');
+    let n = /^\d+(\.\d)?$/.test(d) ? Number(d) : null;
+    if (n !== null && st.sign === '-') n = n === 0 ? 0 : -n;
+    const chips = (cur, opts, pick) => opts.map(([k, label]) => ({ label, pressed: cur === k ? 'true' : 'false', pick: () => pick(k) }));
+    return {
+      ic,
+      appClass: 'app' + (st.dark ? ' dark' : ''),
+      digits: st.digits,
+      signGlyph: st.sign === '-' ? '−' : '+',
+      signLabel: st.sign === '-' ? 'Change to plus' : 'Change to minus',
+      hasValue: n !== null,
+      // A5-6 / R4: no limit, no OK or warning next to a freezer °C; +4.0 saves as 4.0°C.
+      readback: n === null ? '' : (n < 0 ? '−' : '') + Math.abs(n).toFixed(1) + '°C',
+      keepFocus: (e) => e.preventDefault(),
+      flip: () => this.setState({ sign: st.sign === '-' ? '+' : '-' }),
+      onInput: (e) => {
+        const v = e.target.value;
+        const m = /^\s*([-−–+])/.exec(v);
+        if (m) this.setState({ digits: v.slice(m[0].length), sign: m[1] === '+' ? '+' : '-' });
+        else this.setState({ digits: v });
+      },
+      groups: [
+        { label: 'Reading', chips: chips(st.sample, [['empty', 'Empty (starts on −)'], ['m18', '−18.0'], ['p4', '+4.0 (broken freezer)']], (k) => this.setState({ sample: k, ...this.sampleState(k) })) },
+        { label: 'Colour mode', chips: chips(st.dark, [[false, 'Light'], [true, 'Dark']], (k) => this.setState({ dark: k })) },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

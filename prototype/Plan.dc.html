@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390">
+<style>html{touch-action:manipulation}@media (min-width:520px){html,body{background:#0E2A2C}body>div>div>div[style*="width: 390px"]{margin:24px auto;border-radius:28px;overflow:hidden}}</style>
+<title>Choose a plan</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap">
+<style>
+html,body{margin:0;height:100%}
+/* Tokens: light = Kitchen ink (section 1), dark = src/index.css dark block + the new nav tokens (section 12). */
+.app{--bg:#E7EEEC;--card:#FFFFFF;--quiet:#F3F7F6;--text:#0E2A2C;--muted:#4A5E60;--line:#DDE6E4;--line-input:#6F8885;--ring:rgba(14,42,44,0.12);--header:#0E2A2C;--ink-raised:#1C3D40;--on-header-muted:#A9C4C2;--line-on-ink:#6F8E8C;--mint:#8EE6C9;--accent:#0B6B72;--accent-ink:#FFFFFF;--link:#0B6B72;--ok:#08555B;--ok-bg:#DFF5EE;--bad:#A9440C;--bad-text:#7E3209;--bad-bg:#FBE6D9;--icon-bg:#E7EEEC;--av-bg:#0E2A2C;--chip-on-bg:#0E2A2C;--chip-on-text:#FFFFFF;
+--nav-bg:#0E2A2C;--nav-border:#0E2A2C;--nav-shadow:none;--menu-shadow:0 8px 24px rgba(14,42,44,0.18);--nav-strip:#E7EEEC;--safe-bottom:0px;
+position:relative;width:100%;height:100vh;overflow:hidden;box-sizing:border-box;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;display:flex;flex-direction:column}
+.app.dark{--bg:#0A1A1B;--card:#142E30;--quiet:#1B3638;--text:#E8F1EF;--muted:#A9C4C2;--line:#23403F;--line-input:#6F8E8C;--ring:rgba(232,241,239,0.16);--accent:#8EE6C9;--accent-ink:#0E2A2C;--link:#8EE6C9;--ok:#8EE6C9;--ok-bg:#12382F;--bad:#FF9F6E;--bad-text:#FF9F6E;--bad-bg:#3D1F10;--icon-bg:#1B3638;--av-bg:#1C3D40;--chip-on-bg:#8EE6C9;--chip-on-text:#0E2A2C;
+--nav-bg:#284F52;--nav-border:#6F8E8C;--nav-shadow:0 8px 24px rgba(0,0,0,0.55);--menu-shadow:0 8px 24px rgba(0,0,0,0.6);--nav-strip:#0A1A1B}
+.app.safe{--safe-bottom:34px}
+.app a{color:var(--link)}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ic{flex:none;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.c-acc{stroke:var(--accent)}.c-text{stroke:var(--text)}.c-muted{stroke:var(--muted)}.c-bad{stroke:var(--bad)}.c-cur{stroke:currentColor}.c-mint{stroke:#8EE6C9}.c-white{stroke:#FFFFFF}
+
+/* Main-tab header: shop name, NZ date, big title. Same height on Today, What's due, History and Team. */
+.hd{flex:none;position:relative;z-index:3;background:var(--header);color:#FFFFFF;border-radius:0 0 28px 28px;padding:10px 20px 20px;display:flex;flex-direction:column}
+.hd.flat{border-radius:0}
+.hd-proto{margin:0 0 4px;font-size:12px;line-height:1.25;color:#A9C4C2}
+.hd-top{display:flex;align-items:center;gap:12px;min-height:48px}
+.hd-lines{flex:1;min-width:0}
+.hd-shop{flex:1;min-width:0;margin:0;font-size:15px;font-weight:700;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hd-date{margin:2px 0 0;font-size:14px;line-height:1.25;color:#A9C4C2;white-space:nowrap}
+.hd-date.b{margin:4px 0 0}
+.hd-slot{flex:none;display:flex;justify-content:flex-end;max-width:55%;min-width:0}
+.hd-title{margin:10px 0 0;font-size:44px;line-height:0.9;font-weight:900;letter-spacing:-0.045em;text-transform:uppercase;white-space:nowrap}
+/* Shift chip: the app's .shift-avatar (48 px, 32 px mint circle, 15 px 600, name cut with an ellipsis, max 55%). */
+.shift{flex:0 1 auto;min-width:48px;max-width:100%;min-height:48px;box-sizing:border-box;display:flex;align-items:center;gap:8px;padding:0 14px 0 8px;border-radius:9999px;background:#1C3D40;color:#FFFFFF !important;text-decoration:none;font-size:15px;font-weight:600;white-space:nowrap}
+.shift-c{flex:none;width:32px;height:32px;border-radius:9999px;background:#8EE6C9;color:#0E2A2C;display:flex;align-items:center;justify-content:center;font-weight:700}
+.shift-n{position:relative;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.hd-top.b .shift{max-width:46%}
+
+/* Sub-screen and form header: Back + smaller title. */
+.sub-top{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:48px}
+.sub-top .hd-proto{margin:0;white-space:nowrap}
+@media (max-width:340px){.nav{font-size:12px;letter-spacing:-0.02em}}
+@media (min-width:768px){.hd-title{font-size:52px}.sub-title{font-size:36px}}
+.back{display:flex;align-items:center;gap:4px;min-height:48px;padding-right:12px;color:#FFFFFF !important;text-decoration:none;font-size:15px;font-weight:600;white-space:nowrap}
+.sub-title{margin:6px 0 0;display:flex;align-items:center;gap:10px;font-size:32px;line-height:0.95;font-weight:900;letter-spacing:-0.045em;text-transform:uppercase}
+
+/* Section heading: one style on every screen (uppercase via CSS, sentence case in the source). */
+.sec{margin:8px 0 0;font-weight:900;font-size:20px;line-height:1.1;letter-spacing:-0.03em;text-transform:uppercase;color:var(--text);display:flex;align-items:center;gap:8px}
+.sec.quiet{font-size:16px}
+.sec .n{display:inline-flex;min-width:22px;height:22px;padding:0 6px;box-sizing:border-box;border-radius:20px;background:var(--text);color:var(--bg);font-size:13px;letter-spacing:0;align-items:center;justify-content:center}
+.sec .tag{text-transform:none;letter-spacing:0}
+
+.scroll{flex:1;min-height:0;overflow:auto;padding:16px 16px 0;display:flex;flex-direction:column;gap:12px}
+/* Room for the nav strip (12 px fade + 66 px pill + 12 px) plus a 12 px gap from the scroll gap. */
+.endpad{flex:none;height:calc(90px + var(--safe-bottom))}
+.endpad.tall{height:calc(152px + var(--safe-bottom))}
+
+/* Bottom nav dock: the strip behind the pill (solid --nav-strip with a 12 px fade on top), safe-area aware. */
+.dock{position:absolute;left:0;right:0;bottom:0;z-index:2;box-sizing:border-box;padding:12px 12px calc(12px + var(--safe-bottom));background:linear-gradient(to bottom,rgba(0,0,0,0) 0,var(--nav-strip) 12px);display:flex;flex-direction:column;gap:10px}
+.navbar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2px;padding:4px;border:1px solid var(--nav-border);border-radius:9999px;background:var(--nav-bg);box-shadow:var(--nav-shadow)}
+.nav{min-height:56px;border-radius:9999px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:13px;font-weight:600;color:#FFFFFF !important;text-decoration:none;letter-spacing:-0.01em;white-space:nowrap}
+.nav[aria-current="page"]{background:#8EE6C9;color:#0E2A2C !important;font-weight:700}
+.homebar{position:absolute;left:50%;bottom:8px;width:134px;height:5px;margin-left:-67px;border-radius:3px;background:var(--text);opacity:.85;z-index:4}
+
+.docket{flex:none;position:relative;background:var(--card);border-radius:20px;padding:12px 14px 12px 12px;text-decoration:none;color:var(--text) !important;display:flex;gap:12px;align-items:center;min-height:56px;box-sizing:border-box}
+.ico{flex:none;width:44px;height:44px;border-radius:9999px;background:var(--icon-bg);display:flex;align-items:center;justify-content:center}
+.tag{display:inline-block;font-size:13px;font-weight:700;padding:2px 8px;border-radius:9999px;border:1.5px solid currentColor;color:var(--muted);white-space:nowrap}
+.t{margin:0;font-size:18px;line-height:1.1;font-weight:700;letter-spacing:-0.01em}
+.s{margin:2px 0 0;font-size:15px;color:var(--muted);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.help{margin:0;font-size:14px;color:var(--muted);line-height:1.35}
+.src{display:block;margin-top:4px;font-size:13px;color:var(--muted)}
+.mainBtn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:56px;border-radius:9999px;background:var(--accent);color:var(--accent-ink) !important;text-decoration:none;font-weight:700;font-size:17px}
+.go{display:flex;align-items:center;justify-content:center;gap:6px;min-height:48px;border-radius:9999px;border:2px solid var(--accent);background:var(--card);color:var(--accent) !important;text-decoration:none;font-weight:700;font-size:15px}
+
+.proto{margin:8px 0 0;border:2px dashed var(--line-input);border-radius:20px;padding:10px 12px 12px;display:flex;flex-direction:column;gap:8px}
+.proto p{margin:0;font-size:14px;font-weight:700;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:48px;padding:0 16px;border-radius:9999px;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;background:var(--card);color:var(--text);border:2px solid var(--line-input)}
+.chip[aria-pressed="true"]{background:var(--chip-on-bg);color:var(--chip-on-text);border-color:var(--chip-on-bg)}
+
+.box{background:var(--card);border-radius:20px;padding:6px 16px}
+.lrow{display:flex;align-items:center;gap:10px;min-height:56px;border-top:1px solid var(--line)}
+.lrow.first{border-top:0}
+.lrow b{font-size:17px}
+.av{flex:none;width:36px;height:36px;border-radius:9999px;background:var(--av-bg);color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px}
+.tbtn{flex:none;min-width:48px;min-height:48px;padding:0 6px;border:0;background:transparent;color:var(--link);font-family:inherit;font-size:15px;font-weight:700;text-decoration:underline;cursor:pointer}
+.lbl{margin:0;font-size:16px;font-weight:700}
+.addrow{display:flex;gap:8px}
+.txt{flex:1;min-width:0;box-sizing:border-box;min-height:52px;border:2px solid var(--line-input);border-radius:16px;padding:10px 12px;font-family:inherit;font-size:16px;color:var(--text);background:var(--card)}
+.txt::placeholder{color:var(--muted)}
+.btn2{flex:none;min-height:52px;padding:0 16px;border-radius:9999px;border:2px solid var(--accent);background:var(--card);color:var(--accent);font-family:inherit;font-size:15px;font-weight:700;cursor:pointer}
+.srow{display:flex;align-items:center;gap:12px;min-height:60px;color:var(--text) !important;text-decoration:none}
+.dl{display:flex;align-items:center;gap:12px;min-height:52px;width:100%;border:0;border-top:1px solid var(--line);background:transparent;font-family:inherit;cursor:pointer;padding:0;text-align:left;font-size:16px;font-weight:700;color:var(--link)}
+.dl.first{border-top:0}
+/* ui-tidy-a: compact Team lists. Row = name (+ type) + icon buttons; rare actions behind ⋯ (a disclosure panel, not an ARIA menu). */
+.row2{position:relative;display:flex;align-items:center;gap:6px;min-height:64px;border-top:1px solid var(--line);padding:6px 0}
+.row2.first{border-top:0}
+.row2 .rico{flex:none;margin-right:4px}
+.nm{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;overflow-wrap:anywhere}
+.nm b{font-size:17px;line-height:1.2;color:var(--text)}
+.nm .meta{font-size:14px;line-height:1.3;color:var(--muted)}
+.ibtn{flex:none;width:48px;height:48px;box-sizing:border-box;border-radius:9999px;border:2px solid var(--line-input);background:var(--card);color:var(--text);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.ibtn[aria-disabled="true"]{border-color:var(--line);color:var(--line-input);cursor:default}
+.more{flex:none;width:48px;height:48px;box-sizing:border-box;border-radius:9999px;border:0;background:transparent;color:var(--text);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.more[aria-expanded="true"]{background:var(--icon-bg);box-shadow:inset 0 0 0 2px var(--line-input)}
+.ibtn:focus-visible,.more:focus-visible,.addsm:focus-visible,.mi:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.panel{position:absolute;right:0;top:calc(100% - 4px);z-index:5;min-width:224px;max-width:calc(100vw - 48px);box-sizing:border-box;background:var(--card);border:1px solid var(--line-input);border-radius:20px;box-shadow:var(--menu-shadow);padding:6px;display:flex;flex-direction:column;gap:2px}
+.mi{display:flex;align-items:center;gap:12px;min-height:48px;padding:0 14px 0 12px;border:0;border-radius:14px;background:transparent;font-family:inherit;font-size:16px;font-weight:600;color:var(--text);text-align:left;cursor:pointer}
+.mi:hover{background:var(--quiet)}
+.mi.danger{color:var(--bad-text)}
+.addsm{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;min-height:48px;box-sizing:border-box;padding:0 18px 0 14px;border-radius:9999px;border:2px solid var(--accent);background:var(--card);color:var(--accent) !important;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer}
+.linkbtn{align-self:flex-start;min-height:48px;padding:0 4px;border:0;background:transparent;font-family:inherit;font-size:15px;font-weight:700;color:var(--link);text-decoration:underline;cursor:pointer}
+.formbox{background:var(--card);border-radius:20px;padding:12px 16px 14px;display:flex;flex-direction:column;gap:8px}
+.formhead{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.formhead .lbl{font-size:17px}
+.typegrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.typegrid .chip{padding:0 8px}
+.confirm{display:flex;flex-direction:column;gap:8px;padding:10px 12px 12px;margin:0 0 8px;border-radius:16px;background:var(--quiet);border:1px solid var(--line)}
+.confirm p{margin:0;font-size:15px;line-height:1.4}
+.confirm .btns{display:flex;flex-wrap:wrap;gap:8px}
+.btn2.warn{border-color:var(--bad);color:var(--bad-text)}
+.btn2.fill{background:var(--accent);color:var(--accent-ink)}
+.rnform{display:flex;flex-direction:column;gap:6px;padding:10px 0 12px;border-top:1px solid var(--line)}
+.ctitle{margin:0;padding:10px 0 2px;font-size:17px;font-weight:700}
+@media (max-width:360px){.row2 .rico{display:none}}
+/* ui-tidy-a item 5: the shared signed field (SignedTempField), token version so it works in light and dark. */
+.sfield{display:flex;align-items:center;gap:4px;height:64px;box-sizing:border-box;border:2px solid var(--line-input);border-radius:16px;background:var(--card);padding:0 14px 0 6px}
+.sfield:focus-within{outline:3px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+.sfield input{flex:1;min-width:120px;width:100%;height:100%;box-sizing:border-box;border:0;outline:0;background:transparent;font-family:inherit;font-size:32px;font-weight:800;letter-spacing:-0.02em;text-align:left;padding:0 0 0 10px;color:var(--text)}
+.sfield input::placeholder{color:var(--muted);opacity:.6}
+.sfield .u{flex:none;font-size:22px;color:var(--muted);font-weight:800;letter-spacing:-0.02em}
+.sign{flex:none;width:48px;height:48px;box-sizing:border-box;border-radius:12px;border:1.5px solid var(--line-input);background:var(--icon-bg);color:var(--text);font-family:inherit;font-size:30px;line-height:1;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0 0 3px}
+.sign:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.readback{margin:0;font-size:15px;font-weight:700}
+.card{background:var(--card);border-radius:20px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.ans{display:flex;align-items:center;justify-content:center;min-height:56px;border-radius:9999px;font-family:inherit;font-size:17px;font-weight:700;cursor:pointer}
+.ans.ok{border:0;background:var(--accent);color:var(--accent-ink)}
+.ans.bad{border:2px solid var(--bad);background:var(--card);color:var(--bad-text)}
+/* equipment (set C): extra tokens. Disabled answer fill and the label on a warn-filled button, light and dark. */
+.app{--dis-bg:#D5DFDC;--bad-ink:#FFFFFF}
+.app.dark{--dis-bg:#1B3638;--bad-ink:#0E2A2C}
+.why{flex:none;min-width:48px;min-height:48px;margin:-8px -8px -8px 0;padding:0 8px;border:0;background:transparent;font-family:inherit;font-size:15px;font-weight:700;color:var(--link);text-decoration:underline;cursor:pointer}
+.whybox{margin:0;padding:10px 12px;border-radius:16px;background:var(--quiet);font-size:14px;line-height:1.4;color:var(--text)}
+.hd-sub{margin:8px 0 0;font-size:15px;line-height:1.3;color:#A9C4C2}
+.card{background:var(--card);border-radius:20px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.card.warn{box-shadow:inset 0 0 0 2px var(--bad)}
+.field{width:100%;box-sizing:border-box;min-height:52px;border:2px solid var(--line-input);border-radius:16px;padding:10px 12px;font-family:inherit;font-size:16px;color:var(--text);background:var(--card)}
+textarea.field{min-height:76px;resize:vertical;line-height:1.35}
+.field:focus{outline:3px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+.field::placeholder{color:var(--muted)}
+.lbl .opt{font-weight:400;font-size:14px;color:var(--muted)}
+.seg2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.seg{min-height:56px;padding:4px 10px;border-radius:9999px;font-family:inherit;font-size:15px;font-weight:700;line-height:1.15;cursor:pointer;background:var(--card);color:var(--text);border:2px solid var(--line-input)}
+.seg[aria-pressed="true"]{background:var(--chip-on-bg);color:var(--chip-on-text);border-color:var(--chip-on-bg)}
+.chip.wrap{line-height:1.15;padding:4px 14px}
+.preset{display:flex;align-items:center;gap:12px;width:100%;min-height:56px;box-sizing:border-box;padding:8px 12px;border-radius:28px;border:2px solid var(--quiet);background:var(--quiet);font-family:inherit;font-size:16px;font-weight:700;line-height:1.25;color:var(--text);text-align:left;cursor:pointer}
+.preset[aria-pressed="true"]{background:var(--ok-bg);border-color:var(--accent)}
+.preset .mk{flex:none;width:28px;height:28px;box-sizing:border-box;border-radius:14px;border:2px solid var(--line-input);background:var(--card);display:flex;align-items:center;justify-content:center;font-size:17px;color:var(--accent-ink)}
+.preset[aria-pressed="true"] .mk{background:var(--accent);border-color:var(--accent)}
+.qchip{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;min-height:48px;padding:0 16px 0 12px;border-radius:9999px;border:2px solid var(--line-input);background:var(--card);color:var(--text);font-family:inherit;font-size:15px;font-weight:700;cursor:pointer}
+.datebtn{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;box-sizing:border-box;min-height:52px;border:2px solid var(--line-input);border-radius:16px;padding:10px 12px;font-family:inherit;font-size:16px;color:var(--text);background:var(--card);text-align:left;cursor:pointer}
+.wholine{display:flex;align-items:center;gap:10px;min-height:48px}
+.wholine p{flex:1;min-width:0;margin:0;font-size:16px;line-height:1.3}
+.ans{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;min-height:56px;box-sizing:border-box;border-radius:9999px;font-family:inherit;font-size:17px;font-weight:700;cursor:pointer;text-decoration:none}
+.ans.ok{border:0;background:var(--accent);color:var(--accent-ink) !important}
+.ans.bad{border:2px solid var(--bad);background:var(--card);color:var(--bad-text)}
+.ans.bad[aria-pressed="true"]{background:var(--bad-bg)}
+.ans[aria-disabled="true"]{background:var(--dis-bg);color:var(--muted) !important;border:0;cursor:default}
+.note-bad{margin:0;font-size:15px;font-weight:700;color:var(--bad-text);line-height:1.35}
+.sBad{margin:0;padding:10px 14px;border-radius:20px;background:var(--bad-bg);color:var(--bad-text);font-weight:700;font-size:15px;line-height:1.35}
+.err{margin:0;padding:8px 12px;border-radius:16px;background:var(--bad-bg);color:var(--bad-text);font-weight:700;font-size:15px;line-height:1.35}
+/* Bottom action bar on forms (no nav), the same strip as the nav dock. */
+.fbar{flex:none;padding:10px 16px calc(14px + var(--safe-bottom));background:var(--bg);border-top:1px solid var(--line)}
+.btnMain{display:flex;align-items:center;justify-content:center;gap:8px;min-height:56px;border-radius:9999px;font-weight:700;font-size:17px;text-decoration:none;text-align:center;padding:0 16px}
+.btnMain.ok{background:var(--accent);color:var(--accent-ink) !important}
+.btnMain.warn{background:var(--bad);color:var(--bad-ink) !important}
+.btnMain.off{background:var(--dis-bg);color:var(--muted) !important}
+/* Equipment rows: the name area is the link to the item page; ⋯ sits beside it (never inside the link). */
+a.nm{text-decoration:none;color:var(--text) !important;min-height:48px;justify-content:center;border-radius:12px}
+a.nm:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.subhd{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:12px 0 4px;border-top:1px solid var(--line)}
+.subhd b{font-size:15px}
+.subhd .help a{font-weight:700}
+.panelform{display:flex;flex-direction:column;gap:8px;padding:6px 0 12px;border-top:1px solid var(--line)}
+.panelform .lbl{font-size:15px}
+.empty{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 10px;border:2px dashed var(--line-input);border-radius:20px;text-align:center}
+.empty p{margin:0;font-size:15px;color:var(--muted)}
+.subhd.first{border-top:0;padding-top:8px}
+/* Long back labels (an item name) never push the prototype label off screen at 320 px. */
+.sub-top .back{min-width:0;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis}
+.sub-top .hd-proto{flex:0 1 auto;min-width:0;white-space:normal;text-align:right}
+/* billing (spec billing.md): plan status block, plan cards, receipts rows, neutral notices. No warn colour anywhere:
+   a trial countdown, Free, lapsed and a failed card are account states, not food-safety problems (Kitchen ink rule). */
+.stline{display:flex;align-items:flex-start;gap:10px;margin:0;font-size:17px;font-weight:700;line-height:1.35;color:var(--text)}
+.stline .ic{margin-top:1px}
+.stsub{margin:-4px 0 0 32px;font-size:15px;line-height:1.4;color:var(--muted)}
+.ibox{display:flex;gap:10px;align-items:flex-start;margin:0;padding:12px 14px;border-radius:20px;background:var(--quiet);border:1px solid var(--line);font-size:15px;line-height:1.4;color:var(--text)}
+.ibox .ic{margin-top:1px}
+.okbox{display:flex;gap:10px;align-items:flex-start;margin:0;padding:12px 14px;border-radius:20px;background:var(--ok-bg);color:var(--ok);font-size:15px;font-weight:700;line-height:1.4}
+.spin{flex:none;width:16px;height:16px;margin:2px 2px 0;border-radius:50%;border:3px solid var(--line-input);border-top-color:var(--accent);animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.spin{animation:none;border-top-color:var(--line-input);border-right-color:var(--accent)}}
+.navrow{display:flex;align-items:center;gap:12px;min-height:56px;border-top:1px solid var(--line);color:var(--text) !important;text-decoration:none;font-size:16px;font-weight:700}
+.navrow.btnlike{width:100%;border-left:0;border-right:0;border-bottom:0;background:transparent;font-family:inherit;padding:0;text-align:left;cursor:pointer}
+.navrow span.f{flex:1;min-width:0}
+.navrow small{display:block;font-size:14px;font-weight:400;color:var(--muted);line-height:1.3}
+.navrow.dlrow{color:var(--link) !important}
+.mainBtn.off{background:var(--dis-bg);color:var(--muted) !important;cursor:default}
+.go.ext .ic{margin-left:2px}
+/* The scroll column never squeezes its children (the docket rule, flex: none). */
+.scroll > *{flex-shrink:0}
+/* Plan card: the whole card is the button that opens Stripe Checkout (crit. 7). */
+.plancard{display:flex;align-items:center;gap:12px;width:100%;box-sizing:border-box;min-height:92px;padding:14px 12px 14px 16px;border-radius:20px;border:2px solid var(--accent);background:var(--card);color:var(--text);font-family:inherit;text-align:left;cursor:pointer}
+.plancard:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.plancard[aria-disabled="true"]{border-color:var(--line-input);cursor:default}
+.plancard[aria-disabled="true"] .pc-p,.plancard[aria-disabled="true"] .pc-t{color:var(--muted)}
+.plancard[aria-busy="true"]{box-shadow:inset 0 0 0 2px var(--accent)}
+.plancard[aria-disabled="true"] .chev{stroke:var(--line-input)}
+.pc{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.pc-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pc-t{margin:0;font-size:17px;font-weight:700;line-height:1.2}
+.pc-p{margin:0;font-size:16px;font-weight:600;line-height:1.35;color:var(--text)}
+.pc-p b{font-size:26px;font-weight:900;letter-spacing:-0.03em;line-height:1}
+.save{display:inline-block;padding:2px 10px;border-radius:9999px;background:var(--ok-bg);color:var(--ok);font-size:14px;font-weight:700;white-space:nowrap}
+.left{display:inline-block;padding:2px 10px;border-radius:9999px;border:1.5px solid var(--accent);color:var(--accent);font-size:13px;font-weight:700;white-space:nowrap}
+.pc-go{display:flex;align-items:center;gap:6px;margin:0;font-size:14px;font-weight:700;color:var(--link)}
+.feat{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;font-size:15px;line-height:1.35}
+.feat li{display:flex;gap:10px;align-items:flex-start}
+/* Receipts rows (crit. 9). */
+.rrow{display:flex;flex-direction:column;gap:2px;padding:10px 0 4px;border-top:1px solid var(--line)}
+.rrow.first{border-top:0}
+.rr-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.rr-top b{font-size:17px;line-height:1.25}
+.rr-amt{margin-left:auto;font-size:17px;font-weight:800;letter-spacing:-0.01em}
+.rr-meta{margin:2px 0 0;font-size:14px;color:var(--muted);line-height:1.6}
+.rr-meta .stag{margin-right:4px}
+.rr-links{display:flex;flex-wrap:wrap;gap:0 16px}
+.xlink{display:inline-flex;align-items:center;gap:6px;min-height:48px;padding:0 2px;font-size:15px;font-weight:700;color:var(--link) !important;text-decoration:underline}
+.stag{display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:700;padding:2px 9px;border-radius:9999px;border:1.5px solid currentColor;white-space:nowrap;color:var(--muted)}
+.stag.paid{background:var(--ok-bg);border-color:var(--ok-bg);color:var(--ok)}
+.stag.open{color:var(--accent)}
+.stag.failed{color:var(--text)}
+.kline{margin:0;display:flex;align-items:center;gap:10px;min-height:48px;font-size:17px;font-weight:700}
+</style>
+</helmet>
+<div class="{{appClass}}">
+  <header class="hd" style="padding-top: 6px">
+    <div class="sub-top">
+      <a class="back" href="Account.dc.html"><svg class="ic c-white" width="20" height="20" viewBox="0 0 24 24" style="stroke-width: 2.2" aria-hidden="true"><path d="{{ic.back}}"></path></svg>Account</a>
+      <p class="hd-proto">Prototype with sample data</p>
+    </div>
+    <h1 class="sub-title">Choose a plan</h1>
+    <p class="hd-sub">{{headSub}}</p>
+  </header>
+
+  <div class="scroll">
+    <!-- crit. 6: offline → this line, and nothing else changes (the cards stay, but cannot be tapped). -->
+    <sc-if value="{{offline}}" hint-placeholder-val="{{ false }}">
+      <p class="ibox" role="status"><svg class="ic c-text" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ic.cloudOff}}"></path></svg><b>You need internet to choose a plan</b></p>
+    </sc-if>
+    <!-- crit. 26: the last place went while this screen was open (billing-checkout → foundersFull). -->
+    <sc-if value="{{foundersFull}}" hint-placeholder-val="{{ false }}">
+      <p class="ibox" role="alert"><svg class="ic c-text" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ic.info}}"></path></svg><span>Founders places are all taken. You can still choose monthly or yearly.</span></p>
+    </sc-if>
+
+    <!-- crit. 6-7: three paid options (Founders only while places are left). Tapping a card calls billing-checkout({plan})
+         and opens Stripe Checkout in the same tab. Prices come from config/billing/plans.nz.json, wording from gst_mode. -->
+    <sc-for list="{{cards}}" as="c" hint-placeholder-count="3">
+      <button type="button" class="plancard" aria-disabled="{{c.disabled}}" aria-busy="{{c.busy}}" aria-label="{{c.aria}}" onClick="{{c.tap}}">
+        <span class="pc">
+          <span class="pc-top"><span class="pc-t">{{c.title}}</span><sc-if value="{{c.hasLeft}}" hint-placeholder-val="{{ false }}"><span class="left">{{c.left}}</span></sc-if></span>
+          <span class="pc-p"><b>{{c.amount}}</b> {{c.per}}</span>
+          <sc-if value="{{c.hasSave}}" hint-placeholder-val="{{ false }}">
+            <span><span class="save"><span class="vh">(</span>{{c.save}}<span class="vh">)</span></span></span>
+          </sc-if>
+          <sc-if value="{{c.isBusy}}" hint-placeholder-val="{{ false }}">
+            <span class="pc-go" role="status"><span class="spin" aria-hidden="true"></span>Opening Stripe…</span>
+          </sc-if>
+        </span>
+        <svg class="ic c-acc chev" width="24" height="24" viewBox="0 0 24 24" style="stroke-width: 2.4" aria-hidden="true"><path d="{{ic.chevron}}"></path></svg>
+      </button>
+    </sc-for>
+
+    <sc-if value="{{notRegistered}}" hint-placeholder-val="{{ true }}">
+      <p class="help" style="font-size: 15px; color: var(--text)">SousMate is not registered for GST.</p>
+    </sc-if>
+    <sc-if value="{{inTrial}}" hint-placeholder-val="{{ true }}">
+      <p class="help">Paying ends your free trial today. Your first payment is today.</p>
+    </sc-if>
+    <p class="help" style="margin-top: -4px">You pay on Stripe's secure page: card, Apple Pay or Google Pay. A receipt is emailed after every payment.</p>
+
+    <div class="card">
+      <p class="pc-t">Every paid plan</p>
+      <ul class="feat">
+        <sc-for list="{{feats}}" as="f" hint-placeholder-count="3">
+          <li><svg class="ic c-acc" width="20" height="20" viewBox="0 0 24 24" style="stroke-width: 2.4" aria-hidden="true"><path d="{{ic.check}}"></path></svg>{{f}}</li>
+        </sc-for>
+      </ul>
+    </div>
+    <div class="card" style="background: transparent; box-shadow: inset 0 0 0 1px var(--ring)">
+      <p class="pc-t">Free <span class="help" style="font-weight: 400">· NZ$0</span></p>
+      <ul class="feat">
+        <li><svg class="ic c-acc" width="20" height="20" viewBox="0 0 24 24" style="stroke-width: 2.4" aria-hidden="true"><path d="{{ic.check}}"></path></svg>Every record, on 1 device</li>
+        <li><svg class="ic c-acc" width="20" height="20" viewBox="0 0 24 24" style="stroke-width: 2.4" aria-hidden="true"><path d="{{ic.check}}"></path></svg>CSV download, always</li>
+      </ul>
+      <p class="help">No backup or PDF.</p>
+    </div>
+
+    <div class="proto">
+      <p>Prototype only: try another sample</p>
+      <sc-for list="{{groups}}" as="g" hint-placeholder-count="4">
+        <div class="chips" role="group" aria-label="{{g.label}}">
+          <sc-for list="{{g.chips}}" as="c" hint-placeholder-count="3">
+            <button type="button" class="chip" aria-pressed="{{c.pressed}}" onClick="{{c.pick}}">{{c.label}}</button>
+          </sc-for>
+        </div>
+      </sc-for>
+    </div>
+    <div class="endpad"></div>
+  </div>
+
+  <div class="dock">
+    <nav class="navbar" aria-label="Main">
+      <a class="nav" href="Main.dc.html"><svg class="ic c-cur" width="22" height="22" viewBox="0 0 24 24" style="stroke-width: 2" aria-hidden="true"><path d="{{ic.today}}"></path></svg>Today</a>
+      <a class="nav" href="Due.dc.html"><svg class="ic c-cur" width="22" height="22" viewBox="0 0 24 24" style="stroke-width: 2" aria-hidden="true"><path d="{{ic.calendar}}"></path></svg>What's due</a>
+      <a class="nav" href="History.dc.html"><svg class="ic c-cur" width="22" height="22" viewBox="0 0 24 24" style="stroke-width: 2" aria-hidden="true"><path d="{{ic.history}}"></path></svg>History</a>
+      <a class="nav" href="Settings.dc.html" aria-current="page"><svg class="ic c-cur" width="22" height="22" viewBox="0 0 24 24" style="stroke-width: 2.2" aria-hidden="true"><path d="{{ic.team}}"></path></svg>Team</a>
+    </nav>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    const h = (typeof location !== 'undefined' ? location.hash : '').slice(1).split(',');
+    const osDark = typeof matchMedia === 'function' && matchMedia('(prefers-color-scheme: dark)').matches;
+    this.state = {
+      dark: h.indexOf('dark') >= 0 || (h.indexOf('light') < 0 && osDark),
+      gst: h.indexOf('registered') >= 0 ? 'registered' : 'not',
+      founders: ['f7', 'f1', 'f0', 'ffull', 'fmine'].find((k) => h.indexOf(k) >= 0) || 'f7',
+      who: h.indexOf('fromfree') >= 0 || h.indexOf('fmine') >= 0 ? 'free' : 'trial',
+      offline: h.indexOf('offline') >= 0,
+      busy: ['monthly', 'yearly', 'founders'].find((k) => h.indexOf('busy-' + k) >= 0) || null,
+    };
+  }
+  renderVals() {
+    // Line icons: 24 px grid, 2 px stroke, round ends (design-system.md section 8).
+    const ic = {
+      back: 'M15 6l-6 6 6 6',
+      chevron: 'M9 6l6 6-6 6',
+      plus: 'M12 5v14M5 12h14',
+      calendar: 'M5.5 5h13a2 2 0 012 2v11.5a2 2 0 01-2 2h-13a2 2 0 01-2-2V7a2 2 0 012-2zM3.5 10h17M8 3v4M16 3v4',
+      clock: 'M12 21a9 9 0 100-18 9 9 0 000 18zM12 7v5l3 2',
+      info: 'M12 21a9 9 0 100-18 9 9 0 000 18zM12 11v5.5M12 7.5v.5',
+      check: 'M5 12l5 5L20 7',
+      checkCircle: 'M12 21a9 9 0 100-18 9 9 0 000 18zM8 12.5l2.7 2.7L16 9.8',
+      card: 'M3.5 6h17a1 1 0 011 1v10a1 1 0 01-1 1h-17a1 1 0 01-1-1V7a1 1 0 011-1zM2.5 10h19M6 14.5h4',
+      receipt: 'M6 3h12v18l-2-1.5-2 1.5-2-1.5-2 1.5-2-1.5L6 21zM9 8h6M9 12h6M9 16h3',
+      ext: 'M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1h5',
+      cloud: 'M17.5 19H9a7 7 0 116.71-9h1.79a4.5 4.5 0 110 9z',
+      cloudOff: 'M4 4l16 16M8.5 7.2A5.5 5.5 0 0117.4 11 4 4 0 0119 18.6M15.5 19H7a4.5 4.5 0 01-1.6-8.7',
+      device: 'M8 2.5h8a1.5 1.5 0 011.5 1.5v16a1.5 1.5 0 01-1.5 1.5H8A1.5 1.5 0 016.5 20V4A1.5 1.5 0 018 2.5zM11 18.5h2',
+      tablet: 'M5.5 3h13a1.5 1.5 0 011.5 1.5v15a1.5 1.5 0 01-1.5 1.5h-13A1.5 1.5 0 014 19.5v-15A1.5 1.5 0 015.5 3zM11 18h2',
+      download: 'M12 4v11M7 10l5 5 5-5M5 20h14',
+      lock: 'M6 11h12v10H6zM8.5 11V7.5a3.5 3.5 0 017 0V11',
+      star: 'M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z',
+      person: 'M12 12a4 4 0 100-8 4 4 0 000 8zM4.5 21a7.5 7.5 0 0115 0',
+      verify: 'M10.5 18a7.5 7.5 0 110-15 7.5 7.5 0 010 15zM16 16l5 5M7.5 10.5l2 2 4-4',
+      fridge: 'M7 2.5h10a2 2 0 012 2v15a2 2 0 01-2 2H7a2 2 0 01-2-2v-15a2 2 0 012-2zM5 9.5h14M8.5 5.5v1.5M8.5 12.5v3',
+      cooking: 'M5 10.5h14v6.5a3 3 0 01-3 3H8a3 3 0 01-3-3zM3 10.5h18M10 7.5h4M2.5 13h2.5M19 13h2.5M9 3.5v1.5M12 3v2M15 3.5v1.5',
+      cooling: 'M8 14.5V5a2 2 0 014 0v9.5a3.5 3.5 0 11-4 0zM10 9.5v7M18 4v11M15.5 12.5L18 15l2.5-2.5',
+      delivery: 'M2 5.5h11v10H2zM13 8.5h4.2l3.3 3.5v3.5H13M4.5 17.5a2 2 0 104 0a2 2 0 10-4 0M14.5 17.5a2 2 0 104 0a2 2 0 10-4 0',
+      problem: 'M10.3 3.9L2.4 18a2 2 0 001.7 3h15.8a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0zM12 9v4.5M12 17v.5',
+      link: 'M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1',
+      today: 'M4 6l1.5 1.5L8 5M4 12l1.5 1.5L8 11M4 18l1.5 1.5L8 17M11 6.5h9M11 12.5h9M11 18.5h9',
+      history: 'M4 12a8 8 0 102.4-5.7M4 3.5v4.5h4.5M12 8v4l2.5 2',
+      team: 'M9 11a3.5 3.5 0 100-7 3.5 3.5 0 000 7zM2.5 20a6.5 6.5 0 0113 0M16 4.3a3.5 3.5 0 010 6.4M18 13.5a6.5 6.5 0 013.5 6'
+    };
+    const st = this.state;
+    const reg = st.gst === 'registered';
+    // crit. 6 wording. registered: "…, incl. GST"; not_registered: the same without it + "SousMate is not registered for GST."
+    const g = reg ? ', incl. GST' : '';
+    const left = { f7: 7, f1: 1, f0: 0, ffull: 0, fmine: 0 }[st.founders];
+    // Q10 (spec §13, Q3 + crit. 28): a returning Founders shop keeps its own slot, so it still sees its Founders card
+    // when all 20 places are taken. The tag names its own place instead of the counter.
+    const mine = st.founders === 'fmine';
+    const plans = [
+      { k: 'monthly', title: 'SousMate monthly', amount: 'NZ$19.99', per: 'a month' + g },
+      { k: 'yearly', title: 'SousMate yearly', amount: 'NZ$199', per: 'a year' + g, save: 'save NZ$40.88' },
+    ];
+    // crit. 6 + 26: Founders shown only while slots are left; hidden at 20 of 20 claimed.
+    if (left > 0 || mine) plans.push({ k: 'founders', title: 'SousMate Founders', amount: 'NZ$12.99', per: 'a month for life' + g, left: mine ? 'Your Founders price' : 'Founders price: ' + left + ' of 20 left' });
+    const cards = plans.map((c) => {
+      const busy = st.busy === c.k;
+      const disabled = st.offline || (!!st.busy && !busy);
+      return {
+        title: c.title, amount: c.amount, per: c.per,
+        hasSave: !!c.save, save: c.save || '',
+        hasLeft: !!c.left, left: c.left || '',
+        aria: c.title + ', ' + c.amount + ' ' + c.per + (c.save ? ' (' + c.save + ')' : '') + (c.left ? '. ' + c.left : ''),
+        disabled: disabled ? 'true' : 'false', busy: busy ? 'true' : 'false', isBusy: busy,
+        tap: () => { if (!disabled) this.setState({ busy: busy ? null : c.k }); },
+      };
+    });
+    const pick = (key, opts) => opts.map((o) => ({
+      label: o[1],
+      pressed: st[key] === o[0] ? 'true' : 'false',
+      pick: () => this.setState({ [key]: o[0], busy: key === 'busy' ? o[0] : null }),
+    }));
+    return {
+      ic,
+      appClass: 'app' + (st.dark ? ' dark' : ''),
+      headSub: st.who === 'trial' ? 'Free trial: 7 days left (ends 2 Dec 2026)' : 'Free plan — records stay on this device and are not backed up.',
+      offline: st.offline,
+      foundersFull: st.founders === 'ffull',
+      cards,
+      notRegistered: !reg,
+      inTrial: st.who === 'trial',
+      // Approved placeholder list (shop-signup Q-D3) without "Email reminders": not built until Phase 8 (spec §13 Q8, Fair Trading Act).
+      feats: ['Backup kept for 4 years', 'All your devices', 'Inspection day PDF'],
+      groups: [
+        { label: 'GST mode', chips: pick('gst', [['not', 'Not registered for GST'], ['registered', 'GST registered']]) },
+        { label: 'Founders places', chips: pick('founders', [['f7', '7 of 20 left'], ['f1', '1 of 20 left'], ['f0', 'All 20 taken (hidden)'], ['ffull', 'Taken while choosing'], ['fmine', 'All 20 taken, this shop is a Founder']]) },
+        { label: 'Who is choosing', chips: pick('who', [['trial', 'Owner in trial'], ['free', 'Owner on Free or lapsed']]) },
+        { label: 'Tapped', chips: pick('busy', [[null, 'Nothing tapped'], ['monthly', 'Tapped monthly'], ['yearly', 'Tapped yearly']]) },
+        { label: 'Connection', chips: pick('offline', [[false, 'Online'], [true, 'Offline']]) },
+        { label: 'Colour mode', chips: pick('dark', [[false, 'Light'], [true, 'Dark']]) },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

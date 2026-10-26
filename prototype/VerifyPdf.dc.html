@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390">
+<style>html{touch-action:manipulation}@media (min-width:520px){html,body{background:#0E2A2C}body>div>div>div[style*="width: 390px"]{margin:24px auto;border-radius:28px;overflow:hidden}}</style>
+<title>Verifier PDF: Equipment page</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap">
+<style>
+html,body{margin:0;background:#C9D3D1}
+/* One A4 page of the verifier PDF (inspection §4.2), drawn at 794 × 1123 CSS px. It is a printed page: always white,
+   black text, no dark mode, no colour-only meaning (problems are "!", bold and a P{n} reference). */
+.wrap{display:flex;justify-content:center;padding:0}
+.page{width:794px;min-height:1123px;box-sizing:border-box;background:#FFFFFF;color:#111;font-family:'Inter',system-ui,sans-serif;padding:28px 46px 40px;display:flex;flex-direction:column;position:relative;font-size:10.5px;line-height:1.35}
+@media (max-width:793px){.page{zoom:0.6}}
+@media (max-width:480px){.page{zoom:0.47}}
+@media (max-width:374px){.page{zoom:0.4}}
+.proto{margin:0 0 6px;font-size:10px;color:#4A5E60;font-weight:700}
+.runhead{margin:0 0 18px;font-size:8.5px;color:#555}
+h1{margin:0 0 4px;font-size:18px;font-weight:800;letter-spacing:-0.01em}
+.lead{margin:0 0 14px;color:#333}
+h2{margin:16px 0 6px;font-size:13px;font-weight:800}
+.blank{font-weight:400;color:#555;font-size:9.5px}
+table{width:100%;border-collapse:collapse;table-layout:fixed}
+th,td{border:0.75px solid #9AA5A3;padding:4px 5px;text-align:left;vertical-align:top;overflow-wrap:anywhere}
+th{background:#EEF2F1;font-weight:700}
+td.p{font-weight:700}
+.small{font-size:9.5px;color:#333;margin:6px 0 0}
+.corr{margin:16px 0 0;padding-top:8px;border-top:0.75px solid #9AA5A3}
+.corr p{margin:2px 0}
+.foot{margin-top:auto;padding-top:18px;font-size:8px;color:#555}
+</style>
+</helmet>
+<div class="wrap">
+  <div class="page">
+    <p class="proto">Prototype with sample data · one page of the verifier PDF</p>
+    <p class="runhead">Sample Café · Food safety records 14 Mar 2026 to 24 Oct 2026</p>
+    <h1>Equipment: maintenance and calibration</h1>
+    <p class="lead">Limits from SousMate template nz.equipment 1.0.0</p>
+
+    <h2>Equipment list <span class="blank">(MPI record blank p.25: item, how often it is checked)</span></h2>
+    <table>
+      <colgroup><col style="width: 30%"><col style="width: 24%"><col style="width: 23%"><col style="width: 23%"></colgroup>
+      <tr><th>Item</th><th>Type</th><th>Check or service</th><th>Calibrate</th></tr>
+      <sc-for list="{{items}}" as="r" hint-placeholder-count="8">
+        <tr><td>{{r.a}}</td><td>{{r.b}}</td><td>{{r.c}}</td><td>{{r.d}}</td></tr>
+      </sc-for>
+    </table>
+
+    <h2>Maintenance and repairs <span class="blank">(MPI record blank p.25)</span></h2>
+    <table>
+      <colgroup><col style="width: 13%"><col style="width: 18%"><col style="width: 33%"><col style="width: 20%"><col style="width: 16%"></colgroup>
+      <tr><th>Date</th><th>Item</th><th>What was done</th><th>Who</th><th>Type</th></tr>
+      <sc-for list="{{maint}}" as="r" hint-placeholder-count="3">
+        <tr><td>{{r.a}}</td><td>{{r.b}}</td><td>{{r.c}}</td><td>{{r.d}}</td><td class="{{r.cls}}">{{r.e}}</td></tr>
+      </sc-for>
+    </table>
+
+    <h2>Calibration <span class="blank">(MPI record blank p.26)</span></h2>
+    <table>
+      <colgroup><col style="width: 11%"><col style="width: 13%"><col style="width: 14%"><col style="width: 8%"><col style="width: 9%"><col style="width: 16%"><col style="width: 21%"><col style="width: 8%"></colgroup>
+      <tr><th>Date</th><th>Item</th><th>Method</th><th>Ice °C</th><th>Boiling °C</th><th>Result</th><th>Action if inaccurate</th><th>Who</th></tr>
+      <sc-for list="{{cal}}" as="r" hint-placeholder-count="4">
+        <tr><td>{{r.a}}</td><td>{{r.b}}</td><td>{{r.c}}</td><td>{{r.d}}</td><td>{{r.e}}</td><td class="{{r.cls}}">{{r.f}}</td><td>{{r.g}}</td><td>{{r.h}}</td></tr>
+      </sc-for>
+    </table>
+    <p class="small">P2 and P3 are also listed in "When something went wrong" with what went wrong, the fix, how food was kept safe and what will stop it happening again.</p>
+
+    <div class="corr">
+      <p><b>Corrections in this section</b></p>
+      <p>Calibration 14 Apr 2026, Probe 2: Ice °C 0.5 → 0.0 · by Mia · 15 Apr 2026 · reason: typing mistake</p>
+      <p>Maintenance 20 Aug 2026, Rainwater tank: VOID · by Arjun · reason: entered twice</p>
+    </div>
+
+    <p class="foot">Page 9 of 14 · Made with SousMate 0.8.0 on 24 Oct 2026 14:05 · All times are New Zealand time</p>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":794,"height":1123}}'>
+class Component extends DCLogic {
+  renderVals() {
+    // equipment EQ-29: list (interval only, never a next due date, EQ-30), maintenance (Check or service / ! Repair P{n}),
+    // calibration (Accurate / ! Not accurate P{n}). Who = staff initials from the key on page 1 (M = Mia, A = Arjun,
+    // H = Hana); external people by name. No entry time, device, trade field, "overdue" or "non-compliant".
+    const every = (n) => 'Every ' + n + ' months (your schedule)';
+    return {
+      items: [
+        ['Probe 1', 'Thermometer', '—', every(12)],
+        ['Probe 2', 'Thermometer', '—', every(12)],
+        ['Oven thermometer', 'Thermometer', '—', every(12)],
+        ['Bench scale', 'Scale', '—', '—'],
+        ['Coffee machine', 'Appliance or facility', every(6), '—'],
+        ['Rainwater tank', 'Appliance or facility', '—', '—'],
+        ['Walk-in chiller', 'Chiller (fridges list)', every(12), '—'],
+        ['Fridge 1', 'Fridge (fridges list)', '—', '—'],
+        ['Fridge 2', 'Fridge (fridges list)', '—', '—'],
+        ['Chest freezer', 'Freezer (fridges list)', '—', '—'],
+      ].map((r) => ({ a: r[0], b: r[1], c: r[2], d: r[3] })),
+      maint: [
+        ['12 May 2026', 'Coffee machine', 'Descaled the coffee machine', 'M', 'Check or service'],
+        ['2 Jun 2026', 'Walk-in chiller', 'Replaced the door seal', 'Cool Air Refrigeration', '! Repair P3'],
+        ['20 Aug 2026', 'Rainwater tank', 'Cleaned the tank and changed the filter', 'A', 'VOID (see corrections)'],
+      ].map((r) => ({ a: r[0], b: r[1], c: r[2], d: r[3], e: r[4], cls: r[4].indexOf('!') === 0 ? 'p' : '' })),
+      cal: [
+        ['14 Apr 2026', 'Old probe', 'Ice slush', '2.0', '—', '! Not accurate P2', 'Stopped using it', 'M'],
+        ['14 Apr 2026', 'Probe 2', 'Ice slush', '0.0', '—', 'Accurate · Amended', '—', 'M'],
+        ['14 Apr 2026', 'Probe 2', 'Boiling water', '—', '100.5', 'Accurate', '—', 'M'],
+        ['1 Jul 2026', 'Bench scale', 'Test weight', '—', '—', 'Accurate', '—', 'H'],
+      ].map((r) => ({ a: r[0], b: r[1], c: r[2], d: r[3], e: r[4], f: r[5], g: r[6], h: r[7], cls: r[5].indexOf('!') === 0 ? 'p' : '' })),
+    };
+  }
+}
+</script>
+</body>
+</html>

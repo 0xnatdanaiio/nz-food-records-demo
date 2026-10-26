@@ -1,0 +1,684 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390">
+<style>html{touch-action:manipulation}@media (min-width:520px){html,body{background:#0E2A2C}body>div>div>div[style*="width: 390px"]{margin:24px auto;border-radius:28px;overflow:hidden}}</style>
+<title>Contrast options</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap">
+<style>
+html,body{margin:0;height:100%}
+/* Contrast pass (docs/design/contrast-notes.md). Every colour below is a token named as in src/index.css, plus the
+   few new tokens listed in the notes (--card-edge, --primary, --btn2-*, --toggle-off-*, --chip-off-*, --done-bg,
+   --opt-edge*, --tag-must, --toggle-mark). "Current" reproduces today's app exactly. */
+.app{position:relative;width:100%;height:100vh;overflow:hidden;box-sizing:border-box;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;display:flex;flex-direction:column;--safe-bottom:0px;--nav-shadow:none}
+.app.dark{--nav-shadow:0 8px 24px rgba(0,0,0,0.55)}
+/*TOKENS*/
+.app.t-cur{--bg:#E7EEEC;--card:#FFFFFF;--quiet:#F3F7F6;--text:#0E2A2C;--muted:#4A5E60;--line:#DDE6E4;--line-input:#6F8885;--header:#0E2A2C;--ink-raised:#1C3D40;--on-header-muted:#A9C4C2;--on-header-accent:#8EE6C9;--line-on-ink:#6F8E8C;--nav-bg:#0E2A2C;--nav-border:#0E2A2C;--nav-strip:#E7EEEC;--header-edge:transparent;--mint:#8EE6C9;--on-mint:#0E2A2C;--accent:#0B6B72;--accent-ink:#FFFFFF;--accent-dark:#08555B;--link:#0B6B72;--focus:#0B6B72;--selected-bg:#0E2A2C;--on-selected:#FFFFFF;--ok:#08555B;--ok-bg:#DFF5EE;--disabled-bg:#D5DFDC;--placeholder:#A3B5B2;--bad:#A9440C;--bad-text:#7E3209;--bad-bg:#FBE6D9;--icon-bg:#E7EEEC;--card-edge:transparent;--card-edge-w:0px;--card-shadow:none;--primary:#0B6B72;--on-primary:#FFFFFF;--btn2-bg:transparent;--btn2-edge:transparent;--btn2-text:#0B6B72;--toggle-off-bg:#E7EEEC;--toggle-off-edge:#6F8885;--toggle-off-text:#0E2A2C;--done-bg:#DFF5EE;--opt-edge:rgba(14,42,44,0.12);--opt-edge-style:solid;--save-bar:#E7EEEC;--opt-edge-w:1px;--chip-off-bg:#E7EEEC;--chip-off-edge:#E7EEEC;--tag-must:#08555B;--toggle-mark:none}
+.app.t-cur.dark{--bg:#0A1A1B;--card:#142E30;--quiet:#1B3638;--text:#E8F1EF;--muted:#A9C4C2;--line:#23403F;--line-input:#6F8E8C;--header:#0E2A2C;--ink-raised:#1C3D40;--on-header-muted:#A9C4C2;--on-header-accent:#8EE6C9;--line-on-ink:#6F8E8C;--nav-bg:#284F52;--nav-border:#6F8E8C;--nav-strip:#0A1A1B;--header-edge:#6F8E8C;--mint:#8EE6C9;--on-mint:#0E2A2C;--accent:#8EE6C9;--accent-ink:#0E2A2C;--accent-dark:#6FD3B3;--link:#8EE6C9;--focus:#8EE6C9;--selected-bg:#8EE6C9;--on-selected:#0E2A2C;--ok:#8EE6C9;--ok-bg:#12382F;--disabled-bg:#2A4345;--placeholder:#6F8E8C;--bad:#FF9F6E;--bad-text:#FF9F6E;--bad-bg:#3D1F10;--icon-bg:#1B3638;--card-edge:transparent;--card-edge-w:0px;--card-shadow:none;--primary:#8EE6C9;--on-primary:#0E2A2C;--btn2-bg:transparent;--btn2-edge:transparent;--btn2-text:#8EE6C9;--toggle-off-bg:#0A1A1B;--toggle-off-edge:#6F8E8C;--toggle-off-text:#E8F1EF;--done-bg:#12382F;--opt-edge:rgba(232,241,239,0.16);--opt-edge-style:solid;--save-bar:#0A1A1B;--opt-edge-w:1px;--chip-off-bg:#1B3638;--chip-off-edge:#1B3638;--tag-must:#8EE6C9;--toggle-mark:none}
+.app.t-A{--bg:#D9E3E1;--card:#FFFFFF;--quiet:#F3F7F6;--text:#0E2A2C;--muted:#43585A;--line:#DDE6E4;--line-input:#5C7471;--header:#0E2A2C;--ink-raised:#1C3D40;--on-header-muted:#A9C4C2;--on-header-accent:#8EE6C9;--line-on-ink:#6F8E8C;--nav-bg:#0E2A2C;--nav-border:#0E2A2C;--nav-strip:#D9E3E1;--header-edge:transparent;--mint:#8EE6C9;--on-mint:#0E2A2C;--accent:#0B6B72;--accent-ink:#FFFFFF;--accent-dark:#08555B;--link:#0B6B72;--focus:#0B6B72;--selected-bg:#0E2A2C;--on-selected:#FFFFFF;--ok:#08555B;--ok-bg:#DFF5EE;--disabled-bg:#D5DFDC;--placeholder:#A3B5B2;--bad:#A9440C;--bad-text:#7E3209;--bad-bg:#FBE6D9;--icon-bg:#E3EBE9;--card-edge:#6A817E;--card-edge-w:1px;--card-shadow:0 1px 2px rgba(14,42,44,0.14);--primary:#0B6B72;--on-primary:#FFFFFF;--btn2-bg:#FFFFFF;--btn2-edge:#5C7471;--btn2-text:#0E2A2C;--toggle-off-bg:#0B6B72;--toggle-off-edge:#0B6B72;--toggle-off-text:#FFFFFF;--done-bg:#DFF5EE;--opt-edge:#6A817E;--opt-edge-style:dashed;--save-bar:#D9E3E1;--opt-edge-w:1.5px;--chip-off-bg:#FFFFFF;--chip-off-edge:#5C7471;--tag-must:#0E2A2C;--toggle-mark:flex}
+.app.t-A.dark{--bg:#071415;--card:#173335;--quiet:#1E3D3F;--text:#EDF5F3;--muted:#B2CBC8;--line:#23403F;--line-input:#7FA09D;--header:#0E2A2C;--ink-raised:#1C3D40;--on-header-muted:#A9C4C2;--on-header-accent:#8EE6C9;--line-on-ink:#6F8E8C;--nav-bg:#284F52;--nav-border:#6F8E8C;--nav-strip:#071415;--header-edge:#6F8E8C;--mint:#8EE6C9;--on-mint:#0E2A2C;--accent:#8EE6C9;--accent-ink:#0E2A2C;--accent-dark:#6FD3B3;--link:#8EE6C9;--focus:#8EE6C9;--selected-bg:#8EE6C9;--on-selected:#0E2A2C;--ok:#8EE6C9;--ok-bg:#12382F;--disabled-bg:#2A4345;--placeholder:#6F8E8C;--bad:#FF9F6E;--bad-text:#FF9F6E;--bad-bg:#3D1F10;--icon-bg:#21403F;--card-edge:#4D7072;--card-edge-w:1px;--card-shadow:0 1px 0 rgba(0,0,0,0.5);--primary:#8EE6C9;--on-primary:#0E2A2C;--btn2-bg:transparent;--btn2-edge:#7FA09D;--btn2-text:#EDF5F3;--toggle-off-bg:#8EE6C9;--toggle-off-edge:#8EE6C9;--toggle-off-text:#0E2A2C;--done-bg:#12382F;--opt-edge:#6E8E8B;--opt-edge-style:dashed;--save-bar:#071415;--opt-edge-w:1.5px;--chip-off-bg:#173335;--chip-off-edge:#7FA09D;--tag-must:#EDF5F3;--toggle-mark:flex}
+.app.t-B{--bg:#D2E1DD;--card:#FFFFFF;--quiet:#F3F7F6;--text:#051B1D;--muted:#3B5355;--line:#DDE6E4;--line-input:#537370;--header:#051B1D;--ink-raised:#123538;--on-header-muted:#A7C9C5;--on-header-accent:#5FEFC3;--line-on-ink:#6F8E8C;--nav-bg:#051B1D;--nav-border:#051B1D;--nav-strip:#D2E1DD;--header-edge:transparent;--mint:#5FEFC3;--on-mint:#051B1D;--accent:#00707A;--accent-ink:#FFFFFF;--accent-dark:#00555D;--link:#00707A;--focus:#00707A;--selected-bg:#051B1D;--on-selected:#FFFFFF;--ok:#005A61;--ok-bg:#D0F5E7;--disabled-bg:#D5DFDC;--placeholder:#A3B5B2;--bad:#A9440C;--bad-text:#7E3209;--bad-bg:#FBE6D9;--icon-bg:#DDEBE7;--card-edge:#5F7A76;--card-edge-w:1px;--card-shadow:0 1px 3px rgba(5,27,29,0.18);--primary:#00707A;--on-primary:#FFFFFF;--btn2-bg:#FFFFFF;--btn2-edge:#537370;--btn2-text:#051B1D;--toggle-off-bg:#00707A;--toggle-off-edge:#00707A;--toggle-off-text:#FFFFFF;--done-bg:#D0F5E7;--opt-edge:#5F7A76;--opt-edge-style:dashed;--save-bar:#D2E1DD;--opt-edge-w:1.5px;--chip-off-bg:#FFFFFF;--chip-off-edge:#537370;--tag-must:#051B1D;--toggle-mark:flex}
+.app.t-B.dark{--bg:#030D0E;--card:#11292B;--quiet:#183538;--text:#EDF5F3;--muted:#B2CBC8;--line:#23403F;--line-input:#7FA09D;--header:#000708;--ink-raised:#123538;--on-header-muted:#A9C4C2;--on-header-accent:#5FEFC3;--line-on-ink:#6F8E8C;--nav-bg:#000708;--nav-border:#5FEFC3;--nav-strip:#030D0E;--header-edge:#3F6A6B;--mint:#5FEFC3;--on-mint:#03191A;--accent:#5FEFC3;--accent-ink:#03191A;--accent-dark:#45D9AE;--link:#5FEFC3;--focus:#5FEFC3;--selected-bg:#5FEFC3;--on-selected:#03191A;--ok:#5FEFC3;--ok-bg:#0B3A2E;--disabled-bg:#2A4345;--placeholder:#6F8E8C;--bad:#FF9F6E;--bad-text:#FF9F6E;--bad-bg:#3D1F10;--icon-bg:#1C3B3D;--card-edge:#3F6A6B;--card-edge-w:1px;--card-shadow:0 1px 0 rgba(0,0,0,0.5);--primary:#5FEFC3;--on-primary:#03191A;--btn2-bg:transparent;--btn2-edge:#7FA09D;--btn2-text:#EDF5F3;--toggle-off-bg:#5FEFC3;--toggle-off-edge:#5FEFC3;--toggle-off-text:#03191A;--done-bg:#0B3A2E;--opt-edge:#6E8E8B;--opt-edge-style:dashed;--save-bar:#030D0E;--opt-edge-w:1.5px;--chip-off-bg:#11292B;--chip-off-edge:#7FA09D;--tag-must:#EDF5F3;--toggle-mark:flex}
+.app.t-C{--bg:#E2E8E7;--card:#FFFFFF;--quiet:#F3F7F6;--text:#0E2A2C;--muted:#3D5254;--line:#DDE6E4;--line-input:#0E2A2C;--header:#0E2A2C;--ink-raised:#1C3D40;--on-header-muted:#A9C4C2;--on-header-accent:#8EE6C9;--line-on-ink:#6F8E8C;--nav-bg:#0E2A2C;--nav-border:#0E2A2C;--nav-strip:#E2E8E7;--header-edge:transparent;--mint:#8EE6C9;--on-mint:#0E2A2C;--accent:#0B6B72;--accent-ink:#FFFFFF;--accent-dark:#08555B;--link:#0E2A2C;--focus:#0B6B72;--selected-bg:#0B6B72;--on-selected:#FFFFFF;--ok:#08555B;--ok-bg:#DFF5EE;--disabled-bg:#D5DFDC;--placeholder:#8EA3A0;--bad:#A9440C;--bad-text:#7E3209;--bad-bg:#FBE6D9;--icon-bg:#E7EDEC;--card-edge:#0E2A2C;--card-edge-w:2px;--card-shadow:none;--primary:#0E2A2C;--on-primary:#FFFFFF;--btn2-bg:#FFFFFF;--btn2-edge:#0E2A2C;--btn2-text:#0E2A2C;--toggle-off-bg:#0E2A2C;--toggle-off-edge:#0E2A2C;--toggle-off-text:#FFFFFF;--done-bg:#DFF5EE;--opt-edge:#4F6866;--opt-edge-style:dashed;--save-bar:#E2E8E7;--opt-edge-w:2px;--chip-off-bg:#FFFFFF;--chip-off-edge:#0E2A2C;--tag-must:#0E2A2C;--toggle-mark:flex}
+.app.t-C.dark{--bg:#050E0F;--card:#0F2426;--quiet:#16302F;--text:#F1F7F6;--muted:#B8CFCC;--line:#23403F;--line-input:#B8CFCC;--header:#0E2A2C;--ink-raised:#1C3D40;--on-header-muted:#A9C4C2;--on-header-accent:#8EE6C9;--line-on-ink:#6F8E8C;--nav-bg:#0E2A2C;--nav-border:#B8CFCC;--nav-strip:#050E0F;--header-edge:#B8CFCC;--mint:#8EE6C9;--on-mint:#0E2A2C;--accent:#8EE6C9;--accent-ink:#0E2A2C;--accent-dark:#6FD3B3;--link:#F1F7F6;--focus:#8EE6C9;--selected-bg:#8EE6C9;--on-selected:#0E2A2C;--ok:#8EE6C9;--ok-bg:#12382F;--disabled-bg:#2A4345;--placeholder:#6F8E8C;--bad:#FF9F6E;--bad-text:#FF9F6E;--bad-bg:#3D1F10;--icon-bg:#1A3436;--card-edge:#9DBAB7;--card-edge-w:2px;--card-shadow:none;--primary:#8EE6C9;--on-primary:#0E2A2C;--btn2-bg:transparent;--btn2-edge:#F1F7F6;--btn2-text:#F1F7F6;--toggle-off-bg:#8EE6C9;--toggle-off-edge:#8EE6C9;--toggle-off-text:#0E2A2C;--done-bg:#12382F;--opt-edge:#7FA09D;--opt-edge-style:dashed;--save-bar:#050E0F;--opt-edge-w:2px;--chip-off-bg:#0F2426;--chip-off-edge:#B8CFCC;--tag-must:#F1F7F6;--toggle-mark:flex}
+/*END TOKENS*/
+.app a{color:var(--link)}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ic{flex:none;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.c-acc{stroke:var(--accent)}.c-text{stroke:var(--text)}.c-muted{stroke:var(--muted)}.c-bad{stroke:var(--bad)}.c-cur{stroke:currentColor}.c-mint{stroke:var(--on-header-accent)}.c-white{stroke:#FFFFFF}
+
+/* Header A (header-nav), unchanged; dark mode adds the 1 px --header-edge. */
+.hd{flex:none;position:relative;z-index:3;background:var(--header);color:#FFFFFF;border-radius:0 0 28px 28px;padding:10px 20px 20px;display:flex;flex-direction:column;border-bottom:1px solid var(--header-edge)}
+.hd.flat{border-radius:0;border-bottom-color:transparent}
+.hd-proto{margin:0 0 4px;font-size:12px;line-height:1.25;color:var(--on-header-muted)}
+.hd-top{display:flex;align-items:center;gap:12px;min-height:48px}
+.hd-lines{flex:1;min-width:0}
+.hd-shop{flex:1;min-width:0;margin:0;font-size:15px;font-weight:700;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hd-date{margin:2px 0 0;font-size:14px;line-height:1.25;color:var(--on-header-muted);white-space:nowrap}
+.hd-slot{flex:none;display:flex;justify-content:flex-end;max-width:55%;min-width:0}
+.hd-title{margin:10px 0 0;font-size:44px;line-height:0.9;font-weight:900;letter-spacing:-0.045em;text-transform:uppercase;white-space:nowrap}
+.shift{flex:0 1 auto;min-width:48px;max-width:100%;min-height:48px;box-sizing:border-box;display:flex;align-items:center;gap:8px;padding:0 14px 0 8px;border-radius:9999px;background:var(--ink-raised);color:#FFFFFF !important;text-decoration:none;font-size:15px;font-weight:600;white-space:nowrap}
+.shift-c{flex:none;width:32px;height:32px;border-radius:9999px;background:var(--mint);color:var(--on-mint);display:flex;align-items:center;justify-content:center;font-weight:700}
+.sub-top{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:48px}
+.sub-top .hd-proto{margin:0;text-align:right;min-width:0}
+.back{display:flex;align-items:center;gap:4px;min-height:48px;padding-right:12px;color:#FFFFFF !important;text-decoration:none;font-size:15px;font-weight:600;white-space:nowrap}
+.sub-title{margin:6px 0 0;display:flex;align-items:center;gap:10px;font-size:32px;line-height:0.95;font-weight:900;letter-spacing:-0.045em;text-transform:uppercase}
+@media (max-width:340px){.nav{font-size:12px;letter-spacing:-0.02em}.sub-title{font-size:28px}.hd-title{font-size:40px}}
+
+.sec{margin:8px 0 0;font-weight:900;font-size:20px;line-height:1.1;letter-spacing:-0.03em;text-transform:uppercase;color:var(--text);display:flex;align-items:center;gap:8px}
+.sec.quiet{font-size:16px}
+.sec .n{display:inline-flex;min-width:22px;height:22px;padding:0 6px;box-sizing:border-box;border-radius:20px;background:var(--text);color:var(--bg);font-size:13px;letter-spacing:0;align-items:center;justify-content:center}
+
+.scroll{flex:1;min-height:0;overflow:auto;padding:16px 16px 0;display:flex;flex-direction:column;gap:12px}
+.endpad{flex:none;height:calc(90px + var(--safe-bottom))}
+.endpad.tall{height:calc(152px + var(--safe-bottom))}
+
+.dock{position:absolute;left:0;right:0;bottom:0;z-index:2;box-sizing:border-box;padding:12px 12px calc(12px + var(--safe-bottom));background:linear-gradient(to bottom,rgba(0,0,0,0) 0,var(--nav-strip) 12px);display:flex;flex-direction:column;gap:10px}
+.navbar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2px;padding:4px;border:1px solid var(--nav-border);border-radius:9999px;background:var(--nav-bg);box-shadow:var(--nav-shadow)}
+.nav{min-height:56px;border-radius:9999px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:13px;font-weight:600;color:#FFFFFF !important;text-decoration:none;letter-spacing:-0.01em;white-space:nowrap}
+.nav[aria-current="page"]{background:var(--mint);color:var(--on-mint) !important;font-weight:700}
+
+/* Cards: the one component change shared by A, B and C is the edge + shadow (tokens; Current = none). */
+.docket{flex:none;position:relative;background:var(--card);border:var(--card-edge-w) solid var(--card-edge);box-shadow:var(--card-shadow);border-radius:20px;padding:12px 14px 12px 12px;text-decoration:none;color:var(--text) !important;display:flex;gap:12px;align-items:center;min-height:56px;box-sizing:border-box}
+.docket.col{flex-direction:column;align-items:stretch;gap:10px;padding:14px 16px}
+.done{background:var(--done-bg)}.done .ico{background:var(--card)}
+.opt{background:transparent;box-shadow:none;border:var(--opt-edge-w) var(--opt-edge-style) var(--opt-edge)}.opt .ico{background:var(--card)}
+.ico{flex:none;width:44px;height:44px;border-radius:9999px;background:var(--icon-bg);display:flex;align-items:center;justify-content:center}
+.tag{display:inline-block;font-size:13px;font-weight:700;padding:2px 8px;border-radius:9999px;border:1.5px solid currentColor;color:var(--muted);white-space:nowrap}
+.tag.must{color:var(--tag-must)}
+.t{margin:0;font-size:18px;line-height:1.1;font-weight:700;letter-spacing:-0.01em}
+.s{margin:2px 0 0;font-size:15px;color:var(--muted);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.s.bad{color:var(--bad-text);font-weight:700;font-size:14px}
+.s.ok{color:var(--ok);font-weight:700}
+.stamp{flex:none;display:inline-flex;align-items:center;gap:4px;min-height:28px;padding:0 10px;border-radius:9999px;background:var(--card);color:var(--ok);font-weight:700;font-size:13px;white-space:nowrap}
+.dots{display:inline-flex;gap:4px}
+.dot{width:12px;height:12px;border-radius:6px;box-sizing:border-box;border:2px solid var(--accent)}
+.dot.on{background:var(--accent)}
+.quick{min-height:72px;padding:8px 4px;box-sizing:border-box;border-radius:20px;background:var(--card);border:var(--card-edge-w) solid var(--card-edge);box-shadow:var(--card-shadow);color:var(--text) !important;text-decoration:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-weight:700;font-size:15px;text-align:center}
+.banner{display:flex;align-items:center;gap:12px;min-height:52px;padding:8px 12px 8px 14px;box-sizing:border-box;border-radius:28px;background:var(--card);border:2px solid var(--bad);color:var(--text) !important;text-decoration:none}
+.probBtn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;box-sizing:border-box;border-radius:9999px;border:2px solid var(--bad);color:var(--bad-text) !important;background:var(--card);text-decoration:none;font-weight:700;font-size:16px}
+.hero{margin:-16px -16px 0;padding:0 20px 20px;background:var(--header);border-radius:0 0 28px 28px;display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;border-bottom:1px solid var(--header-edge)}
+.hero.round{justify-content:space-between;padding-top:4px}
+.pill{display:inline-flex;align-items:center;min-height:36px;padding:0 14px;border-radius:9999px;background:var(--mint);color:var(--on-mint);font-weight:700;font-size:14px}
+.sync{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--on-header-muted)}
+
+/* Buttons. Primary uses the new --primary token (= --accent except in C); secondary is a real 48 px button. */
+.btn1{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:56px;box-sizing:border-box;border:0;border-radius:9999px;background:var(--primary);color:var(--on-primary) !important;text-decoration:none;font-family:inherit;font-weight:700;font-size:17px;cursor:pointer}
+.btn1.off{background:var(--disabled-bg);color:var(--muted) !important;cursor:not-allowed}
+.btn2{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;min-height:48px;box-sizing:border-box;padding:0 16px;border:2px solid var(--btn2-edge);border-radius:9999px;background:var(--btn2-bg);color:var(--btn2-text) !important;text-decoration:none;font-family:inherit;font-weight:700;font-size:15px;cursor:pointer;text-align:center}
+.lnk{display:inline-flex;align-items:center;gap:6px;min-height:48px;padding:0;border:0;background:transparent;color:var(--link);font-family:inherit;font-size:15px;font-weight:700;text-decoration:underline;text-underline-offset:3px;cursor:pointer;align-self:flex-start}
+.how{display:flex;align-items:center;min-height:48px;padding:0 4px;border:0;background:transparent;color:#FFFFFF;font-family:inherit;font-size:15px;font-weight:700;text-decoration:underline;cursor:pointer}
+.chg{min-height:44px;padding:0 14px;border-radius:9999px;border:2px solid var(--btn2-edge);background:var(--btn2-bg);color:var(--btn2-text);font-family:inherit;font-size:15px;font-weight:700;cursor:pointer}
+.chg.cur{border-color:transparent;color:var(--link);text-decoration:underline}
+
+/* Chips (recent foods, hold time): Current = grey fill only (1.18:1 on white); options add a 2 px edge. */
+.chip{min-height:48px;padding:0 14px;border-radius:9999px;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;background:var(--chip-off-bg);color:var(--text);border:2px solid var(--chip-off-edge)}
+.chip[aria-pressed="true"]{background:var(--selected-bg);color:var(--on-selected);border-color:var(--selected-bg)}
+
+/* Inputs and the signed field (ui-tidy-a A5, design-system §13). */
+.lbl{margin:0;font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px}
+.lbl .opt-word{font-weight:400;color:var(--muted)}
+.txt{width:100%;box-sizing:border-box;min-height:52px;border:2px solid var(--line-input);border-radius:16px;padding:10px 12px;font-family:inherit;font-size:16px;color:var(--text);background:var(--card)}
+.txt:focus,.big:focus{outline:3px solid var(--focus);outline-offset:1px;border-color:var(--focus)}
+.big{width:100%;box-sizing:border-box;min-width:0;height:88px;border:2px solid var(--line-input);border-radius:20px;font-family:inherit;font-size:56px;text-align:center;color:var(--text);background:var(--card);font-weight:900;letter-spacing:-0.04em}
+.big::placeholder,.txt::placeholder,.sfield input::placeholder{color:var(--placeholder)}
+.sfield{display:flex;align-items:center;gap:4px;height:64px;box-sizing:border-box;border:2px solid var(--line-input);border-radius:16px;background:var(--card);padding:0 14px 0 6px}
+.sfield.small{height:56px}
+.sfield:focus-within{outline:3px solid var(--focus);outline-offset:1px;border-color:var(--focus)}
+.sfield input{flex:1;min-width:120px;width:100%;height:100%;box-sizing:border-box;border:0;outline:0;background:transparent;font-family:inherit;font-size:32px;font-weight:800;letter-spacing:-0.02em;text-align:left;padding:0 0 0 10px;color:var(--text)}
+.sfield.small input{font-size:28px}
+.sfield .u{flex:none;font-size:22px;color:var(--muted);font-weight:800;letter-spacing:-0.02em}
+.sign{flex:none;width:48px;height:48px;box-sizing:border-box;border-radius:12px;border:1.5px solid var(--line-input);background:var(--icon-bg);color:var(--text);font-family:inherit;font-size:30px;line-height:1;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0 0 3px}
+.small .sign{width:44px;height:44px}
+.readback{margin:0;font-size:15px;font-weight:700;color:var(--text);min-height:1.4em}
+.hint{margin:0;font-size:14px;color:var(--muted);line-height:1.35}
+
+/* Status boxes (KI15): the word and ✓ / ! carry the meaning, not the colour. */
+.st{margin:0;padding:10px 14px;border-radius:28px;font-weight:700}
+.st.ok{background:var(--ok-bg);color:var(--ok)}
+.st.bad{background:var(--bad-bg);color:var(--bad-text)}
+.okchip{flex:none;display:inline-flex;align-items:center;gap:3px;padding:1px 8px;border-radius:20px;background:var(--card);color:var(--ok);font-weight:700;font-size:14px}
+.track{position:relative;height:28px;border-radius:20px;background:var(--quiet);border:2px solid var(--line-input);box-sizing:border-box}
+.zone-l{position:absolute;left:0;top:0;bottom:0;width:50%;background:var(--ok-bg);border-right:2px solid var(--accent);border-radius:9999px 0 0 9999px;display:flex;align-items:center;gap:4px;padding-left:8px;box-sizing:border-box;font-size:13px;font-weight:700;color:var(--ok)}
+.zone-r{position:absolute;left:42.86%;right:0;top:0;bottom:0;background:var(--ok-bg);border-left:2px solid var(--accent);border-radius:0 9999px 9999px 0}
+.tick{position:absolute;top:0;bottom:0;width:0;border-left:2px dashed var(--accent)}
+.tl{position:absolute;top:2px;transform:translateX(-50%);font-size:13px;font-weight:700;color:var(--muted)}
+.mark{position:absolute;top:-8px;bottom:-8px;width:6px;margin-left:-3px;border-radius:3px;background:var(--text);border:2px solid var(--card);box-sizing:content-box}
+.rule{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 4px 6px;border-radius:16px;text-align:center;background:var(--quiet);border:2px solid var(--quiet);color:var(--text)}
+.rule.met{background:var(--ok-bg);color:var(--ok);border-color:var(--accent)}
+
+/* The round */
+.who{display:flex;align-items:center;gap:10px;min-height:48px;font-size:16px}
+.who .grow{flex:1;min-width:0}
+.timebox{display:flex;align-items:center;min-height:48px;box-sizing:border-box;padding:0 14px;border:2px solid var(--line-input);border-radius:16px;background:var(--card);font-size:16px;color:var(--text)}
+.chk{display:flex;align-items:center;gap:10px;min-height:56px;padding:12px 14px 12px 16px;box-sizing:border-box;border-radius:20px;background:var(--done-bg);border:var(--card-edge-w) solid var(--card-edge);color:var(--text)}
+.chk .temp{margin:0;font-size:25px;color:var(--ok);font-weight:800;letter-spacing:-0.02em}
+.fzname{margin:0;font-size:18px;font-weight:700;letter-spacing:-0.01em}
+/* Freezer "Still frozen ✓" toggle (aria-pressed). Current: outline pill on the page grey. A/B/C: the main action is
+   filled (--toggle-off-*); pressed = OK wash + accent edge + a filled ✓ disc (shape, not only colour). */
+.fz{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:56px;box-sizing:border-box;padding:0 18px;border:2px solid var(--toggle-off-edge);border-radius:9999px;background:var(--toggle-off-bg);color:var(--toggle-off-text);font-family:inherit;font-size:17px;font-weight:700;cursor:pointer}
+.fz[aria-pressed="true"]{border-color:var(--accent);background:var(--ok-bg);color:var(--ok)}
+.fz .mk{display:var(--toggle-mark);flex:none;width:24px;height:24px;box-sizing:border-box;border-radius:12px;border:2.5px solid currentColor;align-items:center;justify-content:center}
+.fz[aria-pressed="true"] .mk{background:var(--accent);border-color:var(--accent)}
+.fz .mk svg{display:none}
+.fz[aria-pressed="true"] .mk svg{display:block}
+.summary{padding:12px 16px;border:2px solid var(--bad);border-radius:20px;background:var(--card)}
+.summary h3{margin:0 0 4px;font-size:17px;font-weight:800;color:var(--bad-text)}
+.summary a{display:flex;align-items:center;min-height:48px;font-weight:700;color:var(--link)}
+.err{margin:0;padding:10px 14px;border-radius:28px;background:var(--bad-bg);color:var(--bad-text);font-weight:700;font-size:15px}
+.savebar{background:var(--save-bar);margin:0 -12px;padding:0 12px 2px}
+
+.proto{margin:8px 0 0;border:2px dashed var(--line-input);border-radius:20px;padding:10px 12px 12px;display:flex;flex-direction:column;gap:8px}
+.proto p{margin:0;font-size:14px;font-weight:700;color:var(--muted)}
+.pchips{display:flex;flex-wrap:wrap;gap:8px}
+.pchip{min-height:44px;padding:0 14px;border-radius:9999px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;background:var(--card);color:var(--text);border:2px solid var(--line-input)}
+.pchip[aria-pressed="true"]{background:var(--selected-bg);color:var(--on-selected);border-color:var(--selected-bg)}
+</style>
+</helmet>
+<div class="{{appClass}}">
+
+  <!-- ===================== TODAY ===================== -->
+  <sc-if value="{{isToday}}" hint-placeholder-val="{{ true }}">
+    <header class="hd flat">
+      <p class="hd-proto">Prototype with sample data · {{optLabel}}</p>
+      <div class="hd-top">
+        <div class="hd-lines">
+          <p class="hd-shop">Sample Café</p>
+          <p class="hd-date">Monday 26 October</p>
+        </div>
+        <div class="hd-slot"><a class="shift" href="SignIn.dc.html"><span class="shift-c" aria-hidden="true">M</span><span><span class="vh">On shift: </span>Mia</span></a></div>
+      </div>
+      <h1 class="hd-title">Today</h1>
+    </header>
+  </sc-if>
+  <sc-if value="{{isSub}}" hint-placeholder-val="{{ false }}">
+    <header class="{{subHdClass}}">
+      <div class="sub-top">
+        <a class="back" href="Main.dc.html"><svg class="ic c-white" width="20" height="20" viewBox="0 0 24 24" style="stroke-width: 2.2" aria-hidden="true"><path d="{{ic.back}}"></path></svg>Today</a>
+        <p class="hd-proto">Prototype with sample data · {{optLabel}}</p>
+      </div>
+      <h1 class="sub-title"><svg class="ic c-mint" width="32" height="32" viewBox="0 0 24 24" aria-hidden="true"><path d="{{subIcon}}"></path></svg>{{subTitle}}</h1>
+      <sc-if value="{{isCook}}" hint-placeholder-val="{{ false }}">
+        <div role="group" aria-label="What kind of food" style="margin-top: 14px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+          <button type="button" aria-pressed="true" style="min-height: 52px; padding: 4px 8px; border-radius: 9999px; font-family: inherit; font-size: 15px; font-weight: 700; background: #FFFFFF; color: #0E2A2C; border: 2px solid #FFFFFF">Poultry, mince, liver</button>
+          <button type="button" aria-pressed="false" style="min-height: 52px; padding: 4px 8px; border-radius: 9999px; font-family: inherit; font-size: 15px; font-weight: 700; background: transparent; color: #FFFFFF; border: 2px solid var(--line-on-ink)">Other food</button>
+        </div>
+      </sc-if>
+    </header>
+  </sc-if>
+
+  <div class="scroll">
+
+    <sc-if value="{{isToday}}" hint-placeholder-val="{{ true }}">
+      <div style="display: flex; flex-direction: column; gap: 12px">
+        <div class="hero">
+          <span class="pill">1 of 3 required done</span>
+          <span class="sync"><svg class="ic c-mint" width="14" height="14" viewBox="0 0 24 24" style="stroke-width: 2.6" aria-hidden="true"><path d="{{ic.check}}"></path></svg>Backed up 2 min ago</span>
+        </div>
+        <a class="banner" href="Due.dc.html">
+          <svg class="ic c-bad" width="24" height="24" viewBox="0 0 24 24" style="stroke-width: 2.2" aria-hidden="true"><path d="{{ic.bell}}"></path></svg>
+          <span style="flex: 1; font-size: 15px; line-height: 1.3"><b style="color: var(--bad-text)">! Somchai: no training yet</b> <span style="color: var(--muted); white-space: nowrap">· +1 more</span></span>
+          <svg class="ic c-text" width="20" height="20" viewBox="0 0 24 24" style="stroke-width: 2.2" aria-hidden="true"><path d="{{ic.chevron}}"></path></svg>
+        </a>
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+          <a class="quick" href="Cooking.dc.html"><svg class="ic c-acc" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ic.cooking}}"></path></svg>Log cooking</a>
+          <a class="quick" href="Delivery.dc.html"><svg class="ic c-acc" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ic.delivery}}"></path></svg>Log delivery</a>
+          <a class="quick" href="CoolingStart.dc.html"><svg class="ic c-acc" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ic.cooling}}"></path></svg>Start cooling</a>
+        </div>
+
+        <h2 class="sec">Still to do <span class="n" aria-label="2 items">2</span></h2>
+        <a href="#" onClick="{{goRound}}" class="docket">
+          <span class="ico"><svg class="ic c-acc" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ic.fridge}}"></path></svg></span>
+          <div style="flex: 1; min-width: 0">
+            <p class="t">Fridges and freezers</p>
+            <p class="s"><span class="dots" aria-hidden="true"><span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>1 of 5 checked</p>
+          </div>
+          <svg class="ic c-text" width="22" height="22" viewBox="0 0 24 24" style="stroke-width: 2.2" aria-hidden="true"><path d="{{ic.chevron}}"></path></svg>
+        </a>
+        <a href="Cooling.dc.html" class="docket">
+          <span class="ico"><svg class="ic c-acc" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ic.cooling}}"></path></svg></span>
+          <div style="flex: 1; min-width: 0">
+            <p class="t">Cooling · beef stock</p>
+            <p class="s" style="color: var(--bad-text); font-weight: 700"><svg class="ic c-bad" width="18" height="18" viewBox="0 0 24 24" style="stroke-width: 2.4" aria-hidden="true"><path d="{{ic.clock}}"></path></svg>25 min left · stage 1</p>
+          </div>
+          <svg class="ic c-text" width="22" height="22" viewBox="0 0 24 24" style="stroke-width: 2.2" aria-hidden="true"><path d="{{ic.chevron}}"></path></svg>
+        </a>
+
+        <h2 class="sec">Done</h2>
+        <div class="docket done">
+          <span class="ico"><svg class="ic c-text" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ic.cooking}}"></path></svg></span>
+          <div style="flex: 1; min-width: 0">
+            <p class="t">Cooking: Chicken thighs</p>
+            <p class="s">Mia. 75.2°C for 1 min</p>
+          </div>
+          <span class="stamp">✓ Done 11:05</span>
+        </div>
+        <div class="docket done">
+          <span class="ico"><svg class="ic c-muted" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ic.delivery}}"></path></svg></span>
+          <div style="flex: 1; min-width: 0">
+            <p class="t">Delivery · Gilmours</p>
+            <p class="s">3 items · 5.1°C · Mia</p>
+            <p class="s bad">! Sent back</p>
+          </div>
+          <span class="stamp">✓ Done 10:50</span>
+        </div>
+
+        <div style="margin: 12px 0 0; border-top: 1px dashed var(--line-input); padding-top: 12px">
+          <h2 class="sec quiet" style="margin: 0">Optional checks</h2>
+          <p style="margin: 2px 0 0; font-size: 14px; color: var(--muted)">Only if they help you.</p>
+        </div>
+        <a href="HotHolding.dc.html" class="docket opt">
+          <span class="ico"><svg class="ic c-muted" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ic.hotHold}}"></path></svg></span>
+          <div style="flex: 1; min-width: 0">
+            <p class="t" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap">Bain-marie 1 <span class="tag">Optional</span></p>
+            <p class="s">Last check 09:30, 66.0°C</p>
+          </div>
+          <svg class="ic c-text" width="22" height="22" viewBox="0 0 24 24" style="stroke-width: 2.2" aria-hidden="true"><path d="{{ic.chevron}}"></path></svg>
+        </a>
+        <!-- cleaning crit. 7: under Optional checks, never in Still to do or the count pill, never orange (only a recorded problem shows "!"). -->
+        <a href="Cleaning.dc.html" class="{{cleanCls}}">
+          <span class="ico"><svg class="ic c-muted" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ic.cleaning}}"></path></svg></span>
+          <div style="flex: 1; min-width: 0">
+            <p class="t" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap">Cleaning <span class="tag">Optional</span></p>
+            <sc-if value="{{cleanAll}}" hint-placeholder-val="{{ false }}">
+              <p class="s ok">✓ {{cleanLine}}</p>
+            </sc-if>
+            <sc-if value="{{cleanPart}}" hint-placeholder-val="{{ true }}">
+              <p class="s"><span class="dots" aria-hidden="true"><sc-for list="{{cleanDots}}" as="d" hint-placeholder-count="3"><span class="{{d.cls}}"></span></sc-for></span>{{cleanLine}}</p>
+            </sc-if>
+          </div>
+          <svg class="ic c-text" width="22" height="22" viewBox="0 0 24 24" style="stroke-width: 2.2" aria-hidden="true"><path d="{{ic.chevron}}"></path></svg>
+        </a>
+        <div class="docket done">
+          <span class="ico"><svg class="ic c-muted" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ic.opening}}"></path></svg></span>
+          <div style="flex: 1; min-width: 0">
+            <p class="t">Opening checks</p>
+            <p class="s">Mia</p>
+          </div>
+          <span class="stamp">✓ Done 07:05</span>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ===================== THE ROUND: 1 fridge + 3 freezers ===================== -->
+    <sc-if value="{{isRound}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 12px">
+        <div class="hero round">
+          <p style="margin: 0; display: flex; align-items: center; gap: 6px; font-size: 16px; font-weight: 700; color: #FFFFFF"><svg class="ic c-mint" width="20" height="20" viewBox="0 0 24 24" style="stroke-width: 2.4" aria-hidden="true"><path d="{{ic.thermometer}}"></path></svg>Safe: 5°C or colder</p>
+          <button type="button" class="how" aria-expanded="false">How to check</button>
+        </div>
+
+        <sc-if value="{{showSummary}}" hint-placeholder-val="{{ false }}">
+          <div class="summary" role="alert" tabindex="-1">
+            <h3>Fix 1 thing before saving</h3>
+            <a href="#fz3-frozen">Ice-cream freezer: tap Still frozen ✓, or remove the °C</a>
+          </div>
+        </sc-if>
+
+        <div class="docket col">
+          <div class="who">
+            <svg class="ic c-text" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ic.person}}"></path></svg>
+            <span class="grow"><b>Who is checking?</b> · Mia</span>
+            <button type="button" class="{{chgCls}}" aria-label="Change who is checking">Change</button>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 4px">
+            <p class="lbl">Time <span class="opt-word" style="font-size: 14px">(now, or up to 7 days back)</span></p>
+            <div class="timebox">26/10/2026, 07:40</div>
+          </div>
+        </div>
+
+        <h2 class="sec">Checked today</h2>
+        <div class="chk">
+          <div style="flex: 1; min-width: 0">
+            <p class="t">Under-bench</p>
+            <p class="s" style="font-size: 14px">Mia · 07:12</p>
+          </div>
+          <p class="temp">3.2°</p>
+          <span class="okchip">✓ OK</span>
+        </div>
+
+        <h2 class="sec">To check</h2>
+        <div class="docket col">
+          <label for="f-walkin" class="t">Walk-in chiller</label>
+          <div class="sfield">
+            <button type="button" class="sign" aria-label="Change to minus" onMouseDown="{{keepFocus}}" onClick="{{fr.flip}}">{{fr.glyph}}</button>
+            <input id="f-walkin" type="text" inputmode="decimal" autocomplete="off" placeholder="0.0" value="{{fr.text}}" onInput="{{fr.onInput}}" aria-describedby="rb-walkin">
+            <span class="u" aria-hidden="true">°C</span>
+          </div>
+          <p class="readback" id="rb-walkin" role="status">{{fr.readback}}</p>
+          <div aria-hidden="true">
+            <div class="track">
+              <div class="zone-l"><svg class="ic" width="14" height="14" viewBox="0 0 24 24" style="stroke: var(--ok); stroke-width: 3"><path d="{{ic.check}}"></path></svg>Safe</div>
+              <span style="position: absolute; right: 8px; top: 0; bottom: 0; display: flex; align-items: center; font-size: 13px; font-weight: 700; color: var(--bad-text)">! Too warm</span>
+              <sc-if value="{{fr.hasValue}}" hint-placeholder-val="{{ false }}"><div class="mark" style="{{fr.markStyle}}"></div></sc-if>
+            </div>
+            <div style="position: relative; height: 18px; font-size: 13px; color: var(--muted)"><span style="position: absolute; left: 50%; transform: translateX(-50%); top: 2px; font-weight: 700">5°C</span></div>
+          </div>
+          <sc-if value="{{fr.ok}}" hint-placeholder-val="{{ false }}">
+            <p class="st ok" role="status">✓ OK — 5°C or lower</p>
+          </sc-if>
+        </div>
+
+        <sc-if value="{{helpOnce}}" hint-placeholder-val="{{ false }}">
+          <p class="hint">Freezers: the °C is optional. Saved as measured. SousMate does not judge a freezer temperature.</p>
+        </sc-if>
+
+        <sc-for list="{{freezers}}" as="z" hint-placeholder-count="3">
+          <div class="docket col">
+            <p class="fzname" id="{{z.nameId}}">{{z.name}}</p>
+            <sc-if value="{{z.btnFirst}}" hint-placeholder-val="{{ true }}">
+              <button type="button" class="fz" id="{{z.frozenId}}" aria-pressed="{{z.pressed}}" aria-describedby="{{z.nameId}}" onClick="{{z.toggle}}"><span class="mk" aria-hidden="true"><svg class="ic" width="14" height="14" viewBox="0 0 24 24" style="stroke: var(--accent-ink); stroke-width: 3.2"><path d="{{ic.check}}"></path></svg></span>{{z.label}}</button>
+            </sc-if>
+            <div style="display: flex; flex-direction: column; gap: 6px">
+              <label for="{{z.inputId}}" class="lbl" style="font-size: 15px">{{z.fieldLabel}}</label>
+              <div class="sfield small">
+                <button type="button" class="sign" aria-label="{{z.signLabel}}" aria-describedby="{{z.nameId}}" onMouseDown="{{keepFocus}}" onClick="{{z.flip}}">{{z.glyph}}</button>
+                <input id="{{z.inputId}}" type="text" inputmode="decimal" autocomplete="off" placeholder="{{z.placeholder}}" value="{{z.text}}" onInput="{{z.onInput}}" aria-describedby="{{z.rbId}}">
+                <span class="u" aria-hidden="true">°C</span>
+              </div>
+              <sc-if value="{{z.hasErr}}" hint-placeholder-val="{{ false }}"><p class="err" role="alert">{{z.err}}</p></sc-if>
+              <sc-if value="{{z.hasValue}}" hint-placeholder-val="{{ false }}"><p class="readback" id="{{z.rbId}}" role="status">Reading: {{z.readback}}</p></sc-if>
+              <sc-if value="{{z.helpEach}}" hint-placeholder-val="{{ true }}"><p class="hint">Saved as measured. SousMate does not judge a freezer temperature.</p></sc-if>
+            </div>
+            <sc-if value="{{z.btnLast}}" hint-placeholder-val="{{ false }}">
+              <button type="button" class="fz" id="{{z.frozenId}}" aria-pressed="{{z.pressed}}" aria-describedby="{{z.nameId}}" onClick="{{z.toggle}}"><span class="mk" aria-hidden="true"><svg class="ic" width="14" height="14" viewBox="0 0 24 24" style="stroke: var(--accent-ink); stroke-width: 3.2"><path d="{{ic.check}}"></path></svg></span>{{z.label}}</button>
+            </sc-if>
+            <a href="FreezerTemp.dc.html" class="btn2" aria-describedby="{{z.nameId}}">Not frozen or freezer fault</a>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <!-- ===================== RECORD FORM: cooking, poultry ===================== -->
+    <sc-if value="{{isCook}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 16px">
+        <div class="docket col">
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
+            <label for="cook-food" class="lbl">What did you cook?</label>
+            <span class="tag must">Record every batch</span>
+          </div>
+          <input id="cook-food" class="txt" autocomplete="off" value="Chicken thighs">
+          <p class="hint" style="font-size: 15px">Includes sausages and burger patties.</p>
+          <div role="group" aria-label="Recent foods" style="display: flex; flex-wrap: wrap; gap: 8px">
+            <button type="button" class="chip" aria-pressed="true">Chicken thighs</button>
+            <button type="button" class="chip" aria-pressed="false">Beef mince patties</button>
+            <button type="button" class="chip" aria-pressed="false">Chicken livers</button>
+          </div>
+          <button type="button" class="lnk" aria-expanded="false"><svg class="ic c-acc" width="18" height="18" viewBox="0 0 24 24" style="stroke-width: 2.2" aria-hidden="true"><path d="{{ic.info}}"></path></svg>Thin pieces?</button>
+        </div>
+
+        <div class="docket col">
+          <h2 class="lbl">Safe at one of these</h2>
+          <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+            <sc-for list="{{rules}}" as="r" hint-placeholder-count="3">
+              <div class="{{r.cls}}">
+                <p style="margin: 0; font-size: 22px; line-height: 1; font-weight: 800; letter-spacing: -0.02em">{{r.temp}}</p>
+                <p style="margin: 0; font-size: 14px">{{r.time}}</p>
+                <p style="margin: 0; font-size: 14px; font-weight: 700; min-height: 18px">{{r.mark}}</p>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div class="docket col">
+          <label for="cook-temp" class="lbl"><svg class="ic c-acc" width="22" height="22" viewBox="0 0 24 24" style="stroke-width: 2.2" aria-hidden="true"><path d="{{ic.thermometer}}"></path></svg>Thickest part</label>
+          <div style="display: flex; align-items: center; gap: 8px">
+            <input id="cook-temp" class="big" inputmode="decimal" autocomplete="off" placeholder="0" value="{{ck.text}}" onInput="{{ck.onInput}}">
+            <span aria-hidden="true" style="font-size: 32px; color: var(--muted); font-weight: 800; letter-spacing: -0.02em">°C</span>
+          </div>
+          <div aria-hidden="true" style="padding-top: 4px">
+            <div class="track">
+              <div class="zone-r"><span style="position: absolute; right: 6px; top: 0; bottom: 0; display: flex; align-items: center; gap: 3px; font-size: 13px; font-weight: 700; color: var(--ok)"><svg class="ic" width="14" height="14" viewBox="0 0 24 24" style="stroke: var(--ok); stroke-width: 2.6"><path d="{{ic.clock}}"></path></svg>+ time</span></div>
+              <div class="tick" style="left: 57.14%"></div>
+              <div class="tick" style="left: 71.43%"></div>
+              <sc-if value="{{ck.hasValue}}" hint-placeholder-val="{{ false }}"><div class="mark" style="{{ck.markStyle}}"></div></sc-if>
+            </div>
+            <div style="position: relative; height: 18px">
+              <span class="tl" style="left: 42.86%">65°</span><span class="tl" style="left: 57.14%">70°</span><span class="tl" style="left: 71.43%">75°</span>
+            </div>
+          </div>
+          <h3 id="hold-label" class="lbl" style="margin-top: 2px"><svg class="ic c-acc" width="22" height="22" viewBox="0 0 24 24" style="stroke-width: 2.2" aria-hidden="true"><path d="{{ic.clock}}"></path></svg>How long at that temperature?</h3>
+          <div role="group" aria-labelledby="hold-label" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px">
+            <sc-for list="{{holds}}" as="h" hint-placeholder-count="9">
+              <button type="button" class="chip" aria-pressed="{{h.pressed}}" onClick="{{h.pick}}" style="{{h.style}}">{{h.label}}</button>
+            </sc-for>
+          </div>
+          <sc-if value="{{ck.pass}}" hint-placeholder-val="{{ false }}">
+            <p class="st ok" role="status">✓ Safe. {{ck.passText}}</p>
+          </sc-if>
+          <sc-if value="{{ck.fail}}" hint-placeholder-val="{{ false }}">
+            <div style="display: flex; flex-direction: column; gap: 10px">
+              <p class="st bad" role="status">! Not safe yet. {{ck.failText}}</p>
+              <button type="button" class="btn2" aria-expanded="false">Can't cook it more? Record what you did</button>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </sc-if>
+
+    <div class="proto">
+      <p>Prototype only: try another option or sample</p>
+      <sc-for list="{{groups}}" as="g" hint-placeholder-count="3">
+        <div class="pchips" role="group" aria-label="{{g.label}}">
+          <sc-for list="{{g.chips}}" as="c" hint-placeholder-count="3">
+            <button type="button" class="pchip" aria-pressed="{{c.pressed}}" onClick="{{c.pick}}">{{c.label}}</button>
+          </sc-for>
+        </div>
+      </sc-for>
+    </div>
+    <div class="{{endpadCls}}"></div>
+  </div>
+
+  <div class="dock">
+    <sc-if value="{{isToday}}" hint-placeholder-val="{{ true }}">
+      <a class="probBtn" href="Problem.dc.html"><svg class="ic c-bad" width="22" height="22" viewBox="0 0 24 24" style="stroke-width: 2.2" aria-hidden="true"><path d="{{ic.problem}}"></path></svg>Something went wrong</a>
+    </sc-if>
+    <sc-if value="{{isSub}}" hint-placeholder-val="{{ false }}">
+      <div class="savebar">
+        <sc-if value="{{canSave}}" hint-placeholder-val="{{ false }}">
+          <a class="btn1" href="Main.dc.html" onClick="{{trySave}}">{{saveLabel}}</a>
+        </sc-if>
+        <sc-if value="{{cannotSave}}" hint-placeholder-val="{{ true }}">
+          <span class="btn1 off" aria-disabled="true">{{saveLabel}}</span>
+        </sc-if>
+      </div>
+    </sc-if>
+    <nav class="navbar" aria-label="Main">
+      <a class="nav" href="Main.dc.html" aria-current="page"><svg class="ic c-cur" width="22" height="22" viewBox="0 0 24 24" style="stroke-width: 2.2" aria-hidden="true"><path d="{{ic.today}}"></path></svg>Today</a>
+      <a class="nav" href="Due.dc.html"><svg class="ic c-cur" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ic.calendar}}"></path></svg>What's due</a>
+      <a class="nav" href="History.dc.html"><svg class="ic c-cur" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ic.history}}"></path></svg>History</a>
+      <a class="nav" href="Settings.dc.html"><svg class="ic c-cur" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ic.team}}"></path></svg>Team</a>
+    </nav>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    // Hash for screenshots, e.g. #A,dark,round,filled or #C,light,cook,fail
+    const h = (typeof location !== 'undefined' ? location.hash : '').slice(1).split(',');
+    const has = (k) => h.indexOf(k) >= 0;
+    const rs = has('filled') ? 'filled' : has('error') ? 'error' : 'empty';
+    this.state = {
+      opt: ['A', 'B', 'C'].find(has) || 'cur',
+      dark: has('dark'),
+      screen: has('round') ? 'round' : has('cook') ? 'cook' : 'today',
+      clean: has('clean0') ? 0 : has('cleanall') ? 3 : 2,
+      order: has('fieldfirst') ? 'field' : 'btn',
+      label: has('short') ? 'short' : 'spec',
+      help: has('helponce') ? 'once' : 'each',
+      cook: has('fail') ? 'fail' : has('cookempty') ? 'empty' : 'pass',
+      rs,
+      ...this.roundState(rs),
+      ...this.cookState(has('fail') ? 'fail' : has('cookempty') ? 'empty' : 'pass'),
+    };
+  }
+  roundState(s) {
+    // Fridge starts on +, freezers start on − (ui-tidy-a A5-1). Pressed = "Still frozen ✓" tapped.
+    const base = { fr: '', frSign: '+', z1: '', z1s: '-', z1p: false, z2: '', z2s: '-', z2p: false, z3: '', z3s: '-', z3p: false, tried: false };
+    if (s === 'filled') return { ...base, fr: '3.4', z1: '18', z1p: true, z2p: true };
+    if (s === 'error') return { ...base, fr: '3.4', z1: '18', z1p: true, z2p: true, z3: '15', tried: true };
+    return base;
+  }
+  cookState(s) {
+    if (s === 'fail') return { ckText: '68.0', hold: 120 };
+    if (s === 'empty') return { ckText: '', hold: null };
+    return { ckText: '70.4', hold: 180 };
+  }
+  renderVals() {
+    const ic = {
+      fridge: 'M7 2.5h10a2 2 0 012 2v15a2 2 0 01-2 2H7a2 2 0 01-2-2v-15a2 2 0 012-2zM5 9.5h14M8.5 5.5v1.5M8.5 12.5v3',
+      cooking: 'M5 10.5h14v6.5a3 3 0 01-3 3H8a3 3 0 01-3-3zM3 10.5h18M10 7.5h4M2.5 13h2.5M19 13h2.5M9 3.5v1.5M12 3v2M15 3.5v1.5',
+      cooling: 'M8 14.5V5a2 2 0 014 0v9.5a3.5 3.5 0 11-4 0zM10 9.5v7M18 4v11M15.5 12.5L18 15l2.5-2.5',
+      delivery: 'M2 5.5h11v10H2zM13 8.5h4.2l3.3 3.5v3.5H13M4.5 17.5a2 2 0 104 0a2 2 0 10-4 0M14.5 17.5a2 2 0 104 0a2 2 0 10-4 0',
+      hotHold: 'M3 13h18M5 13v4.5a2 2 0 002 2h10a2 2 0 002-2V13M8 4.5c-1 1.2 1 2.3 0 3.5M12 4.5c-1 1.2 1 2.3 0 3.5M16 4.5c-1 1.2 1 2.3 0 3.5',
+      problem: 'M10.3 3.9L2.4 18a2 2 0 001.7 3h15.8a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0zM12 9v4.5M12 17v.5',
+      cleaning: 'M11 3l1.9 4.6L17.5 9.5l-4.6 1.9L11 16l-1.9-4.6L4.5 9.5l4.6-1.9zM18 14.5l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z',
+      opening: 'M5 21V4.5a1.5 1.5 0 011.5-1.5h11A1.5 1.5 0 0119 4.5V21M3 21h18M15 12v1',
+      thermometer: 'M10 14.5V5a2 2 0 014 0v9.5a3.5 3.5 0 11-4 0zM12 9.5v7',
+      calendar: 'M5.5 5h13a2 2 0 012 2v11.5a2 2 0 01-2 2h-13a2 2 0 01-2-2V7a2 2 0 012-2zM3.5 10h17M8 3v4M16 3v4',
+      bell: 'M6 16v-5a6 6 0 0112 0v5l1.5 2h-15zM10 20.5a2 2 0 004 0',
+      clock: 'M12 21a9 9 0 100-18 9 9 0 000 18zM12 7v5l3 2',
+      check: 'M5 12l5 5L20 7',
+      info: 'M12 21a9 9 0 100-18 9 9 0 000 18zM12 11v5.5M12 7.5v.5',
+      person: 'M12 12a4 4 0 100-8 4 4 0 000 8zM4.5 21a7.5 7.5 0 0115 0',
+      team: 'M9 11a3.5 3.5 0 100-7 3.5 3.5 0 000 7zM2.5 20a6.5 6.5 0 0113 0M16 4.3a3.5 3.5 0 010 6.4M18 13.5a6.5 6.5 0 013.5 6',
+      today: 'M4 6l1.5 1.5L8 5M4 12l1.5 1.5L8 11M4 18l1.5 1.5L8 17M11 6.5h9M11 12.5h9M11 18.5h9',
+      history: 'M4 12a8 8 0 102.4-5.7M4 3.5v4.5h4.5M12 8v4l2.5 2',
+      chevron: 'M9 6l6 6-6 6',
+      back: 'M15 6l-6 6 6 6'
+    };
+    const st = this.state;
+    const OPT = { cur: 'Current', A: 'Option A Tuned', B: 'Option B Deeper', C: 'Option C Docket' };
+    const fmt = (n) => (n < 0 ? '−' : '') + Math.abs(n).toFixed(1) + '°C';
+    const signed = (digits, sign) => {
+      const d = String(digits).trim().replace(',', '.');
+      if (d === '') return { empty: true, n: null, bad: false };
+      if (!/^\d+(\.\d+)?$/.test(d)) return { empty: false, n: null, bad: 'Enter a number, e.g. 3.5' };
+      if (/\.\d\d/.test(d)) return { empty: false, n: null, bad: 'Use at most 1 decimal place' };
+      let n = Number(d);
+      if (sign === '-') n = n === 0 ? 0 : -n;
+      // Input range −50..30 °C is the app sanity range of the freezer template (not MPI); no freezer limit (P2).
+      if (n < -50 || n > 30) return { empty: false, n: null, bad: 'Check the reading: allowed −50 to 30 °C' };
+      return { empty: false, n, bad: false };
+    };
+    const splitSign = (v) => { const m = /^\s*([-−–+])/.exec(v); return m ? { digits: v.slice(m[0].length), sign: m[1] === '+' ? '+' : '-' } : null; };
+
+    // ---------- round ----------
+    const frv = signed(st.fr, st.frSign);
+    const frPos = (n) => Math.max(0, Math.min(100, ((n + 4) / 18) * 100));
+    const fr = {
+      text: st.fr,
+      glyph: st.frSign === '-' ? '−' : '+',
+      flip: () => this.setState({ frSign: st.frSign === '-' ? '+' : '-' }),
+      onInput: (e) => { const s = splitSign(e.target.value); this.setState(s ? { fr: s.digits, frSign: s.sign } : { fr: e.target.value }); },
+      hasValue: frv.n !== null,
+      readback: frv.n === null ? '' : 'Reading: ' + fmt(frv.n),
+      ok: frv.n !== null && frv.n <= 5,
+      markStyle: 'left: ' + (frv.n === null ? 0 : frPos(frv.n)) + '%',
+    };
+    const names = ['Chest freezer', 'Upright freezer', 'Ice-cream freezer'];
+    const freezers = names.map((name, i) => {
+      const k = 'z' + (i + 1);
+      const v = signed(st[k], st[k + 's']);
+      const pressed = st[k + 'p'];
+      return {
+        name,
+        nameId: k + '-name', frozenId: k + '-frozen', inputId: k + '-fztemp', rbId: k + '-rb',
+        pressed: pressed ? 'true' : 'false',
+        // Amendment F1-2: in the round the toggle is a press, so a valid °C reads "Still frozen ✓ · −18.0°C" (no "save").
+        label: v.n !== null ? 'Still frozen ✓ · ' + fmt(v.n) : 'Still frozen ✓',
+        toggle: () => this.setState({ [k + 'p']: !pressed }),
+        btnFirst: st.order === 'btn', btnLast: st.order === 'field',
+        fieldLabel: st.label === 'spec' ? 'Food temperature (optional)' : '°C (optional)',
+        placeholder: '0.0',
+        text: st[k],
+        glyph: st[k + 's'] === '-' ? '−' : '+',
+        signLabel: st[k + 's'] === '-' ? 'Change to plus' : 'Change to minus',
+        flip: () => this.setState({ [k + 's']: st[k + 's'] === '-' ? '+' : '-' }),
+        onInput: (e) => { const s = splitSign(e.target.value); this.setState(s ? { [k]: s.digits, [k + 's']: s.sign } : { [k]: e.target.value }); },
+        hasValue: v.n !== null, readback: v.n === null ? '' : fmt(v.n),
+        hasErr: !!v.bad, err: v.bad || '',
+        helpEach: st.help === 'each',
+        typedNotPressed: !v.empty && !pressed,
+        counts: pressed,
+      };
+    });
+    const k = (frv.n !== null ? 1 : 0) + freezers.filter((z) => z.counts).length;
+    const roundBlock = freezers.some((z) => z.typedNotPressed) || freezers.some((z) => z.hasErr);
+
+    // ---------- cooking (SS&S p.46 pairs, spec phase2-cooking C1; copied from Cooking.dc.html) ----------
+    const pairs = [{ t: 65, s: 900, temp: '65°C', time: 'for 15 min' }, { t: 70, s: 180, temp: '70°C', time: 'for 3 min' }, { t: 75, s: 30, temp: '75°C', time: 'for 30 sec' }];
+    const cs = String(st.ckText).trim().replace(',', '.');
+    const cn = /^\d+(\.\d)?$/.test(cs) && Number(cs) <= 150 ? Number(cs) : null;
+    const hold = st.hold;
+    const metPair = pairs.find((p) => cn !== null && hold !== null && cn >= p.t && hold >= p.s) || null;
+    const long = (sec) => (sec < 60 ? sec + ' seconds' : sec / 60 + (sec === 60 ? ' minute' : ' minutes'));
+    let failText = '';
+    if (cn !== null && hold !== null && !metPair) {
+      if (cn < 65) failText = 'It must reach at least 65°C. Keep cooking and check again.';
+      else { const best = pairs.filter((p) => cn >= p.t).pop(); failText = 'At ' + best.temp + ' it must stay there for ' + long(best.s) + '. Keep cooking and check again.'; }
+    }
+    const rules = pairs.map((p) => ({ temp: p.temp, time: p.time, mark: metPair === p ? '✓ Met' : '', cls: 'rule' + (metPair === p ? ' met' : '') }));
+    const holdOpts = [[30, '30 sec'], [60, '1 min'], [120, '2 min'], [180, '3 min'], [300, '5 min'], [600, '10 min'], [900, '15 min'], [1200, '20 min'], ['other', 'Other']];
+    const holds = holdOpts.map(([s, label]) => ({
+      label, pressed: hold === s ? 'true' : 'false',
+      style: 'padding: 0 4px' + (s === 'other' ? '; grid-column: 1 / -1' : ''),
+      pick: () => this.setState({ hold: s }),
+    }));
+    const cpos = cn === null ? 0 : Math.max(0, Math.min(100, ((cn - 50) / 35) * 100));
+    const ck = {
+      text: st.ckText, onInput: (e) => this.setState({ ckText: e.target.value }),
+      hasValue: cn !== null, markStyle: 'left: ' + cpos + '%',
+      pass: metPair !== null, passText: metPair ? 'Meets ' + metPair.temp + ' for ' + long(metPair.s) + '.' : '',
+      fail: failText !== '', failText,
+    };
+
+    // ---------- Today: cleaning card (cleaning crit. 7) ----------
+    const cleanN = st.clean;
+
+    // ---------- prototype switches ----------
+    const pick = (key, opts, extra) => opts.map(([v, label]) => ({
+      label, pressed: st[key] === v ? 'true' : 'false',
+      pick: () => this.setState(Object.assign({ [key]: v }, extra ? extra(v) : {})),
+    }));
+    const groups = [
+      { label: 'Option', chips: pick('opt', [['cur', 'Current'], ['A', 'A Tuned'], ['B', 'B Deeper'], ['C', 'C Docket']]) },
+      { label: 'Colour mode', chips: pick('dark', [[false, 'Light'], [true, 'Dark']]) },
+      { label: 'Screen', chips: pick('screen', [['today', 'Today'], ['round', 'Fridge round'], ['cook', 'Cooking form']]) },
+    ];
+    if (st.screen === 'today') groups.push({ label: 'Cleaning card', chips: pick('clean', [[0, 'Cleaning: none'], [2, 'Cleaning: 2 of 3'], [3, 'Cleaning: all done']]) });
+    if (st.screen === 'round') {
+      groups.push({ label: 'Round sample', chips: pick('rs', [['empty', 'Empty'], ['filled', '3.4, −18.0, pressed'], ['error', '°C typed, not pressed']], (v) => this.roundState(v)) });
+      groups.push({ label: 'Freezer order', chips: pick('order', [['btn', 'Button first (spec)'], ['field', '°C first']]) });
+      groups.push({ label: 'Field label', chips: pick('label', [['spec', 'Food temperature (optional)'], ['short', '°C (optional)']]) });
+      groups.push({ label: 'Help line', chips: pick('help', [['each', 'Help on each freezer'], ['once', 'Help once']]) });
+    }
+    if (st.screen === 'cook') groups.push({ label: 'Cooking sample', chips: pick('cook', [['empty', 'Empty'], ['pass', '70.4°C, 3 min'], ['fail', '68.0°C, 2 min']], (v) => this.cookState(v)) });
+
+    const isRound = st.screen === 'round', isCook = st.screen === 'cook';
+    let saveLabel = '', canSave = false;
+    if (isRound) {
+      saveLabel = k === 0 ? 'Enter a temperature' : k === 1 ? 'Save 1 reading' : 'Save ' + k + ' readings';
+      canSave = k > 0;
+    } else if (isCook) {
+      canSave = metPair !== null;
+      saveLabel = canSave ? 'Save cooking check' : cn === null ? 'Enter the temperature' : hold === null ? 'Choose how long' : 'Keep cooking first';
+    }
+    return {
+      ic,
+      appClass: 'app t-' + st.opt + (st.dark ? ' dark' : ''),
+      optLabel: OPT[st.opt] + (st.dark ? ' · Dark' : ' · Light'),
+      isToday: st.screen === 'today', isSub: st.screen !== 'today', isRound, isCook,
+      subHdClass: isRound ? 'hd flat' : 'hd',
+      subTitle: isRound ? 'Fridges, chillers and freezers' : 'Cooking check',
+      subIcon: isRound ? ic.fridge : ic.cooking,
+      goRound: (e) => { e.preventDefault(); this.setState({ screen: 'round' }); },
+      cleanCls: 'docket ' + (cleanN === 3 ? 'done' : 'opt'),
+      cleanAll: cleanN === 3, cleanPart: cleanN < 3,
+      cleanLine: cleanN === 3 ? 'All 3 done · 21:38' : cleanN + ' of 3 today',
+      cleanDots: [0, 1, 2].map((i) => ({ cls: 'dot' + (i < cleanN ? ' on' : '') })),
+      chgCls: st.opt === 'cur' ? 'chg cur' : 'chg',
+      keepFocus: (e) => e.preventDefault(),
+      fr, freezers,
+      showSummary: isRound && st.tried && roundBlock,
+      helpOnce: st.help === 'once',
+      rules, holds, ck,
+      groups,
+      canSave, cannotSave: !canSave, saveLabel,
+      trySave: (e) => { if (isRound && roundBlock) { e.preventDefault(); this.setState({ tried: true }); } },
+      endpadCls: st.screen === 'today' ? 'endpad tall' : 'endpad tall',
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390">
+<style>html{touch-action:manipulation}@media (min-width:520px){html,body{background:#0E2A2C}body>div>div>div[style*="width: 390px"]{margin:24px auto;border-radius:28px;overflow:hidden}}</style>
+<title>Fridge check</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#0B6B72}a:hover{color:#08555B}
+.docket{position:relative;background:#FFFFFF;border-radius:20px;padding:14px 16px}
+
+.temp{width:100%;box-sizing:border-box;min-width:0;height:64px;border:2px solid #6F8885;border-radius:16px;font-size:32px;text-align:center;color:#0E2A2C;background:#FFFFFF;font-weight:800;letter-spacing:-0.02em}
+.temp::placeholder{color:#A3B5B2}
+.temp:focus{outline:3px solid #0B6B72;outline-offset:1px;border-color:#0B6B72}
+/* ui-tidy-a item 5: one field, sign slot at the LEFT INSIDE the border, then the number, then °C. */
+.sfield{display:flex;align-items:center;gap:4px;height:64px;box-sizing:border-box;border:2px solid #6F8885;border-radius:16px;background:#FFFFFF;padding:0 14px 0 6px}
+.sfield:focus-within{outline:3px solid #0B6B72;outline-offset:1px;border-color:#0B6B72}
+.sfield input{flex:1;min-width:120px;width:100%;height:100%;box-sizing:border-box;border:0;outline:0;background:transparent;font-family:inherit;font-size:32px;font-weight:800;letter-spacing:-0.02em;text-align:left;padding:0 0 0 10px;color:#0E2A2C}
+.sfield input::placeholder{color:#A3B5B2}
+.sfield .u{flex:none;font-size:22px;color:#4A5E60;font-weight:800;letter-spacing:-0.02em}
+.sign{flex:none;width:48px;height:48px;box-sizing:border-box;border-radius:12px;border:1.5px solid #6F8885;background:#E7EEEC;color:#0E2A2C;font-family:inherit;font-size:30px;line-height:1;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0 0 3px}
+.sign:focus-visible{outline:3px solid #0B6B72;outline-offset:2px}
+.readback{margin:0;font-size:15px;font-weight:700;color:#0E2A2C}
+.soft{margin:0;font-size:14px;color:#4A5E60}
+.sample{flex:none;margin-top:4px;border:2px dashed #6F8885;border-radius:20px;padding:10px 12px 12px;display:flex;flex-direction:column;gap:8px}
+.sample p{margin:0;font-size:14px;font-weight:700;color:#4A5E60}
+.chip{min-height:48px;padding:0 14px;border-radius:9999px;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;background:#FFFFFF;color:#0E2A2C;border:2px solid #6F8885}
+.chip[aria-pressed="true"]{background:#0E2A2C;color:#FFFFFF;border-color:#0E2A2C}
+textarea{width:100%;box-sizing:border-box;border:2px solid #A9440C;border-radius:16px;padding:10px;font:inherit;font-size:15px;min-height:56px}
+.ok{display:inline-flex;align-items:center;gap:3px;padding:1px 8px;border-radius:20px;background:#DFF5EE;color:#08555B;font-weight:700;font-size:14px}
+.track{position:relative;height:28px;border-radius:20px;background:#F3F7F6;border:2px solid #6F8885;box-sizing:border-box}
+.safe{position:absolute;left:0;top:0;bottom:0;width:50%;background:#DFF5EE;border-right:2px solid #0B6B72;border-radius:9999px 0 0 9999px;display:flex;align-items:center;gap:4px;padding-left:8px;box-sizing:border-box;font-size:13px;font-weight:700;color:#08555B}
+.qa{min-height:48px;padding:0 12px;border-radius:9999px;border:2px solid #6F8885;background:#FFFFFF;color:#0E2A2C;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer}
+.how{display:flex;align-items:center;gap:6px;min-height:48px;margin:-6px 0 -10px;padding:0 8px 0 0;border:0;background:transparent;color:#FFFFFF;font-family:inherit;font-size:15px;font-weight:700;text-decoration:underline;cursor:pointer}
+</style>
+</helmet>
+<div style="width: 100%; height: 100vh; box-sizing: border-box; background: #E7EEEC; font-family: 'Inter', system-ui, sans-serif; color: #0E2A2C; display: flex; flex-direction: column">
+  <div style="flex: none; background: #0E2A2C; color: #FFFFFF; border-radius: 0 0 28px 28px; padding: 14px 20px 22px; display: flex; flex-direction: column; gap: 10px">
+    <div style="display: flex; justify-content: space-between; align-items: center">
+      <a href="Main.dc.html" style="display: flex; align-items: center; gap: 4px; min-height: 48px; margin: -2px 0; padding-right: 12px; color: #FFFFFF; text-decoration: none; font-size: 15px">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.back}}"></path></svg>
+        Today
+      </a>
+      <p style="margin: 0; font-size: 12px; color: #A9C4C2">Prototype with sample data</p>
+    </div>
+    <div style="display: flex; align-items: center; gap: 10px">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#8EE6C9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.fridge}}"></path></svg>
+      <h1 style="margin: 0; font-size: 36px; line-height: 0.9; font-weight: 900; letter-spacing: -0.045em; text-transform: uppercase">Fridges and chillers</h1>
+    </div>
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px">
+      <p style="margin: 0; display: flex; align-items: center; gap: 6px; font-size: 16px; font-weight: 700">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8EE6C9" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.thermometer}}"></path></svg>
+        Safe: 5°C or colder
+      </p>
+      <button type="button" class="how" aria-expanded="{{howOpen}}" onClick="{{toggleHow}}">How to check</button>
+    </div>
+    <sc-if value="{{showHow}}" hint-placeholder-val="{{ false }}">
+      <p style="margin: 0; padding: 8px 10px; border-radius: 20px; background: #1C3D40; font-size: 15px; color: #FFFFFF">Probe the food, or a cup of water in the fridge.</p>
+    </sc-if>
+  </div>
+
+  <div style="flex: 1; overflow: auto; padding: 20px 16px 16px; display: flex; flex-direction: column; gap: 16px">
+    <div class="docket" style="display: flex; align-items: center; gap: 10px; background: #DFF5EE">
+      <div style="flex: 1">
+        <p style="margin: 0; font-size: 18px; font-weight: 700; letter-spacing: -0.01em">Under-bench</p>
+        <p style="margin: 2px 0 0; font-size: 14px; color: #4A5E60">Mia · 07:12</p>
+      </div>
+      <p style="margin: 0; font-size: 25px; color: #0B6B72; font-weight: 800; letter-spacing: -0.02em">3.2°</p>
+      <span class="ok" style="background: #FFFFFF">✓ OK</span>
+    </div>
+
+    <sc-for list="{{units}}" as="u" hint-placeholder-count="2">
+      <div class="docket" style="display: flex; flex-direction: column; gap: 10px">
+        <label for="{{u.id}}" style="font-size: 18px; font-weight: 700; letter-spacing: -0.01em">{{u.name}}</label>
+        <div class="sfield">
+          <button type="button" class="sign" aria-label="{{u.signLabel}}" onClick="{{u.flip}}" onMouseDown="{{u.keepFocus}}">{{u.signGlyph}}</button>
+          <input id="{{u.id}}" type="text" inputmode="decimal" autocomplete="off" placeholder="0.0" value="{{u.text}}" onInput="{{u.onInput}}" aria-describedby="{{u.rbId}}">
+          <span class="u" aria-hidden="true">°C</span>
+        </div>
+        <sc-if value="{{u.hasValue}}" hint-placeholder-val="{{ false }}">
+          <p class="readback" id="{{u.rbId}}" role="status">Reading: {{u.readback}}</p>
+        </sc-if>
+        <div aria-hidden="true" style="padding-top: 4px">
+          <div class="track">
+            <div class="safe"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#08555B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="{{ic.check}}"></path></svg>Safe</div>
+            <span style="position: absolute; right: 8px; top: 0; bottom: 0; display: flex; align-items: center; font-size: 13px; font-weight: 700; color: #7E3209">! Too warm</span>
+            <sc-if value="{{u.hasValue}}" hint-placeholder-val="{{ false }}">
+              <div style="{{u.markStyle}}"></div>
+            </sc-if>
+          </div>
+          <div style="position: relative; height: 18px; font-size: 13px; color: #4A5E60">
+            <span style="position: absolute; left: 50%; transform: translateX(-50%); top: 2px; font-weight: 700">5°C</span>
+          </div>
+        </div>
+        <sc-if value="{{u.ok}}" hint-placeholder-val="{{ false }}">
+          <p role="status" style="margin: 0; padding: 10px 12px; border-radius: 28px; background: #DFF5EE; color: #08555B; font-weight: 700">✓ OK — 5°C or lower</p>
+        </sc-if>
+        <sc-if value="{{u.belowZero}}" hint-placeholder-val="{{ false }}">
+          <p class="soft">Below 0°C: food may freeze. Check the thermostat.</p>
+        </sc-if>
+        <sc-if value="{{u.warm}}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <p role="status" style="margin: 0; padding: 10px 12px; border-radius: 28px; background: #FBE6D9; color: #7E3209; font-weight: 700">✕ Too warm — above 5°C. Move the food. Check the fridge.</p>
+            <label for="{{u.actionId}}" style="font-weight: 700; font-size: 15px">What did you do?</label>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px">
+              <sc-for list="{{u.quick}}" as="q" hint-placeholder-count="3">
+                <button type="button" class="qa" onClick="{{q.add}}">+ {{q.label}}</button>
+              </sc-for>
+            </div>
+            <textarea id="{{u.actionId}}" value="{{u.action}}" onInput="{{u.onAction}}"></textarea>
+          </div>
+        </sc-if>
+      </div>
+    </sc-for>
+
+    <a href="FreezerTemp.dc.html" style="display: flex; align-items: center; justify-content: center; min-height: 48px; font-weight: 700; font-size: 15px">See a freezer reading (sign starts on −)</a>
+
+    <div class="sample">
+      <p>Prototype only: try another sample</p>
+      <sc-for list="{{groups}}" as="g" hint-placeholder-count="2">
+        <div role="group" aria-label="{{g.label}}" style="display: flex; flex-wrap: wrap; gap: 8px">
+          <sc-for list="{{g.chips}}" as="c" hint-placeholder-count="2">
+            <button type="button" class="chip" aria-pressed="{{c.pressed}}" onClick="{{c.pick}}">{{c.label}}</button>
+          </sc-for>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="padding: 12px 16px 16px; background: #E7EEEC">
+    <sc-if value="{{canSave}}" hint-placeholder-val="{{ false }}">
+      <a href="Main.dc.html" style="display: flex; align-items: center; justify-content: center; min-height: 56px; border-radius: 9999px; background: #0B6B72; color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 17px">Save 2 readings</a>
+    </sc-if>
+    <sc-if value="{{cannotSave}}" hint-placeholder-val="{{ true }}">
+      <span style="display: flex; align-items: center; justify-content: center; min-height: 56px; border-radius: 9999px; background: #D5DFDC; color: #4A5E60; font-weight: 700; font-size: 17px">{{saveHint}}</span>
+    </sc-if>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    // Hash samples for screenshots: #blank (blank slot = +), #ok, #warm, #below.
+    const h = (typeof location !== 'undefined' ? location.hash : '').slice(1).split(',');
+    const s = h.indexOf('ok') >= 0 ? 'ok' : h.indexOf('warm') >= 0 ? 'warm' : h.indexOf('below') >= 0 ? 'below' : 'empty';
+    this.state = { slot: h.indexOf('blank') >= 0 ? 'blank' : 'plus', sample: s, how: false, ...this.sampleState(s) };
+  }
+  sampleState(s) {
+    // Each unit keeps its sign apart from the digits (spec ui-tidy-a A5-1..A5-3). Fridges start on +.
+    const base = { walkinAction: '', drinksAction: '', walkinSign: '+', drinksSign: '+' };
+    if (s === 'ok') return { ...base, walkin: '3.2', drinks: '4.0' };
+    if (s === 'warm') return { ...base, walkin: '3.2', drinks: '6.4' };
+    if (s === 'below') return { ...base, walkin: '1.0', walkinSign: '-', drinks: '' };
+    return { ...base, walkin: '', drinks: '' };
+  }
+  renderVals() {
+    // Line icons: 24 px grid, 2 px stroke, round ends (design-system.md section 8)
+    const ic = {
+      fridge: 'M7 2.5h10a2 2 0 012 2v15a2 2 0 01-2 2H7a2 2 0 01-2-2v-15a2 2 0 012-2zM5 9.5h14M8.5 5.5v1.5M8.5 12.5v3',
+      cooking: 'M5 10.5h14v6.5a3 3 0 01-3 3H8a3 3 0 01-3-3zM3 10.5h18M10 7.5h4M2.5 13h2.5M19 13h2.5M9 3.5v1.5M12 3v2M15 3.5v1.5',
+      cooling: 'M8 14.5V5a2 2 0 014 0v9.5a3.5 3.5 0 11-4 0zM10 9.5v7M18 4v11M15.5 12.5L18 15l2.5-2.5',
+      delivery: 'M2 5.5h11v10H2zM13 8.5h4.2l3.3 3.5v3.5H13M4.5 17.5a2 2 0 104 0a2 2 0 10-4 0M14.5 17.5a2 2 0 104 0a2 2 0 10-4 0',
+      hotHold: 'M3 13h18M5 13v4.5a2 2 0 002 2h10a2 2 0 002-2V13M8 4.5c-1 1.2 1 2.3 0 3.5M12 4.5c-1 1.2 1 2.3 0 3.5M16 4.5c-1 1.2 1 2.3 0 3.5',
+      problem: 'M10.3 3.9L2.4 18a2 2 0 001.7 3h15.8a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0zM12 9v4.5M12 17v.5',
+      cleaning: 'M11 3l1.9 4.6L17.5 9.5l-4.6 1.9L11 16l-1.9-4.6L4.5 9.5l4.6-1.9zM18 14.5l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z',
+      opening: 'M5 21V4.5a1.5 1.5 0 011.5-1.5h11A1.5 1.5 0 0119 4.5V21M3 21h18M15 12v1',
+      registration: 'M6 2.5h8.5L19 7v14.5H6zM14.5 2.5V7H19M9 12h7M9 16h5',
+      recall: 'M3.5 8L12 3.5 20.5 8v8L12 20.5 3.5 16zM3.5 8L12 12.5 20.5 8M12 12.5v8',
+      verify: 'M10.5 18a7.5 7.5 0 110-15 7.5 7.5 0 010 15zM16 16l5 5M7.5 10.5l2 2 4-4',
+      training: 'M2 9l10-5 10 5-10 5zM6 11v5c0 1.6 2.7 3 6 3s6-1.4 6-3v-5M22 9v5',
+      thermometer: 'M10 14.5V5a2 2 0 014 0v9.5a3.5 3.5 0 11-4 0zM12 9.5v7',
+      plan: 'M4 4.5A1.5 1.5 0 015.5 3H20v15H5.5A1.5 1.5 0 004 19.5zM4 19.5A1.5 1.5 0 005.5 21H20M9 10.5l2 2 4-4',
+      service: 'M14.7 6.3a4 4 0 00-5.4 5.2L3.5 17.3a1.8 1.8 0 002.5 2.5l5.8-5.8a4 4 0 005.2-5.4l-2.6 2.6-2.3-.4-.4-2.3z',
+      supplier: 'M9 6h11M9 12h11M9 18h11M4.5 6h.5M4.5 12h.5M4.5 18h.5',
+      calendar: 'M5.5 5h13a2 2 0 012 2v11.5a2 2 0 01-2 2h-13a2 2 0 01-2-2V7a2 2 0 012-2zM3.5 10h17M8 3v4M16 3v4',
+      bell: 'M6 16v-5a6 6 0 0112 0v5l1.5 2h-15zM10 20.5a2 2 0 004 0',
+      clock: 'M12 21a9 9 0 100-18 9 9 0 000 18zM12 7v5l3 2',
+      check: 'M5 12l5 5L20 7',
+      download: 'M12 4v11M7 10l5 5 5-5M5 20h14',
+      link: 'M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1',
+      person: 'M12 12a4 4 0 100-8 4 4 0 000 8zM4.5 21a7.5 7.5 0 0115 0',
+      team: 'M9 11a3.5 3.5 0 100-7 3.5 3.5 0 000 7zM2.5 20a6.5 6.5 0 0113 0M16 4.3a3.5 3.5 0 010 6.4M18 13.5a6.5 6.5 0 013.5 6',
+      today: 'M4 6l1.5 1.5L8 5M4 12l1.5 1.5L8 11M4 18l1.5 1.5L8 17M11 6.5h9M11 12.5h9M11 18.5h9',
+      info: 'M12 21a9 9 0 100-18 9 9 0 000 18zM12 11v5.5M12 7.5v.5',
+      lock: 'M6 11h12v10H6zM8.5 11V7.5a3.5 3.5 0 017 0V11',
+      pay: 'M3 6h18v12H3zM3 10h18M7 14.5h3',
+      history: 'M4 12a8 8 0 102.4-5.7M4 3.5v4.5h4.5M12 8v4l2.5 2',
+      chevron: 'M9 6l6 6-6 6',
+      back: 'M15 6l-6 6 6 6',
+      plus: 'M12 5v14M5 12h14',
+      pen: 'M4 20h4L19 9a2.8 2.8 0 00-4-4L4 16zM13.5 6.5l4 4'
+    };
+    const parse = (t) => {
+      const s = String(t).trim().replace(',', '.');
+      return /^[+-]?\d+(\.\d)?$/.test(s) ? Number(s) : null;
+    };
+    // Gauge scale is display only: -4°C on the left, 14°C on the right, so 5°C (spec R-limit, SS&S p.42) sits in the middle.
+    const pos = (n) => Math.max(0, Math.min(100, ((n + 4) / 18) * 100));
+    const fmt = (n) => (n < 0 ? '−' : '') + Math.abs(n).toFixed(1) + '°C';
+    const make = (key, name) => {
+      const text = this.state[key];
+      const sign = this.state[key + 'Sign'];
+      const digits = String(text).trim();
+      // Empty digits = empty value whatever the sign (A5-4); −0 reads and saves as 0.0 (A5-5).
+      let n = digits === '' ? null : parse(digits);
+      if (n !== null && sign === '-') n = n === 0 ? 0 : -n;
+      const warm = n !== null && n > 5;
+      const actionKey = key + 'Action';
+      const add = (label) => () => {
+        const cur = String(this.state[actionKey]).trim();
+        this.setState({ [actionKey]: cur ? cur + '. ' + label : label });
+      };
+      return {
+        id: 'f-' + key,
+        actionId: 'a-' + key,
+        name,
+        text,
+        ok: n !== null && n <= 5,
+        warm,
+        hasValue: n !== null,
+        markStyle: 'position: absolute; top: -8px; bottom: -8px; width: 6px; margin-left: -3px; border-radius: 3px; background: #0E2A2C; border: 2px solid #FFFFFF; box-sizing: content-box; left: ' + (n === null ? 0 : pos(n)) + '%',
+        done: n !== null && (!warm || this.state[actionKey].trim() !== ''),
+        action: this.state[actionKey],
+        quick: [
+          { label: 'Moved the food', add: add('Moved the food') },
+          { label: 'Closed the door', add: add('Closed the door') },
+          { label: 'Called technician', add: add('Called technician') },
+        ],
+        rbId: 'rb-' + key,
+        readback: n === null ? '' : fmt(n),
+        belowZero: n !== null && n < 0,
+        // The slot shows the current sign; on fridges "+" may be drawn blank (Q5). The name always says what a tap does (A5-7).
+        signGlyph: sign === '-' ? '−' : this.state.slot === 'blank' ? '' : '+',
+        signLabel: sign === '-' ? 'Change to plus' : 'Change to minus',
+        // A typed or pasted leading sign sets the slot and is removed from the digits (A5-3).
+        onInput: (e) => {
+          const v = e.target.value;
+          const m = /^\s*([-−–+])/.exec(v);
+          if (m) this.setState({ [key]: v.slice(m[0].length), [key + 'Sign']: m[1] === '+' ? '+' : '-' });
+          else this.setState({ [key]: v });
+        },
+        onAction: (e) => this.setState({ [actionKey]: e.target.value }),
+        keepFocus: (e) => e.preventDefault(),
+        flip: () => this.setState({ [key + 'Sign']: sign === '-' ? '+' : '-' }),
+      };
+    };
+    const units = [make('walkin', 'Walk-in chiller'), make('drinks', 'Drinks fridge')];
+    const st = this.state;
+    const chips = (cur, opts, pick) => opts.map(([k, label]) => ({ label, pressed: cur === k ? 'true' : 'false', pick: () => pick(k) }));
+    const groups = [
+      { label: 'Fridge sign slot', chips: chips(st.slot, [['plus', 'Slot shows +'], ['blank', 'Slot blank (= +)']], (k) => this.setState({ slot: k })) },
+      { label: 'Readings', chips: chips(st.sample, [['empty', 'Empty'], ['ok', '3.2 and 4.0'], ['warm', '6.4 too warm'], ['below', '−1.0 below 0']],
+        (k) => this.setState({ sample: k, ...this.sampleState(k) })) },
+    ];
+    const canSave = units.every((u) => u.done);
+    const anyWarmMissing = units.some((u) => u.warm && !u.done);
+    return {
+      ic,
+      units,
+      groups,
+      canSave,
+      cannotSave: !canSave,
+      saveHint: anyWarmMissing ? 'Add what you did first' : 'Enter both temperatures',
+      showHow: this.state.how,
+      howOpen: this.state.how ? 'true' : 'false',
+      toggleHow: () => this.setState({ how: !this.state.how }),
+    };
+  }
+}
+</script>
+</body>
+</html>

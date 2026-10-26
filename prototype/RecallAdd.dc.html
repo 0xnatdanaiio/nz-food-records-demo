@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390">
+<style>html{touch-action:manipulation}@media (min-width:520px){html,body{background:#0E2A2C}body>div>div>div[style*="width: 390px"]{margin:24px auto;border-radius:28px;overflow:hidden}}</style>
+<title>Add a recall test</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#0B6B72}a:hover{color:#08555B}
+.docket{flex:none;position:relative;background:#FFFFFF;border-radius:20px;padding:16px}
+
+.help{margin:0;font-size:14px;color:#4A5E60;line-height:1.35}
+.field{width:100%;box-sizing:border-box;min-height:52px;border:2px solid #6F8885;border-radius:16px;padding:10px 12px;font:inherit;font-size:16px;color:#0E2A2C;background:#FFFFFF}
+.field:focus{outline:3px solid #0B6B72;outline-offset:1px;border-color:#0B6B72}
+textarea.field{min-height:72px;resize:vertical}
+.field::placeholder{color:#6F8885}
+.datebtn{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;box-sizing:border-box;min-height:52px;border:2px solid #6F8885;border-radius:16px;padding:10px 12px;font:inherit;font-size:16px;color:#0E2A2C;background:#FFFFFF;text-align:left;cursor:pointer}
+.datebtn:focus-visible{outline:3px solid #0B6B72;outline-offset:1px;border-color:#0B6B72}
+.lbl{margin:0;font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.opt{font-weight:400;color:#4A5E60;font-size:14px}
+.tag{display:inline-block;font-size:13px;font-weight:700;padding:2px 8px;border-radius:9999px;border:1.5px solid currentColor;white-space:nowrap}
+.how{min-width:48px;display:flex;align-items:center;justify-content:center;min-height:48px;margin:-6px 0 -10px;padding:0 8px 0 0;border:0;background:transparent;color:#FFFFFF;font-family:inherit;font-size:15px;font-weight:700;text-decoration:underline;cursor:pointer}
+.sBad{margin:0;padding:10px 12px;border-radius:20px;background:#FBE6D9;color:#7E3209;font-weight:700;font-size:15px;line-height:1.35}
+.sInfo{margin:0;padding:10px 12px;border-radius:20px;background:#F3F7F6;color:#0E2A2C;font-size:15px;line-height:1.35}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #E7EEEC; font-family: 'Inter', system-ui, sans-serif; color: #0E2A2C; display: flex; flex-direction: column">
+  <div style="flex: none; background: #0E2A2C; color: #FFFFFF; border-radius: 0 0 28px 28px; padding: 14px 20px 22px; display: flex; flex-direction: column; gap: 10px">
+    <div style="display: flex; justify-content: space-between; align-items: center">
+      <a href="Due.dc.html" style="display: flex; align-items: center; gap: 4px; min-height: 48px; margin: -2px 0; padding-right: 12px; color: #FFFFFF; text-decoration: none; font-size: 15px">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.back}}"></path></svg>
+        What's due
+      </a>
+      <p style="margin: 0; font-size: 12px; color: #A9C4C2">Prototype with sample data</p>
+    </div>
+    <div style="display: flex; align-items: center; gap: 10px">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#8EE6C9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.recall}}"></path></svg>
+      <h1 style="margin: 0; font-size: 36px; line-height: 0.9; font-weight: 900; letter-spacing: -0.045em; text-transform: uppercase">Recall test</h1>
+    </div>
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px">
+      <p style="margin: 0; display: flex; align-items: center; gap: 6px; font-size: 16px; font-weight: 700">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8EE6C9" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.calendar}}"></path></svg>
+        Once every 12 months
+      </p>
+      <button type="button" class="how" aria-expanded="{{whyOpen}}" onClick="{{toggleWhy}}">Why?</button>
+    </div>
+    <sc-if value="{{showWhy}}" hint-placeholder-val="{{ false }}">
+      <p style="margin: 0; padding: 8px 10px; border-radius: 20px; background: #1C3D40; font-size: 15px; color: #FFFFFF; line-height: 1.4">Test your recall plan once every 12 months, using a likely example. Then check how well it worked and what to improve. A real recall that worked also counts.<span style="display: block; margin-top: 4px; font-size: 13px; color: #A9C4C2">Simply Safe &amp; Suitable pp.91-92; National Programme 2 p.73</span></p>
+    </sc-if>
+  </div>
+
+  <div style="flex: 1; overflow: auto; padding: 20px 16px 16px; display: flex; flex-direction: column; gap: 16px">
+    <div class="docket" style="display: flex; flex-direction: column; gap: 10px">
+      <label for="rdate" class="lbl"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B6B72" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.calendar}}"></path></svg>When?</label>
+      <button type="button" id="rdate" class="datebtn">Today, Thursday 22 October<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B6B72" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.calendar}}"></path></svg></button>
+      <p id="type-l" class="lbl" style="margin-top: 6px">Type</p>
+      <div role="group" aria-labelledby="type-l" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+        <sc-for list="{{types}}" as="t" hint-placeholder-count="2">
+          <button type="button" aria-pressed="{{t.pressed}}" onClick="{{t.pick}}" style="{{t.style}}">{{t.label}}</button>
+        </sc-for>
+      </div>
+      <label for="traced" class="lbl" style="margin-top: 6px">What did you trace?</label>
+      <input id="traced" class="field" autocomplete="off" maxlength="80" placeholder="For example: Sourdough batch 12 Oct" value="{{traced}}" onInput="{{onTraced}}">
+      <p id="who-l" class="lbl" style="margin-top: 6px">Who?</p>
+      <div role="group" aria-labelledby="who-l" style="display: flex; flex-wrap: wrap; gap: 8px">
+        <sc-for list="{{people}}" as="p" hint-placeholder-count="4">
+          <button type="button" aria-pressed="{{p.pressed}}" onClick="{{p.pick}}" style="{{p.style}}">{{p.name}}</button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div class="docket" style="{{resultCard}}">
+      <div role="group" aria-labelledby="work-l" style="display: flex; align-items: center; gap: 8px; min-height: 56px">
+        <p id="work-l" style="flex: 1; margin: 0; font-size: 16px; font-weight: 700">Did it work?</p>
+        <button type="button" aria-pressed="{{yesPressed}}" onClick="{{pickYes}}" style="{{yesStyle}}">{{yesText}}</button>
+        <button type="button" aria-pressed="{{noPressed}}" onClick="{{pickNo}}" style="{{noStyle}}">{{noText}}</button>
+      </div>
+      <sc-if value="{{realFailed}}" hint-placeholder-val="{{ false }}">
+        <p class="sBad" role="status">! Real recall did not work: a practice recall is still due</p>
+      </sc-if>
+      <sc-if value="{{mockFailed}}" hint-placeholder-val="{{ false }}">
+        <p class="sInfo" role="status">The test still counts. Write down what to improve.</p>
+      </sc-if>
+      <label for="improve" class="lbl" style="margin-top: 4px">What to improve <sc-if value="{{improveRequired}}" hint-placeholder-val="{{ false }}"><span class="tag" style="color: #08555B">Required</span></sc-if><sc-if value="{{improveOptional}}" hint-placeholder-val="{{ true }}"><span class="opt">(optional)</span></sc-if></label>
+      <textarea id="improve" class="field" maxlength="500" placeholder="For example: keep supplier invoices in one folder" value="{{improve}}" onInput="{{onImprove}}"></textarea>
+    </div>
+  </div>
+
+  <div style="padding: 12px 16px 16px; background: #E7EEEC">
+    <sc-if value="{{canSave}}" hint-placeholder-val="{{ false }}">
+      <a href="Due.dc.html" style="display: flex; align-items: center; justify-content: center; min-height: 56px; border-radius: 9999px; background: #0B6B72; color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 17px">Save recall record</a>
+    </sc-if>
+    <sc-if value="{{cannotSave}}" hint-placeholder-val="{{ true }}">
+      <span style="display: flex; align-items: center; justify-content: center; min-height: 56px; border-radius: 9999px; background: #D5DFDC; color: #4A5E60; font-weight: 700; font-size: 17px">{{saveHint}}</span>
+    </sc-if>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { type: 'mock', traced: 'Sourdough batch 12 Oct', worked: null, improve: '', who: 'Mia', why: false };
+  }
+  renderVals() {
+    // Line icons: 24 px grid, 2 px stroke, round ends (design-system.md section 8)
+    const ic = {
+      fridge: 'M7 2.5h10a2 2 0 012 2v15a2 2 0 01-2 2H7a2 2 0 01-2-2v-15a2 2 0 012-2zM5 9.5h14M8.5 5.5v1.5M8.5 12.5v3',
+      cooking: 'M5 10.5h14v6.5a3 3 0 01-3 3H8a3 3 0 01-3-3zM3 10.5h18M10 7.5h4M2.5 13h2.5M19 13h2.5M9 3.5v1.5M12 3v2M15 3.5v1.5',
+      cooling: 'M8 14.5V5a2 2 0 014 0v9.5a3.5 3.5 0 11-4 0zM10 9.5v7M18 4v11M15.5 12.5L18 15l2.5-2.5',
+      delivery: 'M2 5.5h11v10H2zM13 8.5h4.2l3.3 3.5v3.5H13M4.5 17.5a2 2 0 104 0a2 2 0 10-4 0M14.5 17.5a2 2 0 104 0a2 2 0 10-4 0',
+      hotHold: 'M3 13h18M5 13v4.5a2 2 0 002 2h10a2 2 0 002-2V13M8 4.5c-1 1.2 1 2.3 0 3.5M12 4.5c-1 1.2 1 2.3 0 3.5M16 4.5c-1 1.2 1 2.3 0 3.5',
+      problem: 'M10.3 3.9L2.4 18a2 2 0 001.7 3h15.8a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0zM12 9v4.5M12 17v.5',
+      cleaning: 'M11 3l1.9 4.6L17.5 9.5l-4.6 1.9L11 16l-1.9-4.6L4.5 9.5l4.6-1.9zM18 14.5l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z',
+      opening: 'M5 21V4.5a1.5 1.5 0 011.5-1.5h11A1.5 1.5 0 0119 4.5V21M3 21h18M15 12v1',
+      registration: 'M6 2.5h8.5L19 7v14.5H6zM14.5 2.5V7H19M9 12h7M9 16h5',
+      recall: 'M3.5 8L12 3.5 20.5 8v8L12 20.5 3.5 16zM3.5 8L12 12.5 20.5 8M12 12.5v8',
+      verify: 'M10.5 18a7.5 7.5 0 110-15 7.5 7.5 0 010 15zM16 16l5 5M7.5 10.5l2 2 4-4',
+      training: 'M2 9l10-5 10 5-10 5zM6 11v5c0 1.6 2.7 3 6 3s6-1.4 6-3v-5M22 9v5',
+      thermometer: 'M10 14.5V5a2 2 0 014 0v9.5a3.5 3.5 0 11-4 0zM12 9.5v7',
+      plan: 'M4 4.5A1.5 1.5 0 015.5 3H20v15H5.5A1.5 1.5 0 004 19.5zM4 19.5A1.5 1.5 0 005.5 21H20M9 10.5l2 2 4-4',
+      service: 'M14.7 6.3a4 4 0 00-5.4 5.2L3.5 17.3a1.8 1.8 0 002.5 2.5l5.8-5.8a4 4 0 005.2-5.4l-2.6 2.6-2.3-.4-.4-2.3z',
+      supplier: 'M9 6h11M9 12h11M9 18h11M4.5 6h.5M4.5 12h.5M4.5 18h.5',
+      calendar: 'M5.5 5h13a2 2 0 012 2v11.5a2 2 0 01-2 2h-13a2 2 0 01-2-2V7a2 2 0 012-2zM3.5 10h17M8 3v4M16 3v4',
+      bell: 'M6 16v-5a6 6 0 0112 0v5l1.5 2h-15zM10 20.5a2 2 0 004 0',
+      clock: 'M12 21a9 9 0 100-18 9 9 0 000 18zM12 7v5l3 2',
+      check: 'M5 12l5 5L20 7',
+      download: 'M12 4v11M7 10l5 5 5-5M5 20h14',
+      link: 'M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1',
+      person: 'M12 12a4 4 0 100-8 4 4 0 000 8zM4.5 21a7.5 7.5 0 0115 0',
+      team: 'M9 11a3.5 3.5 0 100-7 3.5 3.5 0 000 7zM2.5 20a6.5 6.5 0 0113 0M16 4.3a3.5 3.5 0 010 6.4M18 13.5a6.5 6.5 0 013.5 6',
+      today: 'M4 6l1.5 1.5L8 5M4 12l1.5 1.5L8 11M4 18l1.5 1.5L8 17M11 6.5h9M11 12.5h9M11 18.5h9',
+      info: 'M12 21a9 9 0 100-18 9 9 0 000 18zM12 11v5.5M12 7.5v.5',
+      lock: 'M6 11h12v10H6zM8.5 11V7.5a3.5 3.5 0 017 0V11',
+      pay: 'M3 6h18v12H3zM3 10h18M7 14.5h3',
+      history: 'M4 12a8 8 0 102.4-5.7M4 3.5v4.5h4.5M12 8v4l2.5 2',
+      chevron: 'M9 6l6 6-6 6',
+      back: 'M15 6l-6 6 6 6',
+      plus: 'M12 5v14M5 12h14',
+      pen: 'M4 20h4L19 9a2.8 2.8 0 00-4-4L4 16zM13.5 6.5l4 4',
+      settings: 'M4 7h9M17 7h3M13 7a2 2 0 104 0a2 2 0 10-4 0M4 17h3M11 17h9M7 17a2 2 0 104 0a2 2 0 10-4 0'
+    };
+    // Fields: phase2-training-due crit. 18 (app design A6, from SS&S pp.91-92 and NP2 p.73).
+    const st = this.state;
+    const on = 'background: #0E2A2C; color: #FFFFFF; border: 2px solid #0E2A2C';
+    const off = 'background: #FFFFFF; color: #0E2A2C; border: 2px solid #6F8885';
+    const seg = 'min-height: 56px; padding: 4px 8px; border-radius: 9999px; font-family: inherit; font-size: 15px; font-weight: 700; line-height: 1.15; cursor: pointer; ';
+    const types = [
+      { k: 'mock', label: 'Practice (mock) recall' },
+      { k: 'real', label: 'Real recall' },
+    ].map((d) => ({
+      label: d.label,
+      pressed: st.type === d.k ? 'true' : 'false',
+      style: seg + (st.type === d.k ? on : off),
+      pick: () => this.setState({ type: d.k }),
+    }));
+    const chipBase = 'min-height: 48px; padding: 0 18px; border-radius: 9999px; font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer; ';
+    const people = ['Mia', 'Arjun', 'Hana', 'Somchai'].map((n) => ({
+      name: n,
+      pressed: st.who === n ? 'true' : 'false',
+      style: chipBase + (st.who === n ? on : off),
+      pick: () => this.setState({ who: n }),
+    }));
+    const yn = (sel, bad) => 'min-height: 48px; min-width: 72px; padding: 0 10px; border-radius: 9999px; font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer; ' +
+      (sel ? (bad ? 'background: #FBE6D9; color: #7E3209; border: 2px solid #A9440C' : on) : off);
+    const no = st.worked === 'no';
+    const tracedOk = st.traced.trim().length > 0;
+    const improveOk = !no || st.improve.trim().length > 0;
+    const canSave = tracedOk && st.worked !== null && improveOk;
+    let saveHint = 'Add what you traced';
+    if (tracedOk && st.worked === null) saveHint = 'Answer: did it work?';
+    else if (tracedOk && !improveOk) saveHint = 'Add what to improve';
+    return {
+      ic,
+      types,
+      people,
+      traced: st.traced,
+      onTraced: (e) => this.setState({ traced: e.target.value }),
+      improve: st.improve,
+      onImprove: (e) => this.setState({ improve: e.target.value }),
+      yesPressed: st.worked === 'yes' ? 'true' : 'false',
+      noPressed: no ? 'true' : 'false',
+      yesText: st.worked === 'yes' ? '✓ Yes' : 'Yes',
+      noText: no ? '! No' : 'No',
+      yesStyle: yn(st.worked === 'yes', false),
+      noStyle: yn(no, true),
+      pickYes: () => this.setState({ worked: 'yes' }),
+      pickNo: () => this.setState({ worked: 'no' }),
+      // A real recall that did not work does not clear the reminder (crit. 19); a practice one always counts (M2).
+      realFailed: no && st.type === 'real',
+      mockFailed: no && st.type === 'mock',
+      improveRequired: no,
+      improveOptional: !no,
+      resultCard: 'display: flex; flex-direction: column; gap: 10px; ' + (no ? 'border: 2px solid #A9440C' : ''),
+      canSave,
+      cannotSave: !canSave,
+      saveHint,
+      showWhy: st.why,
+      whyOpen: st.why ? 'true' : 'false',
+      toggleWhy: () => this.setState({ why: !st.why }),
+    };
+  }
+}
+</script>
+</body>
+</html>

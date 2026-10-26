@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390">
+<style>html{touch-action:manipulation}@media (min-width:520px){html,body{background:#0E2A2C}body>div>div>div[style*="width: 390px"]{margin:24px auto;border-radius:28px;overflow:hidden}}</style>
+<title>History</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap">
+<style>
+html,body{margin:0;height:100%}
+/* Tokens: light = Kitchen ink (section 1), dark = src/index.css dark block + the new nav tokens (section 12). */
+.app{--bg:#E7EEEC;--card:#FFFFFF;--quiet:#F3F7F6;--text:#0E2A2C;--muted:#4A5E60;--line:#DDE6E4;--line-input:#6F8885;--ring:rgba(14,42,44,0.12);--header:#0E2A2C;--ink-raised:#1C3D40;--on-header-muted:#A9C4C2;--line-on-ink:#6F8E8C;--mint:#8EE6C9;--accent:#0B6B72;--accent-ink:#FFFFFF;--link:#0B6B72;--ok:#08555B;--ok-bg:#DFF5EE;--bad:#A9440C;--bad-text:#7E3209;--bad-bg:#FBE6D9;--icon-bg:#E7EEEC;--av-bg:#0E2A2C;--chip-on-bg:#0E2A2C;--chip-on-text:#FFFFFF;
+--nav-bg:#0E2A2C;--nav-border:#0E2A2C;--nav-shadow:none;--nav-strip:#E7EEEC;--safe-bottom:0px;
+position:relative;width:100%;height:100vh;overflow:hidden;box-sizing:border-box;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;display:flex;flex-direction:column}
+.app.dark{--bg:#0A1A1B;--card:#142E30;--quiet:#1B3638;--text:#E8F1EF;--muted:#A9C4C2;--line:#23403F;--line-input:#6F8E8C;--ring:rgba(232,241,239,0.16);--accent:#8EE6C9;--accent-ink:#0E2A2C;--link:#8EE6C9;--ok:#8EE6C9;--ok-bg:#12382F;--bad:#FF9F6E;--bad-text:#FF9F6E;--bad-bg:#3D1F10;--icon-bg:#1B3638;--av-bg:#1C3D40;--chip-on-bg:#8EE6C9;--chip-on-text:#0E2A2C;
+--nav-bg:#284F52;--nav-border:#6F8E8C;--nav-shadow:0 8px 24px rgba(0,0,0,0.55);--nav-strip:#0A1A1B}
+.app.safe{--safe-bottom:34px}
+.app a{color:var(--link)}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ic{flex:none;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.c-acc{stroke:var(--accent)}.c-text{stroke:var(--text)}.c-muted{stroke:var(--muted)}.c-bad{stroke:var(--bad)}.c-cur{stroke:currentColor}.c-mint{stroke:#8EE6C9}.c-white{stroke:#FFFFFF}
+
+/* Main-tab header: shop name, NZ date, big title. Same height on Today, What's due, History and Team. */
+.hd{flex:none;position:relative;z-index:3;background:var(--header);color:#FFFFFF;border-radius:0 0 28px 28px;padding:10px 20px 20px;display:flex;flex-direction:column}
+.hd.flat{border-radius:0}
+.hd-proto{margin:0 0 4px;font-size:12px;line-height:1.25;color:#A9C4C2}
+.hd-top{display:flex;align-items:center;gap:12px;min-height:48px}
+.hd-lines{flex:1;min-width:0}
+.hd-shop{flex:1;min-width:0;margin:0;font-size:15px;font-weight:700;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hd-date{margin:2px 0 0;font-size:14px;line-height:1.25;color:#A9C4C2;white-space:nowrap}
+.hd-date.b{margin:4px 0 0}
+.hd-slot{flex:none;display:flex;justify-content:flex-end;max-width:55%;min-width:0}
+.hd-title{margin:10px 0 0;font-size:44px;line-height:0.9;font-weight:900;letter-spacing:-0.045em;text-transform:uppercase;white-space:nowrap}
+/* Shift chip: the app's .shift-avatar (48 px, 32 px mint circle, 15 px 600, name cut with an ellipsis, max 55%). */
+.shift{flex:0 1 auto;min-width:48px;max-width:100%;min-height:48px;box-sizing:border-box;display:flex;align-items:center;gap:8px;padding:0 14px 0 8px;border-radius:9999px;background:#1C3D40;color:#FFFFFF !important;text-decoration:none;font-size:15px;font-weight:600;white-space:nowrap}
+.shift-c{flex:none;width:32px;height:32px;border-radius:9999px;background:#8EE6C9;color:#0E2A2C;display:flex;align-items:center;justify-content:center;font-weight:700}
+.shift-n{position:relative;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.hd-top.b .shift{max-width:46%}
+
+/* Sub-screen and form header: Back + smaller title. */
+.sub-top{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:48px}
+.sub-top .hd-proto{margin:0;white-space:nowrap}
+@media (max-width:340px){.nav{font-size:12px;letter-spacing:-0.02em}}
+@media (min-width:768px){.hd-title{font-size:52px}.sub-title{font-size:36px}}
+.back{display:flex;align-items:center;gap:4px;min-height:48px;padding-right:12px;color:#FFFFFF !important;text-decoration:none;font-size:15px;font-weight:600;white-space:nowrap}
+.sub-title{margin:6px 0 0;display:flex;align-items:center;gap:10px;font-size:32px;line-height:0.95;font-weight:900;letter-spacing:-0.045em;text-transform:uppercase}
+
+/* Section heading: one style on every screen (uppercase via CSS, sentence case in the source). */
+.sec{margin:8px 0 0;font-weight:900;font-size:20px;line-height:1.1;letter-spacing:-0.03em;text-transform:uppercase;color:var(--text);display:flex;align-items:center;gap:8px}
+.sec.quiet{font-size:16px}
+.sec .n{display:inline-flex;min-width:22px;height:22px;padding:0 6px;box-sizing:border-box;border-radius:20px;background:var(--text);color:var(--bg);font-size:13px;letter-spacing:0;align-items:center;justify-content:center}
+.sec .tag{text-transform:none;letter-spacing:0}
+
+.scroll{flex:1;min-height:0;overflow:auto;padding:16px 16px 0;display:flex;flex-direction:column;gap:12px}
+/* Room for the nav strip (12 px fade + 66 px pill + 12 px) plus a 12 px gap from the scroll gap. */
+.endpad{flex:none;height:calc(90px + var(--safe-bottom))}
+.endpad.tall{height:calc(152px + var(--safe-bottom))}
+
+/* Bottom nav dock: the strip behind the pill (solid --nav-strip with a 12 px fade on top), safe-area aware. */
+.dock{position:absolute;left:0;right:0;bottom:0;z-index:2;box-sizing:border-box;padding:12px 12px calc(12px + var(--safe-bottom));background:linear-gradient(to bottom,rgba(0,0,0,0) 0,var(--nav-strip) 12px);display:flex;flex-direction:column;gap:10px}
+.navbar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2px;padding:4px;border:1px solid var(--nav-border);border-radius:9999px;background:var(--nav-bg);box-shadow:var(--nav-shadow)}
+.nav{min-height:56px;border-radius:9999px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:13px;font-weight:600;color:#FFFFFF !important;text-decoration:none;letter-spacing:-0.01em;white-space:nowrap}
+.nav[aria-current="page"]{background:#8EE6C9;color:#0E2A2C !important;font-weight:700}
+.homebar{position:absolute;left:50%;bottom:8px;width:134px;height:5px;margin-left:-67px;border-radius:3px;background:var(--text);opacity:.85;z-index:4}
+
+.docket{flex:none;position:relative;background:var(--card);border-radius:20px;padding:12px 14px 12px 12px;text-decoration:none;color:var(--text) !important;display:flex;gap:12px;align-items:center;min-height:56px;box-sizing:border-box}
+.ico{flex:none;width:44px;height:44px;border-radius:9999px;background:var(--icon-bg);display:flex;align-items:center;justify-content:center}
+.tag{display:inline-block;font-size:13px;font-weight:700;padding:2px 8px;border-radius:9999px;border:1.5px solid currentColor;color:var(--muted);white-space:nowrap}
+.t{margin:0;font-size:18px;line-height:1.1;font-weight:700;letter-spacing:-0.01em}
+.s{margin:2px 0 0;font-size:15px;color:var(--muted);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.help{margin:0;font-size:14px;color:var(--muted);line-height:1.35}
+.src{display:block;margin-top:4px;font-size:13px;color:var(--muted)}
+.mainBtn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:56px;border-radius:9999px;background:var(--accent);color:var(--accent-ink) !important;text-decoration:none;font-weight:700;font-size:17px}
+.go{display:flex;align-items:center;justify-content:center;gap:6px;min-height:48px;border-radius:9999px;border:2px solid var(--accent);background:var(--card);color:var(--accent) !important;text-decoration:none;font-weight:700;font-size:15px}
+
+.proto{margin:8px 0 0;border:2px dashed var(--line-input);border-radius:20px;padding:10px 12px 12px;display:flex;flex-direction:column;gap:8px}
+.proto p{margin:0;font-size:14px;font-weight:700;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:48px;padding:0 16px;border-radius:9999px;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;background:var(--card);color:var(--text);border:2px solid var(--line-input)}
+.chip[aria-pressed="true"]{background:var(--chip-on-bg);color:var(--chip-on-text);border-color:var(--chip-on-bg)}
+
+.r{display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line);padding:7px 0;min-height:30px}
+.r p{margin:0;font-size:15px}
+.cnt{font-size:18px;line-height:1;font-weight:700;letter-spacing:-0.01em}
+.box{background:var(--card);border-radius:20px;padding:14px 16px}
+.kind{display:flex;flex-wrap:wrap;gap:8px}
+.kind .chip{padding:0 14px;font-size:14px}
+/* ui-tidy-a item 9: one compact native <select> for the period (Q12) and a one-line range. */
+.period{display:flex;flex-direction:column;align-items:flex-start;gap:6px;margin-top:-6px}
+.selwrap{position:relative;max-width:100%}
+.sel{appearance:none;-webkit-appearance:none;display:block;max-width:100%;min-height:48px;box-sizing:border-box;padding:0 44px 0 16px;border:2px solid var(--line-input);border-radius:9999px;background:var(--card);color:var(--text);font-family:inherit;font-size:16px;font-weight:700;cursor:pointer;white-space:nowrap;text-overflow:ellipsis}
+.sel:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.selwrap svg{position:absolute;right:14px;top:50%;margin-top:-10px;pointer-events:none}
+.range{margin:0;font-size:15px;color:var(--muted);white-space:nowrap}
+.range b{color:var(--text)}
+.optmock{width:min(100%, 300px);box-sizing:border-box;background:var(--card);border:1px solid var(--line-input);border-radius:20px;box-shadow:var(--menu-shadow);padding:6px;display:flex;flex-direction:column;gap:2px}
+.optmock p{margin:0;display:flex;align-items:center;gap:10px;min-height:48px;padding:0 12px;border-radius:14px;font-size:16px;font-weight:600}
+.optmock p.on{background:var(--ok-bg);color:var(--ok);font-weight:700}
+.optmock .note{min-height:0;padding:4px 12px 2px;font-size:13px;font-weight:600;color:var(--muted)}
+.dates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;width:100%}
+.dates label{display:flex;flex-direction:column;gap:4px;font-size:15px;font-weight:700}
+.app.dark .dates input{color-scheme:dark}
+.dates input{min-height:52px;box-sizing:border-box;width:100%;border:2px solid var(--line-input);border-radius:16px;padding:0 10px;font-family:inherit;font-size:16px;color:var(--text);background:var(--card)}
+</style>
+</helmet>
+<div class="{{appClass}}">
+  <header class="hd{{hdFlat}}">
+    <p class="hd-proto">Prototype with sample data · {{variantLabel}}</p>
+    <sc-if value="{{isA}}" hint-placeholder-val="{{ true }}">
+      <div class="hd-top">
+        <div class="hd-lines">
+          <p class="hd-shop" title="{{shop}}">{{shop}}</p>
+          <p class="hd-date">Saturday 24 October</p>
+        </div>
+        <div class="hd-slot"></div>
+      </div>
+    </sc-if>
+    <sc-if value="{{isB}}" hint-placeholder-val="{{ false }}">
+      <div class="hd-top b">
+        <p class="hd-shop" title="{{shop}}">{{shop}}</p>
+        <a class="shift" href="SignIn.dc.html"><span class="shift-c" aria-hidden="true">{{staffInitial}}</span><span class="shift-n"><span class="vh">On shift: </span>{{staffName}}</span></a>
+      </div>
+      <p class="hd-date b">Saturday 24 October</p>
+    </sc-if>
+    <h1 class="hd-title">History</h1>
+  </header>
+
+  <div class="scroll">
+    <div class="kind" role="group" aria-label="Which records">
+      <sc-for list="{{kinds}}" as="k" hint-placeholder-count="9">
+        <button type="button" class="chip" aria-pressed="{{k.pressed}}">{{k.label}}</button>
+      </sc-for>
+    </div>
+
+    <h2 class="sec">Inspection day</h2>
+    <div class="period" id="period-box">
+      <label class="vh" for="period">Period</label>
+      <div class="selwrap">
+        <select id="period" class="sel" value="{{period}}" onChange="{{onPeriod}}">
+          <option value="visit">Since last visit · 14 Mar</option>
+          <option value="m3">Last 3 months</option>
+          <option value="d30">Last 30 days</option>
+          <option value="choose">Choose dates</option>
+        </select>
+        <svg class="ic c-text" width="20" height="20" viewBox="0 0 24 24" style="stroke-width: 2.4" aria-hidden="true"><path d="{{ic.down}}"></path></svg>
+      </div>
+      <sc-if value="{{showOpts}}" hint-placeholder-val="{{ false }}">
+        <div class="optmock" aria-hidden="true">
+          <sc-for list="{{opts}}" as="o" hint-placeholder-count="4">
+            <p class="{{o.cls}}"><span style="width: 18px">{{o.tick}}</span>{{o.label}}</p>
+          </sc-for>
+          <p class="note">Prototype: the phone draws this list itself (native select)</p>
+        </div>
+      </sc-if>
+      <sc-if value="{{showDates}}" hint-placeholder-val="{{ false }}">
+        <div class="dates">
+          <label>From<input type="date" value="2026-03-14"></label>
+          <label>To<input type="date" value="2026-10-24"></label>
+        </div>
+      </sc-if>
+      <p class="range"><b>{{rangeFrom}}</b> <span aria-hidden="true">–</span><span class="vh"> to </span> <b>{{rangeTo}}</b></p>
+    </div>
+    <div class="box" style="display: flex; align-items: center; gap: 14px">
+      <div style="position: relative; width: 92px; height: 92px; flex: none">
+        <svg width="92" height="92" viewBox="0 0 92 92" aria-hidden="true" style="display: block">
+          <circle cx="46" cy="46" r="39" fill="none" stroke-width="10" style="stroke: var(--icon-bg)"></circle>
+          <circle cx="46" cy="46" r="39" fill="none" stroke-width="10" stroke-dasharray="{{ringDash}}" transform="rotate(-90 46 46)" style="stroke: var(--accent)"></circle>
+        </svg>
+        <div aria-hidden="true" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center">
+          <span style="font-size: 22px; line-height: 1; color: var(--accent); font-weight: 800; letter-spacing: -0.02em">216</span>
+          <span style="font-size: 13px; color: var(--muted)">of 225</span>
+        </div>
+      </div>
+      <div>
+        <p style="margin: 0; font-size: 17px; font-weight: 700">Days with every fridge check done</p>
+        <p style="margin: 4px 0 0; font-size: 15px; color: var(--muted)">216 of 225 days</p>
+      </div>
+    </div>
+
+    <div class="box" style="display: flex; flex-direction: column">
+      <p style="margin: 0 0 4px; font-size: 16px; font-weight: 700">Required records</p>
+      <sc-for list="{{rows}}" as="r" hint-placeholder-count="4">
+        <div class="r">
+          <svg class="ic c-acc" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="{{r.icon}}"></path></svg>
+          <p style="flex: 1">{{r.name}}</p>
+          <span class="cnt">{{r.count}}</span>
+        </div>
+      </sc-for>
+      <div style="display: flex; align-items: center; gap: 10px; padding: 10px 0 2px">
+        <svg class="ic c-bad" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ic.problem}}"></path></svg>
+        <p style="margin: 0; font-size: 15px; font-weight: 700; color: var(--bad-text)">3 problems, each with what was done</p>
+      </div>
+      <p style="margin: 14px 0 2px; font-size: 16px; font-weight: 700; color: var(--muted)">Optional records kept <span style="font-weight: 400; font-size: 14px">· extra evidence</span></p>
+      <sc-for list="{{optRows}}" as="r" hint-placeholder-count="3">
+        <div class="r">
+          <svg class="ic c-muted" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="{{r.icon}}"></path></svg>
+          <p style="flex: 1; color: var(--muted)">{{r.name}}</p>
+          <span class="cnt" style="color: var(--muted)">{{r.count}}</span>
+        </div>
+      </sc-for>
+    </div>
+
+    <a class="mainBtn" href="Verify.dc.html"><svg class="ic c-cur" width="22" height="22" viewBox="0 0 24 24" style="stroke-width: 2.2" aria-hidden="true"><path d="{{ic.download}}"></path></svg>PDF for the verifier</a>
+    <a class="go" href="Verify.dc.html" style="min-height: 52px; font-size: 16px"><svg class="ic c-acc" width="22" height="22" viewBox="0 0 24 24" style="stroke-width: 2.2" aria-hidden="true"><path d="{{ic.link}}"></path></svg>Read-only link · 7 days</a>
+
+    <div class="proto">
+      <p>Prototype only: try another sample</p>
+      <sc-for list="{{groups}}" as="g" hint-placeholder-count="3">
+        <div class="chips" role="group" aria-label="{{g.label}}">
+          <sc-for list="{{g.chips}}" as="c" hint-placeholder-count="2">
+            <button type="button" class="chip" aria-pressed="{{c.pressed}}" onClick="{{c.pick}}">{{c.label}}</button>
+          </sc-for>
+        </div>
+      </sc-for>
+    </div>
+    <div class="endpad"></div>
+  </div>
+
+  <div class="dock">
+    <nav class="navbar" aria-label="Main">
+      <a class="nav" href="Main.dc.html"><svg class="ic c-cur" width="22" height="22" viewBox="0 0 24 24" style="stroke-width: 2" aria-hidden="true"><path d="{{ic.today}}"></path></svg>Today</a>
+      <a class="nav" href="Due.dc.html"><svg class="ic c-cur" width="22" height="22" viewBox="0 0 24 24" style="stroke-width: 2" aria-hidden="true"><path d="{{ic.calendar}}"></path></svg>What's due</a>
+      <a class="nav" href="History.dc.html" aria-current="page"><svg class="ic c-cur" width="22" height="22" viewBox="0 0 24 24" style="stroke-width: 2.2" aria-hidden="true"><path d="{{ic.history}}"></path></svg>History</a>
+      <a class="nav" href="Settings.dc.html"><svg class="ic c-cur" width="22" height="22" viewBox="0 0 24 24" style="stroke-width: 2" aria-hidden="true"><path d="{{ic.team}}"></path></svg>Team</a>
+    </nav>
+  </div>
+  <sc-if value="{{safe}}" hint-placeholder-val="{{ false }}"><div class="homebar" aria-hidden="true"></div></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    const h = (typeof location !== 'undefined' ? location.hash : '').slice(1).split(',');
+    const osDark = typeof matchMedia === 'function' && matchMedia('(prefers-color-scheme: dark)').matches;
+    this.state = {
+      dark: h.indexOf('dark') >= 0 || (h.indexOf('light') < 0 && osDark),
+      hv: h.indexOf('B') >= 0 ? 'B' : 'A',
+      shop: h.indexOf('long') >= 0 ? 'long' : h.indexOf('short') >= 0 ? 'short' : h.indexOf('noname') >= 0 ? 'none' : 'long',
+      period: ['m3', 'd30', 'choose'].find((k) => h.indexOf(k) >= 0) || 'visit',
+      optsOpen: h.indexOf('open') >= 0,
+      safe: h.indexOf('safe') >= 0,
+    };
+  }
+  renderVals() {
+    // Line icons: 24 px grid, 2 px stroke, round ends (design-system.md section 8)
+    const ic = {
+      fridge: 'M7 2.5h10a2 2 0 012 2v15a2 2 0 01-2 2H7a2 2 0 01-2-2v-15a2 2 0 012-2zM5 9.5h14M8.5 5.5v1.5M8.5 12.5v3',
+      cooking: 'M5 10.5h14v6.5a3 3 0 01-3 3H8a3 3 0 01-3-3zM3 10.5h18M10 7.5h4M2.5 13h2.5M19 13h2.5M9 3.5v1.5M12 3v2M15 3.5v1.5',
+      cooling: 'M8 14.5V5a2 2 0 014 0v9.5a3.5 3.5 0 11-4 0zM10 9.5v7M18 4v11M15.5 12.5L18 15l2.5-2.5',
+      delivery: 'M2 5.5h11v10H2zM13 8.5h4.2l3.3 3.5v3.5H13M4.5 17.5a2 2 0 104 0a2 2 0 10-4 0M14.5 17.5a2 2 0 104 0a2 2 0 10-4 0',
+      hotHold: 'M3 13h18M5 13v4.5a2 2 0 002 2h10a2 2 0 002-2V13M8 4.5c-1 1.2 1 2.3 0 3.5M12 4.5c-1 1.2 1 2.3 0 3.5M16 4.5c-1 1.2 1 2.3 0 3.5',
+      problem: 'M10.3 3.9L2.4 18a2 2 0 001.7 3h15.8a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0zM12 9v4.5M12 17v.5',
+      cleaning: 'M11 3l1.9 4.6L17.5 9.5l-4.6 1.9L11 16l-1.9-4.6L4.5 9.5l4.6-1.9zM18 14.5l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z',
+      opening: 'M5 21V4.5a1.5 1.5 0 011.5-1.5h11A1.5 1.5 0 0119 4.5V21M3 21h18M15 12v1',
+      registration: 'M6 2.5h8.5L19 7v14.5H6zM14.5 2.5V7H19M9 12h7M9 16h5',
+      recall: 'M3.5 8L12 3.5 20.5 8v8L12 20.5 3.5 16zM3.5 8L12 12.5 20.5 8M12 12.5v8',
+      verify: 'M10.5 18a7.5 7.5 0 110-15 7.5 7.5 0 010 15zM16 16l5 5M7.5 10.5l2 2 4-4',
+      training: 'M2 9l10-5 10 5-10 5zM6 11v5c0 1.6 2.7 3 6 3s6-1.4 6-3v-5M22 9v5',
+      supplier: 'M9 6h11M9 12h11M9 18h11M4.5 6h.5M4.5 12h.5M4.5 18h.5',
+      calendar: 'M5.5 5h13a2 2 0 012 2v11.5a2 2 0 01-2 2h-13a2 2 0 01-2-2V7a2 2 0 012-2zM3.5 10h17M8 3v4M16 3v4',
+      bell: 'M6 16v-5a6 6 0 0112 0v5l1.5 2h-15zM10 20.5a2 2 0 004 0',
+      clock: 'M12 21a9 9 0 100-18 9 9 0 000 18zM12 7v5l3 2',
+      check: 'M5 12l5 5L20 7',
+      download: 'M12 4v11M7 10l5 5 5-5M5 20h14',
+      link: 'M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1',
+      person: 'M12 12a4 4 0 100-8 4 4 0 000 8zM4.5 21a7.5 7.5 0 0115 0',
+      team: 'M9 11a3.5 3.5 0 100-7 3.5 3.5 0 000 7zM2.5 20a6.5 6.5 0 0113 0M16 4.3a3.5 3.5 0 010 6.4M18 13.5a6.5 6.5 0 013.5 6',
+      today: 'M4 6l1.5 1.5L8 5M4 12l1.5 1.5L8 11M4 18l1.5 1.5L8 17M11 6.5h9M11 12.5h9M11 18.5h9',
+      lock: 'M6 11h12v10H6zM8.5 11V7.5a3.5 3.5 0 017 0V11',
+      history: 'M4 12a8 8 0 102.4-5.7M4 3.5v4.5h4.5M12 8v4l2.5 2',
+      chevron: 'M9 6l6 6-6 6',
+      down: 'M6 9l6 6 6-6',
+      back: 'M15 6l-6 6 6 6',
+      plus: 'M12 5v14M5 12h14'
+    };
+    const st = this.state;
+    // 80-character shop name (header-nav H2) and a long staff name, to show the ellipsis.
+    const LONG_SHOP = 'Sample Café and Bakery at the Old Wharf Buildings, 112 Marine Parade, Eastbourne';
+    const shop = st.shop === 'long' ? LONG_SHOP : st.shop === 'none' ? 'SousMate' : 'Sample Café';
+    const staffName = st.shop === 'long' ? 'Kaewkanya Srisawat-Thompson' : 'Mia';
+    const pick = (key, opts) => opts.map((o) => ({
+      label: o[1],
+      pressed: st[key] === o[0] ? 'true' : 'false',
+      pick: () => this.setState({ [key]: o[0] }),
+    }));
+    const groups = [
+      { label: 'Header variant', chips: pick('hv', [['A', 'Header A'], ['B', 'Header B']]) },
+      { label: 'Colour mode', chips: pick('dark', [[false, 'Light'], [true, 'Dark']]) },
+      { label: 'Shop name', chips: pick('shop', [['short', 'Sample Café'], ['long', '80 characters'], ['none', 'No name']]) },
+      { label: 'Period list', chips: pick('optsOpen', [[false, 'Period closed'], [true, 'Period list open']]) },
+    ];
+    const common = {
+      appClass: 'app' + (st.dark ? ' dark' : '') + (st.safe ? ' safe' : ''),
+      isA: st.hv === 'A', isB: st.hv === 'B',
+      variantLabel: st.hv === 'A' ? 'Header A' : 'Header B',
+      hdFlat: '',
+      shop, staffName, staffInitial: staffName[0],
+      safe: st.safe,
+      groups,
+    };
+    // Picker as in the app (App.tsx history-picker + Inspection day first). Sample numbers from the Verify board.
+    const kinds = ['Inspection day', 'Fridges', 'Freezers', 'Cooking', 'Hot holding', 'Cooling', 'Deliveries', 'Training', 'Dates']
+      .map((label, i) => ({ label, pressed: i === 0 ? 'true' : 'false' }));
+    const circ = 2 * Math.PI * 39;
+    // Ranges as on the app's chips (inspection.md crit. 2-6); today = Saturday 24 October 2026. Format A9-4.
+    const ranges = { visit: ['14 Mar', '24 Oct 2026'], m3: ['25 Jul', '24 Oct 2026'], d30: ['25 Sep', '24 Oct 2026'], choose: ['14 Mar', '24 Oct 2026'] };
+    const optLabels = [['visit', 'Since last visit · 14 Mar'], ['m3', 'Last 3 months'], ['d30', 'Last 30 days'], ['choose', 'Choose dates']];
+    return {
+      ic,
+      ...common,
+      kinds,
+      period: st.period,
+      onPeriod: (e) => this.setState({ period: e.target.value, optsOpen: false }),
+      showOpts: st.optsOpen,
+      opts: optLabels.map(([k, label]) => ({ label, cls: k === st.period ? 'on' : '', tick: k === st.period ? '✓' : '' })),
+      showDates: st.period === 'choose',
+      rangeFrom: ranges[st.period][0], rangeTo: ranges[st.period][1],
+      ringDash: (circ * 216 / 225).toFixed(1) + ' ' + circ.toFixed(1),
+      rows: [
+        { icon: ic.fridge, name: 'Fridge checks', count: '666' },
+        { icon: ic.cooking, name: 'Poultry, mince, liver', count: '268' },
+        { icon: ic.cooling, name: 'Cooling batches', count: '38' },
+        { icon: ic.delivery, name: 'Deliveries', count: '97' },
+      ],
+      optRows: [
+        { icon: ic.cooking, name: 'Other cooking', count: '144' },
+        { icon: ic.hotHold, name: 'Hot holding', count: '305' },
+        { icon: ic.cleaning, name: 'Cleaning days', count: '214' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

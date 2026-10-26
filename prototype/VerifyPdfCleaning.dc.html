@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390">
+<style>html{touch-action:manipulation}@media (min-width:520px){html,body{background:#0E2A2C}body>div>div>div[style*="width: 390px"]{margin:24px auto;border-radius:28px;overflow:hidden}}</style>
+<title>Verifier PDF: Cleaning page</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap">
+<style>
+html,body{margin:0;background:#C9D3D1}
+/* One A4 page of the verifier PDF (inspection §4.2), drawn at 794 × 1123 CSS px. It is a printed page: always white,
+   black text, no dark mode, no colour-only meaning (problems are "!", bold and a P{n} reference). */
+.wrap{display:flex;justify-content:center;padding:0}
+.page{width:794px;min-height:1123px;box-sizing:border-box;background:#FFFFFF;color:#111;font-family:'Inter',system-ui,sans-serif;padding:28px 46px 40px;display:flex;flex-direction:column;position:relative;font-size:10.5px;line-height:1.35}
+@media (max-width:793px){.page{zoom:0.6}}
+@media (max-width:480px){.page{zoom:0.47}}
+@media (max-width:374px){.page{zoom:0.4}}
+.proto{margin:0 0 6px;font-size:10px;color:#4A5E60;font-weight:700}
+.runhead{margin:0 0 18px;font-size:8.5px;color:#555}
+h1{margin:0 0 4px;font-size:18px;font-weight:800;letter-spacing:-0.01em}
+.lead{margin:0 0 2px;color:#333}
+h2{margin:16px 0 6px;font-size:13px;font-weight:800}
+h3{margin:10px 0 4px;font-size:11px;font-weight:800}
+.blank{font-weight:400;color:#555;font-size:9.5px}
+table{width:100%;border-collapse:collapse;table-layout:fixed}
+th,td{border:0.75px solid #9AA5A3;padding:4px 5px;text-align:left;vertical-align:top;overflow-wrap:anywhere}
+th{background:#EEF2F1;font-weight:700}
+/* Weekly grid (cleaning crit. 23): rows = afterUse/daily tasks, columns Mon-Sun, cell = initials, blank = no tick. */
+.grid td,.grid th{text-align:center;vertical-align:middle;height:16px}
+.grid td.task,.grid th.task{text-align:left}
+.grid td.p{font-weight:800}
+.grid td.na{color:#555}
+.small{font-size:9.5px;color:#333;margin:6px 0 0}
+.corr{margin:16px 0 0;padding-top:8px;border-top:0.75px solid #9AA5A3}
+.corr p{margin:2px 0}
+.foot{margin-top:auto;padding-top:18px;font-size:8px;color:#555}
+</style>
+</helmet>
+<div class="wrap">
+  <div class="page">
+    <p class="proto">Prototype with sample data · one page of the verifier PDF</p>
+    <p class="runhead">Sample Café · Food safety records 14 Mar 2026 to 25 Oct 2026 · Optional records</p>
+    <h1>Cleaning</h1>
+    <p class="lead">Optional record (MPI Guidance p.39).</p>
+    <p class="lead">Limits from SousMate template nz.cleaning 1.0.0</p>
+
+    <h2>Cleaning plan <span class="blank">(MPI record blank p.23) · the plan on 25 Oct 2026, plus tasks retired in this period</span></h2>
+    <table>
+      <colgroup><col style="width: 22%"><col style="width: 14%"><col style="width: 36%"><col style="width: 13%"><col style="width: 15%"></colgroup>
+      <tr><th>Task</th><th>How often</th><th>Method</th><th>Who does it</th><th>Notes</th></tr>
+      <sc-for list="{{plan}}" as="r" hint-placeholder-count="7">
+        <tr><td>{{r.a}}</td><td>{{r.b}}</td><td>{{r.c}}</td><td>{{r.d}}</td><td>{{r.e}}</td></tr>
+      </sc-for>
+    </table>
+
+    <h2>Cleaning done <span class="blank">(MPI record blank p.24) · initials of who ticked the task</span></h2>
+    <sc-for list="{{weeks}}" as="w" hint-placeholder-count="2">
+      <h3>Week of {{w.title}}</h3>
+      <table class="grid">
+        <colgroup><col style="width: 30%"><col style="width: 10%"><col style="width: 10%"><col style="width: 10%"><col style="width: 10%"><col style="width: 10%"><col style="width: 10%"><col style="width: 10%"></colgroup>
+        <tr><th class="task">Task</th><sc-for list="{{w.days}}" as="d" hint-placeholder-count="7"><th>{{d}}</th></sc-for></tr>
+        <sc-for list="{{w.rows}}" as="r" hint-placeholder-count="3">
+          <tr><td class="task">{{r.name}}</td><sc-for list="{{r.cells}}" as="c" hint-placeholder-count="7"><td class="{{c.cls}}">{{c.v}}</td></sc-for></tr>
+        </sc-for>
+      </table>
+    </sc-for>
+    <p class="small">Initials: M = Mia, A = Arjun, H = Hana (staff key on page 1). Blank = no tick that day. · = not in the plan that day. ! P4 = problem record P4, listed in "When something went wrong" with what went wrong, the fix, how food was kept safe and what will stop it happening again.</p>
+
+    <h2>Less often</h2>
+    <table>
+      <colgroup><col style="width: 18%"><col style="width: 52%"><col style="width: 30%"></colgroup>
+      <tr><th>Date</th><th>Task</th><th>Done by</th></tr>
+      <sc-for list="{{less}}" as="r" hint-placeholder-count="3">
+        <tr><td>{{r.a}}</td><td>{{r.b}}</td><td>{{r.c}}</td></tr>
+      </sc-for>
+    </table>
+
+    <div class="corr">
+      <p><b>Corrections in this section</b></p>
+      <p>Cleaning 20 Oct 2026, Preparation benches: time 21:00 → 15:00 · by Hana · 21 Oct 2026 · reason: wrong time</p>
+      <p>Cleaning 22 Oct 2026, Floors: VOID · by Mia · reason: ticked by mistake</p>
+    </div>
+
+    <p class="foot">Page 10 of 14 · Made with SousMate 0.8.0 on 26 Oct 2026 09:10 · All times are New Zealand time</p>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":794,"height":1123}}'>
+class Component extends DCLogic {
+  renderVals() {
+    // cleaning crit. 23-24. Plan = Blanks p.23 columns. Grid = Blanks p.24 (Date, Cleaning task, Task done by), drawn one
+    // Monday-start week per block. Blank cell = no tick (Gate A Q6), never "—", "missed", "not done" or "overdue".
+    // "·" = before the task existed or while retired. No entry time, device id, lateness or next date.
+    const D = (r) => ({ a: r[0], b: r[1], c: r[2], d: r[3], e: r[4] });
+    const plan = [
+      ['Preparation benches', 'After every use', 'Clean debris, wipe with new or freshly cleaned cloth with hot soapy water, dry with paper towels, apply spray sanitiser (no rinse)', 'All staff', '—'],
+      ['Floors', 'Every day', 'Sweep, then mop with hot soapy water', 'Closing staff', '—'],
+      ['Fridge and door handles', 'Every day', '—', '—', '—'],
+      ['Bins and rubbish area', 'Every week', '—', 'Arjun', 'Bin collection is on Tuesday'],
+      ['Extraction fan and filters', 'Every month', '—', '—', '—'],
+      ['Ceilings and light fittings', 'Every 6 months', '—', '—', '—'],
+      ['Grease trap · Retired 14 Oct 2026', 'Every day', '—', '—', '—'],
+    ].map(D);
+    const cell = (v) => ({ v: v === '_' ? '' : v, cls: v === '·' ? 'na' : v.indexOf('!') === 0 ? 'p' : '' });
+    const row = (name, cells) => ({ name, cells: cells.map(cell) });
+    const weeks = [
+      { title: 'Monday 12 October 2026', days: ['Mon 12', 'Tue 13', 'Wed 14', 'Thu 15', 'Fri 16', 'Sat 17', 'Sun 18'],
+        rows: [
+          row('Preparation benches', ['M', 'M/A', 'A', '_', 'H', 'M', '_']),
+          row('Floors', ['M', 'M', '_', 'A', 'H', 'M', '_']),
+          row('Fridge and door handles', ['·', '·', '·', '·', '·', '·', '·']),
+          row('Grease trap (retired)', ['A', 'A', '·', '·', '·', '·', '·']),
+        ] },
+      { title: 'Monday 19 October 2026', days: ['Mon 19', 'Tue 20', 'Wed 21', 'Thu 22', 'Fri 23', 'Sat 24', 'Sun 25'],
+        rows: [
+          row('Preparation benches', ['M', 'H', 'A', 'M', 'M/H', '_', 'A']),
+          row('Floors', ['M', 'H', '_', '_', 'M', '! P4', 'A']),
+          row('Fridge and door handles', ['·', '·', 'A', 'M', '_', 'H', 'A']),
+        ] },
+    ];
+    const less = [
+      ['12 Oct 2026', 'Bins and rubbish area', 'A'],
+      ['19 Oct 2026', 'Bins and rubbish area', 'A'],
+    ].map((r) => ({ a: r[0], b: r[1], c: r[2] }));
+    return { plan, weeks, less };
+  }
+}
+</script>
+</body>
+</html>
